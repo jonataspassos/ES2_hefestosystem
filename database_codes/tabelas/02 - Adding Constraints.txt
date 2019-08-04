@@ -1,0 +1,24 @@
+Clique na tabela que deseja adicionar os constraints: Primary key, foreign key, Checks e Uniques.
+
+No caso de Primary keys, aparecerá uma lista com os campos já marcados como chave primaria. 
+Se desejar adicionar mais um, clique no campo OnField da chave existente e clique na seta para baixo do lado direito do campo.
+Poderá adicionar ou remover campos da tabela a chave primaria passando campos para esquerda(remover) ou direita(adicionar).
+
+No caso de foreign keys, aparecera uma lista das foregin key ja existentes naquela tabela.
+Para adicionar uma nova, clique com o botão direito numa área vazia e selecione a opção new foreign.
+Selecione os campos que representam a chave estrangeira, a tabela para a qual a chave aponta e os campos da tabela estrangeira. Confira as regras de Update e Delete,
+Idicação por default: 
+	Update Rule: Cascade
+	Delete Rule: SetNull
+Em casos que a chave estrangeira for tambem primaria, Delete Rule: Cascade
+
+No caso dos Cheks
+São constraints para verificar o campo antes da inserção no banco, mas não será utilizado neste projeto
+
+No caso dos Uniques
+São constraints que garantem que aquele conjunto de campos será unico na tabela.
+Estará sendo listada todos os grupos de unicos da tabela em questão
+para adicionar uma regra de unique, clique numa área vazia e selecione New Unique Constraint
+Selecione o grupo de campos unicos
+
+Para confirmar quaisquer alterações no banco, clique no raio com o nome de compile, confira as alterações que serão feitas e clique em close.

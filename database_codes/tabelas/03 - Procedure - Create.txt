@@ -1,0 +1,24 @@
+No IbExpert, com o banco aberto, clique no icone da barra superior, já próximo a direita com o nome de New Procedure
+
+Adicione logo no inicio os parametros de entra da procedure, com seus tipos e tamanhos
+
+Para a procedure de create, quando a tabela não utilizar chave primaria de auto incremento, obedecerá o seguinte padrão:
+begin
+    INSERT INTO <tableName> (<tableField1>,<tableField2>)
+    VALUES(:<var_tableField1>,:<var_tableField2>);
+end
+
+Sendo <var_tableField1> e <var_tableField2> os nomes dos parametros criados em cima.
+
+Para a procedure create quando a tabela utilizar chave primaria de auto incremento, obedecerá o seguinte padrão:
+begin
+  while(:id in (SELECT id from <tableName>)) do
+  begin
+  ID = GEN_ID(<GeneratorName>,1);
+  end
+
+  INSERT INTO USUARIO (<AutoIncrementField>, <tableField1>,<tableField2>)
+  VALUES (:ID, :<var_tableField1>,:<var_tableField2>);
+end
+
+Sendo <var_tableField1> e <var_tableField2> os nomes dos parametros criados em cima. e ID sendo uma variavel criada na aba de variaveis. Deverá ser do tipo Integer e com valor default 0

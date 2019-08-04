@@ -1,0 +1,10 @@
+No IbExpert, com o banco aberto, clique no icone da barra superior, já próximo a direita com o nome de New Procedure
+
+Adicione logo no inicio os parametros de entra da procedure, com seus tipos e tamanhos
+
+Para a procedire delete, obedecerá o sequinte parão:
+begin
+  DELETE FROM <tableName> WHERE <primaryKeyField1> = :<var_primaryKeyField1> and <primaryKeyField2> = :<var_primaryKeyField2>;
+end
+
+Sendo <var_primaryKeyField1> e <var_primaryKeyField2> os nomes dos parametros criados em cima.

@@ -1,0 +1,15 @@
+Abra o IB expert e no canto superior esquerdo selecione o icone com o nome de Register DataBase
+Escolha as opções a seguir:
+Server:	Local
+Server Version:	Firebird 2.0
+Database File: C:\users\<seu-usuario>\eclipse-workspace\hefestosystem\hefestosystem.fdb
+Database Alias: hefesto_db
+User Name:	SYSDBA
+Password:	masterkey
+
+Depois, selecione Register
+
+Para testar a conexão, clique duas vezes em cima do banco registrado, deverá abrir opções expandidas do nome do banco.
+Se não der certo, aparecerá uma mensagem de erro, confira os nomes de usuário e senha digitados na hora de registrar
+Clique com o botão direito em cima do nome do banco, e selecione a opção Database Registration Info...
+Confira o nome de usuario e redigite a senha. Confira os outros campos informados acima.

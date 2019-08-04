@@ -1,0 +1,8 @@
+#abra o ISQL e escreva os seguintes comandos:
+
+SQL>create database C:\hefestosystem.fdb page_size 8192
+CON>user 'SYSDBA' password 'masterkey';
+SQL>QUIT;
+
+#Recorte o arquivo do disco C e cole na pasta do projeto:
+C:\users\<seu-usuario>\eclipse-workspace\hefestosystem\

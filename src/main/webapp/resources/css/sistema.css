@@ -1,0 +1,52 @@
+@Charset "utf-8";
+
+body {
+}
+
+header {
+	background-color: #034f84;
+	color: #fff;
+	box-shadow: 0px 2px 2px #ccc;
+}
+
+header>div {
+	margin-top: 3px;
+	margin-left: 8px;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	width: 100%;
+	padding: 8px 0px;
+}
+
+p{
+}
+
+#conteudo{
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
+.content{
+	background-color: white;
+	margin-left: 5%;
+	margin-right: 5%;
+	padding-bottom: 80px;
+	height: 100%;
+}
+
+#center-form{
+	width: 400px;
+	margin-top:50px;
+}
+
+.centralizar-externa{
+	align-items: center;
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: center;
+	height: 100%;
+}

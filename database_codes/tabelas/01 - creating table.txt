@@ -1,0 +1,18 @@
+Abra o ibExpert, e abra o banco de dados no qual se deseja criar a tabela
+Nas opçõs da barra superior, já próximo da direita, selecione a opção com o nome new table
+
+Informe o nome da tabela(Não esqueça de fazer isso antes de confirmar a criação da tabela)
+
+Informe os campos da tabela na área abaixo
+Para inserir um campo nessa área, clique na seta para baixo enquanto estiver editando
+Selecione as restrições desejadas pra cada campo.
+
+Não se esqueça de definir a chave primaria da tabela, selecionando um ou mais campos para isso
+para adicionar um campo à chave primaria, clique duas vezes na coluna PK na linha do campo.
+
+Restrições como unique, foregin key e indices secundários serão criados posteiormente
+
+No caso do auto incremento, ao selecioná-lo, será aberto uma janela com opções para o auto incremento. Marque a opção Create Generator, não será necessário criar o trigger ou a procedure, pois a procedure será criada posteriormente.
+
+Para confirmar a criação da tabela, clique no ícone do raio com o nome de compile que tem na janela de criação da tabela na parte de cima. Abrirá uma janela exibindo os códigos sql necessários para a criação da tabela com todas as especificações dadas. Também aoarecerá uma coluna marcando o status de sucesso ou erro da operação.
+Ao conferir as alterações desejadas, clique em commit para persistir as alterações.

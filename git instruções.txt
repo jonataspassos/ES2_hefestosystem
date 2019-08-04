@@ -1,0 +1,40 @@
+#------------------------------------para configurar seus usuario e email no git escreva
+git config --global user.name "Nome do seu Usuario"
+git congig --global user.email "Endereço de e-mail"
+
+#------------------------------------#para baixar os códigos do git
+#vá na pasta onde se encontra o repositorio git
+#clique numa área vazia com o botão direito
+#selecione a opção git bash here
+#escreva no prompt o seguinte comando:
+git clone https://github.com/jonataspassos/hefestosystem.git
+
+
+
+#------------------------------------#para sincronizar o repositório remoto
+#clique numa área vazia com o botão direito
+#selecione a opção git bash here
+#escreva no prompt o seguinte comando:
+git pull
+#OBSERVAÇÕES:: Nunca se esqueça de dar este comando ao iniciar e ao finalizar qualquer alteração. Num projeto compartilhado, outras pessoas podem estar trabalhando ao mesmo tempo que você, e os arquivos podem gerar versões diferentes.
+Ao findar seus trabalhos, o git pull deverá ser dado após o "git commit ...", antes do "git push"
+
+
+
+#------------------------------------para publicar alterações
+#clique numa área vazia com o botão direito
+#selecione a opção git bash here
+#escreva no prompt o seguinte comando:
+git status
+#este comando listará todas as alterações ainda não adicionadas a uma versão(commit).
+#para adicionar os arquivos alterados a uma próxima versão escreva:
+git add <diretorio-do(s)-arquivo(s)>
+#para adicionar todos os arquivos alterados na pasta, escreva
+git add .
+#se você solicitar o status novamente, as alterações aparecerão em uma lista de arquivos a serem commitados
+#para fazer o commit escreva
+git commit -m "Mensagem do commit"
+#essa mensagem do commit é a mensagem que descreve a natureza das alterações feitas naquele commit. Informe sempre uma mensagem coerente com as funcionalidades adicionadas ou os bugs corrigidos para facilitar a localização das versões futuramente
+#para enviar as informações para o repositório remoto digite:
+git push
+#No windows ele solicitará o usuario e senha apenas uma vez; informe seu usuario e senha para validar a sua participação como colaborador no repositório remoto
