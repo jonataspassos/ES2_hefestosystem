@@ -7,19 +7,25 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
 @SessionScoped
-@ManagedBean(name="autentication")
+@ManagedBean(name = "autentication")
 public class AutenticationMB {
 	public void login() {
 		System.out.println("Ta entrando login");
+		MessagesMB.getMessage().info("Ta entrando login");
 		SystemMB.getSystem().redirect("/");
 	}
+
 	public void logout() {
 		System.out.println("Ta entrando logout");
-		SystemMB.getSystem().redirect("/p/login.xhtml");
+		System.out.println(MessagesMB.getMessage());
+		MessagesMB.getMessage().info("Ta entrando logout");
+		SystemMB.getSystem().redirect("/p/autenticacao/login.xhtml");
 	}
+
 	public String testAutentication() {
-		return "";}
-	
+		return "";
+	}
+
 	public static AutenticationMB getAutentication() {
 		FacesContext fc = FacesContext.getCurrentInstance();
 		ExternalContext ec;
