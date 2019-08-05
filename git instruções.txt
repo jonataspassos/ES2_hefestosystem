@@ -1,6 +1,6 @@
 #------------------------------------para configurar seus usuario e email no git escreva
 git config --global user.name "Nome do seu Usuario"
-git congig --global user.email "Endereço de e-mail"
+git config --global user.email "Endereço de e-mail"
 
 #------------------------------------#para baixar os códigos do git
 #vá na pasta onde se encontra o repositorio git
