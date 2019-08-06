@@ -37,6 +37,8 @@ public class MaquinaModel {
 				st.setString(3, "" + maquina.getPotencia());
 				st.setString(4, "" + maquina.getValor_diaria());
 				st.setString(5, maquina.getTipo_combustivel());
+				
+				ajsdladajdasdklçakç
 
 //				st.setInt(1, Integer.parseInt(maquina.getUs_vendedor()));
 //				st.setInt(2, Integer.parseInt(maquina.getUs_comprador()));
