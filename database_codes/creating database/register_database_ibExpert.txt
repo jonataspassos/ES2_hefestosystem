@@ -3,7 +3,7 @@ Escolha as opções a seguir:
 Server:	Local
 Server Version:	Firebird 2.0
 Database File: C:\users\<seu-usuario>\eclipse-workspace\hefestosystem\hefestosystem.fdb
-Database Alias: hefesto_db
+Database Alias: hefestosystem
 User Name:	SYSDBA
 Password:	masterkey
 
