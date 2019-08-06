@@ -1,6 +1,7 @@
 @Charset "utf-8";
 
 body {
+	
 }
 
 header {
@@ -24,7 +25,8 @@ footer {
 p{
 }
 
-#conteudo{
+.conteudo{
+	margin-top: 70px;
 	padding-left: 10px;
 	padding-right: 10px;
 }
@@ -49,4 +51,11 @@ p{
 	flex-wrap: wrap;
 	justify-content: center;
 	height: 100%;
+}
+
+.titulo {
+	font-style: normal;
+	font-family: Helvetica, sans-serif;
+	font-weight: 500 !important;
+    color: darkred;
 }
