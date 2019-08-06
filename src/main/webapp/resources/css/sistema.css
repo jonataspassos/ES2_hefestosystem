@@ -27,8 +27,6 @@ p{
 
 .conteudo{
 	margin-top: 70px;
-	padding-left: 10px;
-	padding-right: 10px;
 }
 
 .content{
@@ -58,4 +56,9 @@ p{
 	font-family: Helvetica, sans-serif;
 	font-weight: 500 !important;
     color: #737373;
+}
+
+.listar-acoes {
+	text-align: end;
+	margin-bottom: 10px;
 }

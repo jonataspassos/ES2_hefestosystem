@@ -7,14 +7,14 @@
 	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
 
 	<ui:define name="titulo">Máquinas</ui:define>
+	<ui:define name="cabecalho">Listagem de Máquinas</ui:define>
 	<ui:define name="corpo">
-		<!-- Escreva aqui o Corpo da Página -->
-
-		<h1 class="titulo">Listagem de Máquinas</h1>
-		<hr></hr>
-
-		<div class="conteudo">
-			<p:dataTable var="maquina" value="#{dtBasicView.cars}" reflow="true" rows="5" paginator="true">
+			<div class="conteudo">
+			<div class="listar-acoes">
+				<p:linkButton outcome="criar" value="Cadastrar Máquina" icon="fa fa-plus"/>
+			</div>
+			<p:dataTable var="maquina" value="#{dtBasicView.cars}" reflow="true"
+				rows="5" paginator="true">
 				<p:column headerText="Número de registro">
 					<h:outputText value="#{car.id}" />
 				</p:column>
@@ -30,11 +30,11 @@
 				<p:column headerText="Valor da diária">
 					<h:outputText value="#{car.color}" />
 				</p:column>
-				
+
 				<p:column headerText="Tipo combustível">
 					<h:outputText value="#{car.color}" />
 				</p:column>
-				
+
 				<p:column headerText="Data da última revisão">
 					<h:outputText value="#{car.color}" />
 				</p:column>
