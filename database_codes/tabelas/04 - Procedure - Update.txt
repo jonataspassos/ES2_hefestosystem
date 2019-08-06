@@ -4,7 +4,7 @@ Adicione logo no inicio os parametros de entra da procedure, com seus tipos e ta
 
 Para a procedure Update, obedecerá o seguinte padrao
 begin
-    UPDATE <table_name> SET <tableField1> = :<var_tableField1>, <tableField2> = :password WHERE <primaryKeyField1> = :<var_primaryKeyField1> and <primaryKeyField2> = :<var_primaryKeyField2>;
+    UPDATE <table_name> SET <tableField1> = :<var_tableField1>, <tableField2> = :<var_tableField2> WHERE <primaryKeyField1> = :<var_primaryKeyField1>;
 end
 
-Sendo <var_tableField1>, <var_tableField2>,  <var_primaryKeyField1> e <var_primaryKeyField2> os nomes dos parametros criados em cima.
+Sendo <var_tableField1>, <var_tableField2> e  <var_primaryKeyField1> os nomes dos parametros criados em cima.
