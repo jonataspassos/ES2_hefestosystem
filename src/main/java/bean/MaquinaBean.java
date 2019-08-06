@@ -44,6 +44,7 @@ public class MaquinaBean {
 	public void setTipo_combustivel(String tipo_combustivel) {
 		this.tipo_combustivel = tipo_combustivel;
 	}
+	@Override
 	public String toString() {
 		return "";
 	}
