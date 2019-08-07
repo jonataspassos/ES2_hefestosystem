@@ -5,6 +5,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 import bean.AluguelBean;
 import lookUp.AluguelLookUpList;
@@ -12,6 +16,8 @@ import lookUp.MaquinaLookUp;
 import resources.Database;
 import resources.HUtil;
 
+@ManagedBean(name = "alguguelService")
+@ApplicationScoped
 public class AluguelModel {
 	public void create(AluguelBean aluguel) {
 		Database db = new Database();
@@ -160,12 +166,12 @@ public class AluguelModel {
 		}
 	}
 	
-	public ArrayList<AluguelLookUpList> list() {
+	public List<AluguelLookUpList> list() {
 		AluguelLookUpList aluguel;
 		Database bd = new Database();
 		Connection conn = null;
 
-		ArrayList<AluguelLookUpList> alugueis = new ArrayList<AluguelLookUpList>();
+		List<AluguelLookUpList> alugueis = new ArrayList<AluguelLookUpList>();
 
 		try {
 			conn = bd.getConnection();
@@ -209,7 +215,7 @@ public class AluguelModel {
 //		
 //		(new AluguelModel()).create(l);
 		
-		ArrayList<AluguelLookUpList> alugueis = (new AluguelModel()).list();
+		List<AluguelLookUpList> alugueis = (new AluguelModel()).list();
 		
 		for(int i=0;i<alugueis.size();i++) {
 			System.out.println(alugueis.get(i));

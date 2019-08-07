@@ -9,7 +9,104 @@
 	<ui:define name="titulo">Titulo da Página</ui:define>
 	<ui:define name="corpo">
 		<!-- Escreva aqui o Corpo da Página -->
-		
+		<style type="text/css">
+.ui-datatable .ui-datatable-header {
+	text-align: right !important;
+}
+
+.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+	display: none;
+}
+</style>
+
+
+		<h:form id="form">
+
+			<p:dataTable id="tableStateDT" var="car"
+				value="#{dtTableStateView.cars}" widgetVar="carsTable"
+				multiViewState="true" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				selection="#{dtTableStateView.selectedCar}" rowKey="#{car.id}"
+				emptyMessage="No cars found with given criteria"
+				filteredValue="#{dtTableStateView.filteredCars}"
+				 sortMode="multiple"	>
+
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Search all fields:" />
+						<p:inputText id="globalFilter" onkeyup="PF('carsTable').filter()"
+							style="width:150px" placeholder="Enter keyword" />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:ajax event="rowSelect" update=":form:carDetail"
+					oncomplete="PF('carDialog').show()" />
+
+				<p:column headerText="Id" filterBy="#{car.id}" sortBy="#{car.id}"
+					filterMatchMode="contains">
+					<h:outputText value="#{car.id}" />
+				</p:column>
+
+				<p:column headerText="Year" filterBy="#{car.year}"
+					sortBy="#{car.year}" filterMatchMode="startsWith">
+					<h:outputText value="#{car.year}" />
+				</p:column>
+
+				<p:column headerText="Brand" filterBy="#{car.brand}"
+					sortBy="#{car.brand}" filterMatchMode="exact">
+					<f:facet name="filter">
+						<p:selectOneMenu onchange="PF('carsTable').filter()"
+							style="width:100%; box-sizing: border-box;">
+							<f:selectItem itemLabel="Select One" itemValue="#{null}"
+								noSelectionOption="true" />
+							<f:selectItems value="#{dtTableStateView.brands}" />
+						</p:selectOneMenu>
+					</f:facet>
+					<h:outputText value="#{car.brand}" />
+				</p:column>
+
+				<p:column headerText="Color" filterBy="#{car.color}"
+					sortBy="#{car.color}" filterMatchMode="in">
+					<f:facet name="filter">
+						<p:selectCheckboxMenu label="Colors"
+							onchange="PF('carsTable').filter()"
+							style="width:100%; box-sizing: border-box;" scrollHeight="150">
+							<f:selectItems value="#{dtTableStateView.colors}" />
+						</p:selectCheckboxMenu>
+					</f:facet>
+					<h:outputText value="#{car.color}" />
+				</p:column>
+			</p:dataTable>
+
+			<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+				showEffect="fade" hideEffect="fade" resizable="false">
+				<p:outputPanel id="carDetail" style="text-align:center;">
+					<p:panelGrid columns="2"
+						rendered="#{not empty dtTableStateView.selectedCar}"
+						columnClasses="label,value">
+						<f:facet name="header">
+							<p:graphicImage
+								name="demo/images/car/#{dtTableStateView.selectedCar.brand}-big.gif" />
+						</f:facet>
+
+						<h:outputText value="Id:" />
+						<h:outputText value="#{dtTableStateView.selectedCar.id}" />
+
+						<h:outputText value="Year" />
+						<h:outputText value="#{dtTableStateView.selectedCar.year}" />
+
+						<h:outputText value="Brand" />
+						<h:outputText value="#{dtTableStateView.selectedCar.brand}" />
+
+						<h:outputText value="Color:" />
+						<h:outputText value="#{dtTableStateView.selectedCar.color}"
+							style="color:#{dtTableStateView.selectedCar.color}" />
+					</p:panelGrid>
+				</p:outputPanel>
+			</p:dialog>
+
+		</h:form>
 	</ui:define>
 
 </ui:composition>

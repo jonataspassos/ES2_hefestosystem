@@ -9,40 +9,49 @@
 	<ui:define name="titulo">Aluguéis</ui:define>
 	<ui:define name="cabecalho">Listagem de Aluguéis</ui:define>
 	<ui:define name="corpo">
+
+		<style type="text/css">
+.ui-datatable input {
+	box-sizing: border-box;
+	width: 100%;
+	-webkit-box-shadow: none;
+	box-shadow: none !important;
+}
+</style>
+
 		<div class="conteudo">
 			<div class="listar-acoes">
 				<p:linkButton outcome="alugar" value="Realizar Aluguel"
 					icon="fa fa-plus" />
 			</div>
+			<h:form>
+				<p:dataTable var="alu" value="#{aluguel.alugueis}">
+					<p:column headerText="Data de Saída">
+						<h:outputText value="#{alu.data_ini}" />
+					</p:column>
 
-			<p:dataTable var="aluguel" value="#{aluguel.alugueis}" reflow="true"
-				rows="5" paginator="true">
-				<p:column headerText="Data de Saída">
-					<h:outputText value="#{aluguel.data_ini}" />
-				</p:column>
+					<p:column headerText="Data de Retorno">
+						<h:outputText value="#{alu.data_entregue}" />
+					</p:column>
 
-				<p:column headerText="Data de Retorno">
-					<h:outputText value="#{aluguel.data_entregue}" />
-				</p:column>
+					<p:column headerText="Numero de Registro de Máquina">
+						<h:outputText value="#{alu.n_registro}" />
+					</p:column>
 
-				<p:column headerText="Numero de Registro de Máquina">
-					<h:outputText value="#{aluguel.n_registro}" />
-				</p:column>
+					<p:column headerText="Potência">
+						<h:outputText value="#{alu.potencia}" />
+					</p:column>
 
-				<p:column headerText="Potência">
-					<h:outputText value="#{aluguel.potencia}" />
-				</p:column>
+					<p:column headerText="Valor Contratado">
+						<h:outputText value="#{alu.val_contratado}" />
+					</p:column>
 
-				<p:column headerText="Valor Contratado">
-					<h:outputText value="#{aluguel.val_contratado}" />
-				</p:column>
+					<p:column headerText="Valor Pago">
+						<h:outputText value="#{alu.valor_pago}" />
+					</p:column>
 
-				<p:column headerText="Valor Pago">
-					<h:outputText value="#{aluguel.valor_pago}" />
-				</p:column>
-
-			</p:dataTable>
-
+				</p:dataTable>
+			</h:form>
 		</div>
 	</ui:define>
 
