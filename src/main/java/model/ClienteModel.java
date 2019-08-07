@@ -32,5 +32,16 @@ public class ClienteModel
 			e.printStackTrace();
 		}
 	}
+	
+	public static void main(String []args) {
+		ClienteModel cliente = new ClienteModel();
+		ClienteBean clienteBean = new ClienteBean();
+		
+		clienteBean.setCpf("93221351298");
+		clienteBean.setNome("Cigano");
+		
+		cliente.create(clienteBean);
+		
+	}
 
 }

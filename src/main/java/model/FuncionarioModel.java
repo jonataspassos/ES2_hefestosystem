@@ -3,6 +3,7 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import bean.ClienteBean;
 import bean.FuncionarioBean;
 import resources.Database;
 
@@ -31,6 +32,17 @@ public class FuncionarioModel
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void main(String []args) {
+		FuncionarioModel func = new FuncionarioModel();
+		FuncionarioBean funcBean = new FuncionarioBean();
+		
+		funcBean.setCpf("93221351298");
+		funcBean.setNome("Cigano");
+		
+		func.create(funcBean);
+		
 	}
 
 }
