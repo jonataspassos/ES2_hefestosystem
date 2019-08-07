@@ -36,6 +36,9 @@ public class SystemMB {
 					session = (HttpSession) ec.getSession(true);
 					if (session != null) {
 						sys = ((SystemMB) session.getAttribute("system"));
+						if(sys == null) {
+							sys  = new SystemMB();
+						}
 					}
 				}
 			}
