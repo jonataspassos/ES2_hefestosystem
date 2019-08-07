@@ -6,24 +6,55 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import bean.FuncionarioBean;
+import bean.UsuarioBean;
+import model.FuncionarioModel;
+import model.UsuarioModel;
+
 @SessionScoped
 @ManagedBean(name = "autentication")
 public class AutenticationMB {
+	private FuncionarioBean funcionario;
+	
+	
+	
+	public AutenticationMB() {
+		super();
+		this.funcionario = new FuncionarioBean();
+	}
+
 	public void login() {
-		System.out.println("Ta entrando login");
-		MessagesMB.getMessage().info("Ta entrando login");
-		SystemMB.getSystem().redirect("/");
+		if(funcionario==null)
+			return;
+		else {
+			FuncionarioBean us = (new FuncionarioModel()).readBean(funcionario);
+			if(us != null){
+				funcionario = us;
+				SystemMB.getSystem().redirect("/");
+			}else {
+				System.out.println("Usuario e/ou senha Incorretos!");
+				(new MessagesMB()).warn("Usuario e/ou senha Incorretos!");
+				//addMessage(, "Usuario e/ou senha Incorretos!");
+			}
+		}
 	}
 
 	public void logout() {
-		System.out.println("Ta entrando logout");
-		System.out.println(MessagesMB.getMessage());
-		MessagesMB.getMessage().info("Ta entrando logout");
 		SystemMB.getSystem().redirect("/p/autenticacao/login.xhtml");
 	}
 
 	public String testAutentication() {
 		return "";
+	}
+	
+	
+
+	public FuncionarioBean getFuncionario() {
+		return funcionario;
+	}
+
+	public void setFuncionario(FuncionarioBean funcionario) {
+		this.funcionario = funcionario;
 	}
 
 	public static AutenticationMB getAutentication() {

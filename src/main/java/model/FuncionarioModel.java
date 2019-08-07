@@ -34,6 +34,8 @@ public class FuncionarioModel
 		}
 	}
 	
+	
+	
 	public static void main(String []args) {
 		FuncionarioModel func = new FuncionarioModel();
 		FuncionarioBean funcBean = new FuncionarioBean();
