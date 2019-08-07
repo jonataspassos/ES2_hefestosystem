@@ -18,7 +18,7 @@ public class EmpresaModel
 		try {
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE CLIENTE_CREATE(?,?)");
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE EMPRESA_CREATE(?,?)");
 				
 				st.setString(1, "" + empresa.getCnpj());
 				st.setString(2, empresa.getRaz_social());
