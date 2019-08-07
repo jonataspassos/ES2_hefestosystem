@@ -33,7 +33,7 @@ public class AutenticationMB {
 				else
 					SystemMB.getSystem().redirect("/");
 			}else {
-				System.out.println("Usuario e/ou senha Incorretos!");
+				//System.out.println("Usuario e/ou senha Incorretos!");
 				(new MessagesMB()).warn("Usuario e/ou senha Incorretos!");
 				//addMessage(, "Usuario e/ou senha Incorretos!");
 			}

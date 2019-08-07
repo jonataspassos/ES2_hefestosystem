@@ -9,7 +9,41 @@
 	<ui:define name="titulo">Aluguéis</ui:define>
 	<ui:define name="cabecalho">Listagem de Aluguéis</ui:define>
 	<ui:define name="corpo">
-	
+		<div class="conteudo">
+			<div class="listar-acoes">
+				<p:linkButton outcome="alugar" value="Realizar Aluguel"
+					icon="fa fa-plus" />
+			</div>
+
+			<p:dataTable var="aluguel" value="#{aluguel.alugueis}" reflow="true"
+				rows="5" paginator="true">
+				<p:column headerText="Data de Saída">
+					<h:outputText value="#{aluguel.data_ini}" />
+				</p:column>
+
+				<p:column headerText="Data de Retorno">
+					<h:outputText value="#{aluguel.data_entregue}" />
+				</p:column>
+
+				<p:column headerText="Numero de Registro de Máquina">
+					<h:outputText value="#{aluguel.n_registro}" />
+				</p:column>
+
+				<p:column headerText="Potência">
+					<h:outputText value="#{aluguel.potencia}" />
+				</p:column>
+
+				<p:column headerText="Valor Contratado">
+					<h:outputText value="#{aluguel.val_contratado}" />
+				</p:column>
+
+				<p:column headerText="Valor Pago">
+					<h:outputText value="#{aluguel.valor_pago}" />
+				</p:column>
+
+			</p:dataTable>
+
+		</div>
 	</ui:define>
 
 </ui:composition>
