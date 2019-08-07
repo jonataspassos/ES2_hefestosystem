@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 
 import bean.MaquinaBean;
@@ -13,6 +14,7 @@ import lookUp.MaquinaLookUp;
 
 @ManagedBean(name="maquina")
 @ViewScoped
+@RequestScoped
 public class MaquinaController {
 	private MaquinaModel maqm;
 	private MaquinaBean maquina;

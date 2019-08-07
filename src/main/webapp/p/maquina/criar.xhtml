@@ -14,7 +14,7 @@
 				<div class="p-col">
 					<div class="box">
 						<span class="ui-float-label"> <p:inputText id="float-input"
-								value="#{MaquinaBean.n_registro}" /> <p:outputLabel
+								value="#{maquina.maquina.n_registro}" /> <p:outputLabel
 								for="@previous" value="Número de Registro" />
 						</span>
 					</div>
@@ -23,8 +23,8 @@
 				<div class="p-col">
 					<div class="box">
 						<span class="ui-float-label"> <p:inputText id="marca"
-								value="#{MaquinaBean.marca}" /> <p:outputLabel for="@previous"
-								value="Marca" />
+								value="#{maquina.maquina.marca}" /> <p:outputLabel
+								for="@previous" value="Marca" />
 						</span>
 					</div>
 				</div>
@@ -32,7 +32,7 @@
 				<div class="p-col">
 					<div class="box">
 						<span class="ui-float-label"> <p:inputNumber id="potencia"
-								value="#{MaquinaBean.potencia}" /> <p:outputLabel
+								value="#{maquina.maquina.potencia}" /> <p:outputLabel
 								for="@previous" value="Potência" />
 						</span>
 					</div>
@@ -41,7 +41,7 @@
 				<div class="p-col">
 					<div class="box">
 						<span class="ui-float-label"> <p:inputNumber
-								id="valor_diaria" value="#{MaquinaBean.valor_diaria}" /> <p:outputLabel
+								id="valor_diaria" value="#{maquina.maquina.valor_diaria}" /> <p:outputLabel
 								for="@previous" value="Valor da diária" />
 						</span>
 					</div>
@@ -52,13 +52,19 @@
 				<div class="p-col">
 					<div class="box">
 						<span class="ui-float-label"> <p:inputText
-								id="tipo_combustivel" value="#{MaquinaBean.tipo_combustivel}" />
-							<p:outputLabel for="@previous" value="Tipo de combustívle" />
+								id="tipo_combustivel"
+								value="#{maquina.maquina.tipo_combustivel}" /> <p:outputLabel
+								for="@previous" value="Tipo de combustível" />
 						</span>
 					</div>
 				</div>
 			</div>
 
+			<div class="p-grid">
+				<p:commandButton value="With Icon" id="withIcon"
+					action="#{maquina.maqm.create}" update="growl"
+					style="margin-right:20px;" icon="pi pi-save" />
+			</div>
 		</h:form>
 	</ui:define>
 </ui:composition>
