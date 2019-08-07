@@ -23,6 +23,7 @@ public class MaquinaController {
 	@PostConstruct
 	public void init() {
 		maqm = new MaquinaModel();
+		maquina = new MaquinaBean();
 		maquinas = maqm.list();
 	}
 
@@ -48,5 +49,9 @@ public class MaquinaController {
 
 	public void setMaquinas(ArrayList<MaquinaLookUp> maquinas) {
 		this.maquinas = maquinas;
+	}
+	
+	public void createMaquina() {
+		maqm.create(maquina);
 	}
 }

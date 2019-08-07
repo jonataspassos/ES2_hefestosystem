@@ -10,10 +10,13 @@
 	<ui:define name="cabecalho">Cadastrar Máquina</ui:define>
 	<ui:define name="corpo">
 		<h:form>
+			<p:growl id="message" autoUpdate="true" closable="true">
+				<p:autoUpdate />
+			</p:growl>
 			<div class="p-grid">
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputText id="float-input"
+						<span class="ui-float-label"> <p:inputText id="n_registro"
 								value="#{maquina.maquina.n_registro}" /> <p:outputLabel
 								for="@previous" value="Número de Registro" />
 						</span>
@@ -60,10 +63,13 @@
 				</div>
 			</div>
 
+			<p:spacer></p:spacer>
+
 			<div class="p-grid">
-				<p:commandButton value="With Icon" id="withIcon"
-					action="#{maquina.maqm.create}" update="growl"
-					style="margin-right:20px;" icon="pi pi-save" />
+				<div class="p-col">
+					<p:commandButton value="Salvar" id="withIcon"
+						action="#{maquina.createMaquina}" icon="pi pi-save" />
+				</div>
 			</div>
 		</h:form>
 	</ui:define>
