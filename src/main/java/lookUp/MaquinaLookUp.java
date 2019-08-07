@@ -1,9 +1,11 @@
 package lookUp;
 
+import java.util.Date;
+
 import bean.MaquinaBean;
 
 public class MaquinaLookUp extends MaquinaBean{
-	private String data_ult_revisao;
+	private Date data_ult_revisao;
 	private float horimetro;
 
 	public float getHorimetro() {
@@ -14,11 +16,11 @@ public class MaquinaLookUp extends MaquinaBean{
 		this.horimetro = horimetro;
 	}
 
-	public String getData_ult_revisao() {
+	public Date getData_ult_revisao() {
 		return data_ult_revisao;
 	}
 
-	public void setData_ult_revisao(String data_ult_revisao) {
+	public void setData_ult_revisao(Date data_ult_revisao) {
 		this.data_ult_revisao = data_ult_revisao;
 	}
 	

@@ -96,7 +96,7 @@ public class MaquinaModel {
 			conn = bd.getConnection();
 
 			if (conn != null) {
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA_LIST");
 
 				ResultSet rs = st.executeQuery();
 
@@ -109,6 +109,8 @@ public class MaquinaModel {
 					maquina.setPotencia(rs.getFloat("potencia"));
 					maquina.setValor_diaria(rs.getFloat("val_diaria"));
 					maquina.setTipo_combustivel(rs.getString("tipo_combust"));
+					maquina.setData_ult_revisao(rs.getDate("data_ult_revisao"));
+					maquina.setHorimetro(rs.getInt("horimetro"));
 
 					maquinas.add(maquina);
 				}
