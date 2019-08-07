@@ -1,0 +1,37 @@
+package bean;
+
+public class TelClienteBean 
+{
+	private int n_telefone;
+	private int n_cliente_fk;
+	private int ddd;
+	private int numero_tel;
+	
+	public int getN_telefone() {
+		return n_telefone;
+	}
+	public void setN_telefone(int n_telefone) {
+		this.n_telefone = n_telefone;
+	}
+	public int getN_cliente_fk() {
+		return n_cliente_fk;
+	}
+	public void setN_cliente_fk(int n_cliente_fk) {
+		this.n_cliente_fk = n_cliente_fk;
+	}
+	public int getDdd() {
+		return ddd;
+	}
+	public void setDdd(int ddd) {
+		this.ddd = ddd;
+	}
+	public int getNumero_tel() {
+		return numero_tel;
+	}
+	public void setNumero_tel(int numero_tel) {
+		this.numero_tel = numero_tel;
+	}
+	
+	
+
+}
