@@ -8,23 +8,19 @@ import java.sql.SQLException;
 //import java.util.ArrayList;
 import java.util.ArrayList;
 import bean.MaquinaBean;
+import controller.MessagesMB;
+import controller.SystemMB;
 import lookUp.MaquinaLookUp;
 import resources.Database;
 
 public class MaquinaModel {
 
 	public void create(MaquinaBean maquina) {
+		
 		Database db = new Database();
 		Connection conn = null;
 
 		conn = db.getConnection();
-//
-//		MaquinaBean maquina = new MaquinaBean();
-//		maquina.setMarca("asdadasdsad");
-//		maquina.setTipo_combustivel("klajlsdjka");
-//		maquina.setConsumo(3.43f);
-//		maquina.setN_registro(987);
-//		maquina.setValor_diaria(98.2f);
 
 		try {
 			if (conn != null) {
@@ -41,9 +37,17 @@ public class MaquinaModel {
 
 				st.close();
 				conn.close();
+				
+				(new MessagesMB()).info("Máquina cadastrada com sucesso.");
+				System.out.println("Máquina criada!!");
+				
+				Thread.sleep(5000);
+				SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			(new MessagesMB()).error("Error ao tentar cadastrar máquina.");
+			System.out.println("Error com a criação de máquina!!");
 		}
 	}
 
