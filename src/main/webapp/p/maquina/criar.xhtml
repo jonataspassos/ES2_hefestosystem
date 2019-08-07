@@ -9,11 +9,53 @@
 	<ui:define name="titulo">Máquinas</ui:define>
 	<ui:define name="cabecalho">Cadastrar Máquina</ui:define>
 	<ui:define name="corpo">
-<!-- 		<h1 class="titulo">Cadastrar Máquina</h1> -->
-<!-- 		<hr></hr> -->
-		
-		<div>
-		
+		<div class="p-grid">
+			<div class="p-col">
+				<div class="box">
+					<span class="ui-float-label"> <p:inputText id="float-input"
+							value="#{MaquinaBean.n_registro}" /> <p:outputLabel
+							for="@previous" value="Número de Registro" />
+					</span>
+				</div>
+			</div>
+
+			<div class="p-col">
+				<div class="box">
+					<span class="ui-float-label"> <p:inputText id="marca"
+							value="#{MaquinaBean.marca}" /> <p:outputLabel for="@previous"
+							value="Marca" />
+					</span>
+				</div>
+			</div>
+
+			<div class="p-col">
+				<div class="box">
+					<span class="ui-float-label"> <p:inputNumber id="potencia"
+							value="#{MaquinaBean.potencia}" /> <p:outputLabel
+							for="@previous" value="Potência" />
+					</span>
+				</div>
+			</div>
+
+			<div class="p-col">
+				<div class="box">
+					<span class="ui-float-label"> <p:inputNumber
+							id="valor_diaria" value="#{MaquinaBean.valor_diaria}" /> <p:outputLabel
+							for="@previous" value="Valor da diária" />
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<div class="p-grid">
+			<div class="p-col">
+				<div class="box">
+					<span class="ui-float-label"> <p:inputText
+							id="tipo_combustivel" value="#{MaquinaBean.tipo_combustivel}" />
+						<p:outputLabel for="@previous" value="Tipo de combustívle" />
+					</span>
+				</div>
+			</div>
 		</div>
 
 

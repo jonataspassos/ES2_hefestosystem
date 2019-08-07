@@ -1,6 +1,7 @@
 package bean;
 
 public class MaquinaBean {
+	private int n_maquina;
 	private int n_registro;
 	private String marca;
 	private float potencia;
@@ -8,6 +9,12 @@ public class MaquinaBean {
 	private float valor_diaria;
 	private String tipo_combustivel;
 	
+	public int getN_maquina() {
+		return n_maquina;
+	}
+	public void setN_maquina(int n_maquina) {
+		this.n_maquina = n_maquina;
+	}
 	public int getN_registro() {
 		return n_registro;
 	}

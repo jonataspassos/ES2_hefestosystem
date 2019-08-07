@@ -9,36 +9,43 @@
 	<ui:define name="titulo">Máquinas</ui:define>
 	<ui:define name="cabecalho">Listagem de Máquinas</ui:define>
 	<ui:define name="corpo">
-			<div class="conteudo">
+		<div class="conteudo">
 			<div class="listar-acoes">
-				<p:linkButton outcome="criar" value="Cadastrar Máquina" icon="fa fa-plus"/>
+				<p:linkButton outcome="criar" value="Cadastrar Máquina"
+					icon="fa fa-plus" />
 			</div>
-			<p:dataTable var="maquina" value="#{dtBasicView.cars}" reflow="true"
+
+			<p:dataTable var="maquina" value="#{maquina.maquinas}" reflow="true"
 				rows="5" paginator="true">
 				<p:column headerText="Número de registro">
-					<h:outputText value="#{car.id}" />
+					<h:outputText value="#{maquina.n_registro}" />
 				</p:column>
 
 				<p:column headerText="Marca">
-					<h:outputText value="#{car.year}" />
+					<h:outputText value="#{maquina.marca}" />
 				</p:column>
 
 				<p:column headerText="Potência">
-					<h:outputText value="#{car.brand}" />
+					<h:outputText value="#{maquina.potencia}" />
 				</p:column>
 
 				<p:column headerText="Valor da diária">
-					<h:outputText value="#{car.color}" />
+					<h:outputText value="#{maquina.valor_diaria}" />
 				</p:column>
 
 				<p:column headerText="Tipo combustível">
-					<h:outputText value="#{car.color}" />
+					<h:outputText value="#{maquina.tipo_combustivel}" />
 				</p:column>
 
 				<p:column headerText="Data da última revisão">
-					<h:outputText value="#{car.color}" />
+					<h:outputText value="#{maquina.data_ult_revisao}" />
+				</p:column>
+
+				<p:column headerText="Horímetro">
+					<h:outputText value="#{maquina.horimetro}" />
 				</p:column>
 			</p:dataTable>
+
 		</div>
 
 	</ui:define>

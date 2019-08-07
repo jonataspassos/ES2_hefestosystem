@@ -4,6 +4,15 @@ import bean.MaquinaBean;
 
 public class MaquinaLookUp extends MaquinaBean{
 	private String data_ult_revisao;
+	private float horimetro;
+
+	public float getHorimetro() {
+		return horimetro;
+	}
+
+	public void setHorimetro(float horimetro) {
+		this.horimetro = horimetro;
+	}
 
 	public String getData_ult_revisao() {
 		return data_ult_revisao;
