@@ -18,7 +18,7 @@ public class FuncionarioModel
 		try {
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE CLIENTE_CREATE(?,?)");
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE FUNCIONARIO_CREATE(?,?)");
 				
 				st.setString(1, "" + funcionario.getCpf());
 				st.setString(2, funcionario.getNome());
