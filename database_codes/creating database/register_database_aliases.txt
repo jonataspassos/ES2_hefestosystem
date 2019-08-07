@@ -1,4 +1,4 @@
 #abra o arquivo aliases.conf do firebird que se encontra em 
 C:\Program Files (x86)\Firebird\Firebird_2_5\aliases.conf
 #Ao final do arquivo, adicione a seguinte linha:
-hefesto_db = C:\users\<seu-usuario>\eclipse-workspace\hefestosystem\hefestosystem.fdb
+hefestosystem = C:\users\<seu-usuario>\eclipse-workspace\hefestosystem\hefestosystem.fdb

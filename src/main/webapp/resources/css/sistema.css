@@ -1,6 +1,7 @@
 @Charset "utf-8";
 
 body {
+	
 }
 
 header {
@@ -24,9 +25,8 @@ footer {
 p{
 }
 
-#conteudo{
-	padding-left: 10px;
-	padding-right: 10px;
+.conteudo{
+	margin-top: 70px;
 }
 
 .content{
@@ -49,4 +49,16 @@ p{
 	flex-wrap: wrap;
 	justify-content: center;
 	height: 100%;
+}
+
+.titulo {
+	font-style: normal;
+	font-family: Helvetica, sans-serif;
+	font-weight: 500 !important;
+    color: #737373;
+}
+
+.listar-acoes {
+	text-align: end;
+	margin-bottom: 10px;
 }
