@@ -11,11 +11,20 @@
 	<ui:define name="corpo">
 		<p:spacer></p:spacer>
 		<p:growl id="growl" life="2000" />
-		
+
 		<div class="p-grid">
 			<div class="p-col-10">
 				<p:accordionPanel>
-					<p:tab title="Últimos Aluguéis"></p:tab>
+					<p:tab title="Últimos Aluguéis">
+						<h:panelGrid>
+							<p:dataList value="#{maquina.alugueis}" var="aluguel">
+								<strong>Início:</strong> #{aluguel.data_ini}, <strong>Fim:</strong> #{aluguel.data_final}, 
+								<strong>Hora de Saída:</strong> #{aluguel.hori_saida}, 
+								<strong>Hora de Retorno:</strong> #{aluguel.hori_retorno}
+							</p:dataList>
+							<!-- 							<h:outputText value="#{maquina.maquina_id_param}" /> -->
+						</h:panelGrid>
+					</p:tab>
 					<p:tab title="Últimas Revisões"></p:tab>
 				</p:accordionPanel>
 			</div>

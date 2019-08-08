@@ -10,14 +10,14 @@
 	<ui:define name="corpo">
 		<!-- Escreva aqui o Corpo da Página -->
 		<style type="text/css">
-.ui-datatable .ui-datatable-header {
-	text-align: right !important;
-}
+			.ui-datatable .ui-datatable-header {
+				text-align: right !important;
+			}
 
-.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
-	display: none;
-}
-</style>
+			.ui-selectcheckboxmenu-panel .ui-selectcheckboxmenu-header .ui-chkbox {
+				display: none;
+			}
+		</style>
 
 
 		<h:form id="form">
@@ -29,8 +29,7 @@
 				rowsPerPageTemplate="5,10,15" selectionMode="single"
 				selection="#{dtTableStateView.selectedCar}" rowKey="#{car.id}"
 				emptyMessage="No cars found with given criteria"
-				filteredValue="#{dtTableStateView.filteredCars}"
-				 sortMode="multiple"	>
+				filteredValue="#{dtTableStateView.filteredCars}" sortMode="multiple">
 
 				<f:facet name="header">
 					<p:outputPanel>

@@ -1,17 +1,26 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+
+import bean.AluguelBean;
 import bean.MaquinaBean;
+import bean.RevisaoBean;
 import lookUp.MaquinaLookUp;
 import resources.Database;
 
-public class MaquinaModel {
+@ManagedBean
+@ApplicationScoped
+public class MaquinaModel implements Serializable {
 
 	public Boolean create(MaquinaBean maquina) {
-		
+
 		Database db = new Database();
 		Connection conn = null;
 
@@ -32,7 +41,7 @@ public class MaquinaModel {
 
 				st.close();
 				conn.close();
-			
+
 				System.out.println("Máquina criada!!");
 				return true;
 			}
@@ -172,11 +181,79 @@ public class MaquinaModel {
 		}
 	}
 
-//	public static void main(String[] args) {
-//		MaquinaModel maquina = new MaquinaModel();
-//		ArrayList<MaquinaLookUp> maquinas = maquina.list();
-//		if(maquinas.size() > 0)
-//			System.out.println("tem algo");
-//	}
+	public ArrayList<AluguelBean> getLastAlugueis(String maquina_id) {
+		ArrayList<AluguelBean> alugueis = new ArrayList<AluguelBean>();
+		Database db = new Database();
+		Connection conn = null;
+		
+		try {
+			conn = db.getConnection();
+			if(conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT FIRST 5 * FROM ALUGUEL WHERE N_MAQUINA_FK = ?");
+				
+				st.setString(1, maquina_id);
+				
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					AluguelBean aluguel = new AluguelBean();
+
+					aluguel.setData_entregue(rs.getDate("data_entregue"));
+					aluguel.setData_final(rs.getDate("data_final"));
+					aluguel.setData_ini(rs.getDate("data_ini"));
+					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
+					aluguel.setHori_saida(rs.getInt("hori_saida"));
+					aluguel.setHori_retorno(rs.getInt("hori_retorno"));
+
+					alugueis.add(aluguel);
+				}
+				
+				st.close();
+				conn.close();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return alugueis;
+	}
+
+	public ArrayList<RevisaoBean> getLastRevisoes(String maquina_id) {
+		ArrayList<RevisaoBean> revisoes = new ArrayList<RevisaoBean>();
+		Database db = new Database();
+		Connection conn = null;
+		
+		try {
+			conn = db.getConnection();
+			if(conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT FIRST 5 * FROM REVISAO WHERE N_MAQUINA_FK = ?");
+				
+				st.setString(1, maquina_id);
+				
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					RevisaoBean revisao = new RevisaoBean();
+					
+
+//					aluguel.setData_entregue(rs.getDate("data_entregue"));
+//					aluguel.setData_final(rs.getDate("data_final"));
+//					aluguel.setData_ini(rs.getDate("data_ini"));
+//					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
+//					aluguel.setHori_saida(rs.getInt("hori_saida"));
+//					aluguel.setHori_retorno(rs.getInt("hori_retorno"));
+
+					revisoes.add(revisao);
+				}
+				
+				st.close();
+				conn.close();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return revisoes;
+	}
 
 }
