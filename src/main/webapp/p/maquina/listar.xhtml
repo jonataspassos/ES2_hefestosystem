@@ -111,7 +111,8 @@
 							value="#{maq.status == '2' ? 'Revisao': (maq.status == '1'? 'Alugada': 'Disponível')}" />
 					</p:column>
 
-					<p:column headerText="Ações" class="text-center" style="width:40px;text-align:center">
+					<p:column headerText="Ações" class="text-center"
+						style="width:40px;text-align:center">
 						<p:linkButton outcome="consultar" icon="fa fa-eye"
 							title="Consultar Máquina">
 							<f:param name="maquina_id" value="#{maq.n_maquina}" />

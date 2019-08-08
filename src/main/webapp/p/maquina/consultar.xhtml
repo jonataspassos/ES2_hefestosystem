@@ -16,9 +16,10 @@
 			<p:commandButton class="btn-primary" value="Editar" id="btnEdita"
 				action="#{buttonView.buttonAction}" update="growl"
 				icon="fa fa-pencil-square-o" />
-				
+
 			<p:commandButton class="btn-success" value="Salvar" id="btnSalvar"
-				action="#{buttonView.buttonAction}" update="growl" disabled="true"/>
+				action="#{buttonView.buttonAction}" update="growl" icon="fa fa-save"
+				disabled="true" />
 		</div>
 
 		<div class="p-grid">
@@ -35,14 +36,16 @@
 					<div class="p-col">
 						<div class="box">
 							<h5>Marca</h5>
-							<p:inputText id="marca" value="#{maquina.maquina.marca}" disabled="true"/>
+							<p:inputText id="marca" value="#{maquina.maquina.marca}"
+								disabled="true" />
 						</div>
 					</div>
 
 					<div class="p-col">
 						<div class="box">
 							<h5>Potência</h5>
-							<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}" disabled="true"/>
+							<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}"
+								disabled="true" />
 						</div>
 					</div>
 
@@ -50,7 +53,7 @@
 						<div class="box">
 							<h5>Valor da diária</h5>
 							<p:inputNumber id="valor_diaria"
-								value="#{maquina.maquina.valor_diaria}" disabled="true"/>
+								value="#{maquina.maquina.valor_diaria}" disabled="true" />
 						</div>
 					</div>
 				</div>
@@ -60,7 +63,7 @@
 						<div class="box">
 							<h5>Tipo de combustível</h5>
 							<p:inputText id="tipo_combustivel"
-								value="#{maquina.maquina.tipo_combustivel}" disabled="true"/>
+								value="#{maquina.maquina.tipo_combustivel}" disabled="true" />
 						</div>
 					</div>
 				</div>
@@ -68,9 +71,9 @@
 			<div class="p-col-2 p-dir-col">
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn-primary" value="Revisão" id="btnRevisao"
-							action="#{buttonView.buttonAction}" update="growl"
-							icon="fa fa-gear" />
+						<p:commandButton class="btn-primary" value="Revisão"
+							id="btnRevisao" action="#{buttonView.buttonAction}"
+							update="growl" icon="fa fa-gear" />
 					</div>
 				</div>
 				<div class="p-col">
