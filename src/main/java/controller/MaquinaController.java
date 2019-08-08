@@ -26,9 +26,11 @@ public class MaquinaController {
 	@ManagedProperty("#{message}")
 	private MessagesMB messagesService;
 	private MaquinaBean maquina;
-	private ArrayList<MaquinaLookUp> maquinas;
+	private List<MaquinaLookUp> maquinas;
 	private Integer maquina_id_param;
 	private ArrayList<AluguelBean> alugueis;
+	private MaquinaLookUp selectedMaquina;
+	private List<MaquinaLookUp>filteredMaquinas;
 
 	@PostConstruct
 	public void init() {
@@ -59,14 +61,6 @@ public class MaquinaController {
 
 	public void setMaquina(MaquinaBean maquina) {
 		this.maquina = maquina;
-	}
-
-	public ArrayList<MaquinaLookUp> getMaquinas() {
-		return maquinas;
-	}
-
-	public void setMaquinas(ArrayList<MaquinaLookUp> maquinas) {
-		this.maquinas = maquinas;
 	}
 
 	public String getMaquina_id_param() {
@@ -102,5 +96,27 @@ public class MaquinaController {
 	public List<String>getTipo_combust(){
 		return maqm.tipo_combust();
 	}
+
+	public MaquinaLookUp getSelectedMaquina() {
+		return selectedMaquina;
+	}
+
+	public void setSelectedMaquina(MaquinaLookUp selectedMaquina) {
+		this.selectedMaquina = selectedMaquina;
+	}
+
+	public List<MaquinaLookUp> getFilteredMaquinas() {
+		return filteredMaquinas;
+	}
+
+	public void setFilteredMaquinas(List<MaquinaLookUp> filteredMaquinas) {
+		this.filteredMaquinas = filteredMaquinas;
+	}
+
+	public List<MaquinaLookUp> getMaquinas() {
+		return maquinas;
+	}
+	
+	
 
 }
