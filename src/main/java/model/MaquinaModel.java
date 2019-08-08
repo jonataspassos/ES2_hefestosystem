@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
@@ -255,6 +256,58 @@ public class MaquinaModel implements Serializable {
 		}
 		
 		return revisoes;
+	}
+	
+	public List<String> marcas(){
+		Database db = new Database();
+		Connection conn = null;
+		List<String>marcas = new ArrayList<String>();
+		
+		try {
+			conn = db.getConnection();
+			if(conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM MARCA_LIST");
+				
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					marcas.add(rs.getString("marca"));
+				}
+				
+				st.close();
+				conn.close();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return marcas;
+	}
+	
+	public List<String> tipo_combust(){
+		Database db = new Database();
+		Connection conn = null;
+		List<String>tipos_combust = new ArrayList<String>();
+		
+		try {
+			conn = db.getConnection();
+			if(conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM tipo_combust");
+				
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					tipos_combust.add(rs.getString("tipo_combust"));
+				}
+				
+				st.close();
+				conn.close();
+			}
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return tipos_combust;
 	}
 
 }

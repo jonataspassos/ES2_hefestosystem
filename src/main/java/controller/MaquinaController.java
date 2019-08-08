@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
@@ -92,6 +93,14 @@ public class MaquinaController {
 			return;
 		}
 		messagesService.error("Error ao tentar cadastrar máquina.");
+	}
+	
+	public List<String>getMarcas(){
+		return maqm.marcas();
+	}
+	
+	public List<String>getTipo_combust(){
+		return maqm.tipo_combust();
 	}
 
 }
