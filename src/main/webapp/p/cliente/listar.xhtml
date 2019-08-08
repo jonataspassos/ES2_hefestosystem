@@ -19,6 +19,7 @@
 	width: 100%;
 	box-sizing: border-box;
 }
+
 </style>
 		<h:form id="form">
 			<p:dataTable id="tableStateDT" var="cli"
@@ -28,7 +29,7 @@
 				rowsPerPageTemplate="5,10,15" selectionMode="single"
 				selection="#{clienteMB.selectedCliente}" rowKey="#{cli.n_cliente}"
 				emptyMessage="Nenhum Cliente encontrado com esses critérios"
-				filteredValue="#{clienteMB.filteredClientes}" sortMode="multiple">
+				filteredValue="#{clienteMB.filteredClientes}" sortMode="multiple" >
 				<f:facet name="header">
 					<p:outputPanel>
 						<h:outputText value="Procure por todos os campos:" />
@@ -58,6 +59,9 @@
 							<f:converter converterId="javax.faces.Integer" />
 						</p:spinner>
 					</f:facet>
+					<h:outputText value="#{cli.n_alugueis}" />
+				</p:column>
+				<p:column headerText="Ações" style="width:40px;text-align:center">
 					<h:outputText value="#{cli.n_alugueis}" />
 				</p:column>
 			</p:dataTable>
