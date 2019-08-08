@@ -3,19 +3,14 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-//import java.sql.ResultSet;
-import java.sql.SQLException;
-//import java.util.ArrayList;
 import java.util.ArrayList;
 import bean.MaquinaBean;
-import controller.MessagesMB;
-import controller.SystemMB;
 import lookUp.MaquinaLookUp;
 import resources.Database;
 
 public class MaquinaModel {
 
-	public void create(MaquinaBean maquina) {
+	public Boolean create(MaquinaBean maquina) {
 		
 		Database db = new Database();
 		Connection conn = null;
@@ -37,18 +32,16 @@ public class MaquinaModel {
 
 				st.close();
 				conn.close();
-				
-				(new MessagesMB()).info("Máquina cadastrada com sucesso.");
+			
 				System.out.println("Máquina criada!!");
-				
-				Thread.sleep(5000);
-				SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
+				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
-			(new MessagesMB()).error("Error ao tentar cadastrar máquina.");
 			System.out.println("Error com a criação de máquina!!");
+			return false;
 		}
+		return false;
 	}
 
 	public MaquinaBean readBean(Integer maquina_id) {
