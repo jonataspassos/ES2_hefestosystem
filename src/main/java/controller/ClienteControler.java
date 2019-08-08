@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import bean.ClienteBean;
 import lookUp.ClienteLookUpList;
 import model.ClienteModel;
 
@@ -25,7 +24,6 @@ public class ClienteControler implements Serializable{
 	@PostConstruct	
 	public void init() {
 		clientes = clienteService.list();
-		System.out.println(clientes);
 	}
 
 	public ClienteLookUpList getSelectedCliente() {

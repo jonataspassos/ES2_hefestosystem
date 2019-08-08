@@ -3,9 +3,14 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
+
 import bean.EndEmpresaBean;
 import resources.Database;
 
+@ManagedBean
+@ApplicationScoped
 public class EndEmpresaModel 
 {
 	public void create(EndEmpresaBean endempresa) {

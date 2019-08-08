@@ -51,7 +51,7 @@
 					<h:outputText value="#{cli.telefone}" />
 				</p:column>
 				<p:column headerText="Nº Alugueis" filterBy="#{cli.n_alugueis}"
-					sortBy="#{cli.n_alugueis}" filterMatchMode="lte">
+					sortBy="#{cli.n_alugueis}" filterMatchMode="gte">
 					<f:facet name="filter">
 						<p:spinner onchange="PF('clientesTable').filter()"
 							styleClass="year-spinner custom-filter">
