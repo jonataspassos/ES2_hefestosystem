@@ -22,14 +22,15 @@ footer {
 	padding: 8px 0px;
 }
 
-p{
+p {
+	
 }
 
-.conteudo{
+.conteudo {
 	margin-top: 70px;
 }
 
-.content{
+.content {
 	background-color: white;
 	margin-left: 5%;
 	margin-right: 5%;
@@ -37,12 +38,12 @@ p{
 	height: 100%;
 }
 
-#center-form{
+#center-form {
 	width: 400px;
-	margin-top:50px;
+	margin-top: 50px;
 }
 
-.centralizar-externa{
+.centralizar-externa {
 	align-items: center;
 	display: flex;
 	flex-direction: row;
@@ -55,7 +56,7 @@ p{
 	font-style: normal;
 	font-family: Helvetica, sans-serif;
 	font-weight: 500 !important;
-    color: #737373;
+	color: #737373;
 }
 
 .listar-acoes {
@@ -64,5 +65,17 @@ p{
 }
 
 .text-center {
-	text-align:	center;
+	text-align: center;
+}
+
+.ui-datatable-data div.ui-datepicker {
+	position: fixed !important;
+	width: min-content !important;
+	left: 39% !important;
+	top: 33px !important;
+}
+
+div.ui-datepicker th, div.ui-datepicker td{
+	border: 0 !important;
+	border-width:0 !important;
 }
