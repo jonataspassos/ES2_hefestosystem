@@ -62,3 +62,7 @@ p{
 	text-align: end;
 	margin-bottom: 10px;
 }
+
+.text-center {
+	text-align:	center;
+}

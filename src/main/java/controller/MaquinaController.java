@@ -6,6 +6,7 @@ import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
+import controller.MessagesMB;
 
 import bean.MaquinaBean;
 //import lookUp.UsuarioLookUpList;
@@ -51,7 +52,13 @@ public class MaquinaController {
 		this.maquinas = maquinas;
 	}
 	
-	public void createMaquina() {
-		maqm.create(maquina);
+	public void createMaquina() throws Exception {
+		if(maqm.create(maquina)) {
+			(new MessagesMB()).info("Máquina cadastrada com sucesso.");
+			Thread.sleep(5000);
+			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
+			return;
+		}
+		(new MessagesMB()).error("Error ao tentar cadastrar máquina.");
 	}
 }

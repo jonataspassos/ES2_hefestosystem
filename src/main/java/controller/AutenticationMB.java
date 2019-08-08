@@ -79,8 +79,6 @@ public class AutenticationMB {
 		}
 		return "Logado";
 	}
-	
-	
 
 	public FuncionarioBean getFuncionario() {
 		return funcionario;
