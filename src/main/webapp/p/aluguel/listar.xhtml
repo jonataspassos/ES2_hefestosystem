@@ -41,7 +41,7 @@
 				<p:column headerText="Data de Saída" filterBy="#{alu.data_ini}"
 					sortBy="#{alu.data_ini}" filterMatchMode="gte">
 					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy" >
+						<p:calendar pattern="dd/MM/yyyy" widgetVar="calendarWidget">
 							<p:ajax event="dateSelect"
 								oncomplete="PF('alugueisTable').filter()" />
 						</p:calendar>
