@@ -40,12 +40,7 @@
 
 				<p:column headerText="Data de Saída" filterBy="#{alu.data_ini}"
 					sortBy="#{alu.data_ini}">
-					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy">
-							<p:ajax event="dateSelect"
-								oncomplete="PF('alugueisTable').filter()" />
-						</p:calendar>
-					</f:facet>
+					
 					<p:datePicker id="popup" value="#{alu.data_ini}"
 						readonly="#{facesContext.renderResponse}" />
 				</p:column>
