@@ -28,5 +28,13 @@ public class MaquinaLookUp extends MaquinaBean{
 	@Override
 	public String toString() {
 		return "";
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
 	}	
 }

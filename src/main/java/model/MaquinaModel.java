@@ -117,6 +117,7 @@ public class MaquinaModel implements Serializable {
 					maquina.setTipo_combustivel(rs.getString("tipo_combust"));
 					maquina.setData_ult_revisao(rs.getDate("data_ult_revisao"));
 					maquina.setHorimetro(rs.getInt("horimetro"));
+					maquina.setStatus(rs.getString("status"));
 
 					maquinas.add(maquina);
 				}

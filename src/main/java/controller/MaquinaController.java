@@ -86,12 +86,12 @@ public class MaquinaController {
 
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
-			messagesService.info("M√°quina cadastrada com sucesso.");
+			messagesService.info("M·quina cadastrada com sucesso.");
 			Thread.sleep(5000);
 			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			return;
 		}
-		messagesService.error("Error ao tentar cadastrar m√°quina.");
+		messagesService.error("Error ao tentar cadastrar m·quina.");
 	}
 
 }
