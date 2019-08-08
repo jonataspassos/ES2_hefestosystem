@@ -92,12 +92,12 @@ public class MaquinaModel implements Serializable {
 		return null;
 	}
 
-	public ArrayList<MaquinaLookUp> list() {
+	public List<MaquinaLookUp> list() {
 		MaquinaLookUp maquina;
 		Database bd = new Database();
 		Connection conn = null;
 
-		ArrayList<MaquinaLookUp> maquinas = new ArrayList<MaquinaLookUp>();
+		List<MaquinaLookUp> maquinas = new ArrayList<MaquinaLookUp>();
 
 		try {
 			conn = bd.getConnection();
@@ -292,7 +292,7 @@ public class MaquinaModel implements Serializable {
 		try {
 			conn = db.getConnection();
 			if(conn != null) {
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM tipo_combust");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM tipo_combust_list");
 				
 				ResultSet rs = st.executeQuery();
 

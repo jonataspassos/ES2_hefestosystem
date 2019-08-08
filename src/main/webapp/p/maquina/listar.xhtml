@@ -14,45 +14,114 @@
 				<p:linkButton outcome="criar" value="Cadastrar Máquina"
 					icon="fa fa-plus" />
 			</div>
-			
-			
 
-			<p:dataTable var="maquina" value="#{maquina.maquinas}" reflow="true"
-				rows="5" paginator="true">
-				<p:column headerText="Número de registro">
-					<h:outputText value="#{maquina.n_registro}" />
-				</p:column>
+			<style type="text/css">
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
 
-				<p:column headerText="Marca">
-					<h:outputText value="#{maquina.marca}" />
-				</p:column>
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
+			<h:form id="form">
+				<p:dataTable id="tableStateDT" var="maq" value="#{maquina.maquinas}"
+					widgetVar="maquinasTable" multiViewState="true" rows="10"
+					paginator="true"
+					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+					rowsPerPageTemplate="5,10,15" selectionMode="single"
+					selection="#{maquina.selectedMaquina}" rowKey="#{maq.n_maquina}"
+					emptyMessage="Nenhuma Máquina encontrada com esses critérios"
+					filteredValue="#{maquina.filteredMaquinas}" sortMode="multiple">
+					<f:facet name="header">
+						<p:outputPanel style="text-align:end">
+							<h:outputText value="Procure por todos os campos:" />
+							<p:inputText id="globalFilter"
+								onkeyup="PF('maquinasTable').filter()" style="width:150px"
+								placeholder="pesquisar..." />
+						</p:outputPanel>
+					</f:facet>
 
-				<p:column headerText="Potência">
-					<h:outputText value="#{maquina.potencia}" />
-				</p:column>
+					<p:column headerText="Nº de Registro" filterBy="#{maq.n_registro}"
+						sortBy="#{maq.n_registro}" filterMatchMode="contains">
+						<h:outputText value="#{maq.n_registro}" />
+					</p:column>
 
-				<p:column headerText="Valor da diária">
-					<h:outputText value="#{maquina.valor_diaria}" />
-				</p:column>
+					<p:column filterBy="#{maq.marca}" headerText="Marca"
+						filterMatchMode="exact">
+						<f:facet name="filter">
+							<p:selectOneMenu onchange="PF('maquinasTable').filter()"
+								styleClass="custom-filter">
+								<f:selectItem itemLabel="Select One" itemValue="#{null}"
+									noSelectionOption="true" />
+								<f:selectItems value="#{maquina.marcas}" />
+							</p:selectOneMenu>
+						</f:facet>
+						<h:outputText value="#{maq.marca}" />
+					</p:column>
 
-				<p:column headerText="Tipo combustível">
-					<h:outputText value="#{maquina.tipo_combustivel}" />
-				</p:column>
+					<p:column filterBy="#{car.tipo_comustivel}"
+						headerText="Combustível" filterMatchMode="in">
+						<f:facet name="filter">
+							<p:selectCheckboxMenu label="Tipo"
+								onchange="PF('maquinasTable').filter()" scrollHeight="150"
+								styleClass="custom-filter">
+								<f:selectItems value="#{maquina.tipo_combust}" />
+							</p:selectCheckboxMenu>
+						</f:facet>
+						<h:outputText value="#{maq.tipo_combustivel}" />
+					</p:column>
+					<p:column headerText="Potência" filterBy="#{maq.potencia}"
+						sortBy="#{maq.potencia}" filterMatchMode="gte">
+						<f:facet name="filter">
+							<p:spinner onchange="PF('maquinasTable').filter()"
+								styleClass="year-spinner custom-filter">
+								<f:converter converterId="javax.faces.Integer" />
+							</p:spinner>
+						</f:facet>
+						<h:outputText value="#{maq.potencia}" />
+					</p:column>
 
-				<p:column headerText="Data da última revisão">
-					<h:outputText value="#{maquina.data_ult_revisao}" />
-				</p:column>
+					<p:column headerText="Diária" filterBy="#{maq.valor_diaria}"
+						sortBy="#{maq.valor_diaria}" filterMatchMode="lte">
+						<f:facet name="filter">
+							<p:spinner onchange="PF('maquinasTable').filter()"
+								styleClass="year-spinner custom-filter">
+								<f:converter converterId="javax.faces.Integer" />
+							</p:spinner>
+						</f:facet>
+						<h:outputText value="#{maq.valor_diaria}" />
+					</p:column>
 
-				<p:column headerText="Horímetro">
-					<h:outputText value="#{maquina.horimetro}" />
-				</p:column>
+					<p:column filterBy="#{maq.status}" headerText="Status"
+						filterMatchMode="equals" sortBy="#{maq.status}">
+						<f:facet name="filter">
+							<p:selectOneButton onchange="PF('maquinasTable').filter()"
+								styleClass="custom-filter">
+								<f:converter converterId="javax.faces.Integer" />
+								<f:selectItem itemLabel="All" itemValue="" />
+								<f:selectItem itemLabel="Revisao" itemValue="2" />
+								<f:selectItem itemLabel="Alugada" itemValue="1" />
+								<f:selectItem itemLabel="Disponível" itemValue="0" />
+							</p:selectOneButton>
+						</f:facet>
+						<h:outputText
+							value="#{maq.status == '2' ? 'Revisao': (maq.status == '1'? 'Alugada': 'Disponível')}" />
+					</p:column>
 
-				<p:column headerText="Ações" class="text-center">
-						<p:linkButton outcome="consultar" icon="fa fa-eye" title="Consultar Máquina">
-							<f:param name="maquina_id" value="#{maquina.n_maquina}" />
+					<p:column headerText="Ações" class="text-center" style="width:40px;text-align:center">
+						<p:linkButton outcome="consultar" icon="fa fa-eye"
+							title="Consultar Máquina">
+							<f:param name="maquina_id" value="#{maq.n_maquina}" />
 						</p:linkButton>
-				</p:column>
-			</p:dataTable>
+					</p:column>
+
+				</p:dataTable>
+			</h:form>
+
+			<h1>LEMBRA DO BOTÃO DE RESET</h1>
 
 		</div>
 
