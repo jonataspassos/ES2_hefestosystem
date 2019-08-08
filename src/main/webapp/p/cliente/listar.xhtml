@@ -9,7 +9,59 @@
 	<ui:define name="titulo">Clientes</ui:define>
 	<ui:define name="cabecalho">Listagem de Clientes</ui:define>
 	<ui:define name="corpo">
-		
+		<style type="text/css">
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
+		<h:form id="form">
+			<p:dataTable id="tableStateDT" var="cli"
+				value="#{clienteMB.clientes}" widgetVar="clientesTable"
+				multiViewState="true" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				selection="#{clienteMB.selectedCliente}" rowKey="#{cli.n_cliente}"
+				emptyMessage="Nenhum Cliente encontrado com esses critérios"
+				filteredValue="#{clienteMB.filteredClientes}" sortMode="multiple">
+				<f:facet name="header">
+					<p:outputPanel>
+						<h:outputText value="Procure por todos os campos:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('clientesTable').filter()" style="width:150px"
+							placeholder="pesquisar..." />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="CPF" filterBy="#{cli.cpf}" sortBy="#{cli.cpf}"
+					filterMatchMode="contains">
+					<h:outputText value="#{cli.cpf}" />
+				</p:column>
+				<p:column headerText="Nome" filterBy="#{cli.nome}"
+					sortBy="#{cli.nome}" filterMatchMode="contains">
+					<h:outputText value="#{cli.nome}" />
+				</p:column>
+				<p:column headerText="Telefone" filterBy="#{cli.telefone}"
+					sortBy="#{cli.telefone}" filterMatchMode="contains">
+					<h:outputText value="#{cli.telefone}" />
+				</p:column>
+				<p:column headerText="Nº Alugueis" filterBy="#{cli.n_alugueis}"
+					sortBy="#{cli.n_alugueis}" filterMatchMode="lte">
+					<f:facet name="filter">
+						<p:spinner onchange="PF('clientesTable').filter()"
+							styleClass="year-spinner custom-filter">
+							<f:converter converterId="javax.faces.Integer" />
+						</p:spinner>
+					</f:facet>
+					<h:outputText value="#{cli.n_alugueis}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>
