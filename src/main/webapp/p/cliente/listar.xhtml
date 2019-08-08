@@ -31,7 +31,7 @@
 				emptyMessage="Nenhum Cliente encontrado com esses critérios"
 				filteredValue="#{clienteMB.filteredClientes}" sortMode="multiple" >
 				<f:facet name="header">
-					<p:outputPanel>
+					<p:outputPanel style="text-align:end">
 						<h:outputText value="Procure por todos os campos:" />
 						<p:inputText id="globalFilter"
 							onkeyup="PF('clientesTable').filter()" style="width:150px"

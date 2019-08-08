@@ -9,50 +9,93 @@
 	<ui:define name="titulo">Aluguéis</ui:define>
 	<ui:define name="cabecalho">Listagem de Aluguéis</ui:define>
 	<ui:define name="corpo">
-
 		<style type="text/css">
-.ui-datatable input {
-	box-sizing: border-box;
+.ui-filter-column .ui-column-customfilter .custom-filter {
 	width: 100%;
-	-webkit-box-shadow: none;
-	box-shadow: none !important;
+	box-sizing: border-box;
+}
+
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
 }
 </style>
+		<h:form id="form">
+			<p:dataTable id="tableStateDT" var="alu"
+				value="#{aluguelMB.alugueis}" widgetVar="alugueisTable"
+				multiViewState="true" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				selection="#{aluguelMB.selectedAluguel}" rowKey="#{alu.n_aluguel}"
+				emptyMessage="Nenhum Aluguel encontrado com esses critérios"
+				filteredValue="#{aluguelMB.filteredAlugueis}" sortMode="multiple">
+				<f:facet name="header">
+					<p:outputPanel style="text-align:end">
+						<h:outputText value="Procure por todos os campos:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('alugueisTable').filter()" style="width:150px"
+							placeholder="pesquisar..." />
+					</p:outputPanel>
+				</f:facet>
 
-		<div class="conteudo">
-			<div class="listar-acoes">
-				<p:linkButton outcome="alugar" value="Realizar Aluguel"
-					icon="fa fa-plus" />
-			</div>
-			<h:form>
-				<p:dataTable var="alu" value="#{aluguel.alugueis}">
-					<p:column headerText="Data de Saída">
-						<h:outputText value="#{alu.data_ini}" />
-					</p:column>
-
-					<p:column headerText="Data de Retorno">
-						<h:outputText value="#{alu.data_entregue}" />
-					</p:column>
-
-					<p:column headerText="Numero de Registro de Máquina">
-						<h:outputText value="#{alu.n_registro}" />
-					</p:column>
-
-					<p:column headerText="Potência">
-						<h:outputText value="#{alu.potencia}" />
-					</p:column>
-
-					<p:column headerText="Valor Contratado">
-						<h:outputText value="#{alu.val_contratado}" />
-					</p:column>
-
-					<p:column headerText="Valor Pago">
-						<h:outputText value="#{alu.valor_pago}" />
-					</p:column>
-
-				</p:dataTable>
-			</h:form>
-		</div>
+				<p:column headerText="Data de Saída" filterBy="#{alu.data_ini}"
+					sortBy="#{alu.data_ini}">
+					<f:facet name="filter">
+						<p:calendar pattern="dd/MM/yyyy">
+							<p:ajax event="dateSelect"
+								oncomplete="PF('alugueisTable').filter()" />
+						</p:calendar>
+					</f:facet>
+					<p:datePicker id="popup" value="#{alu.data_ini}"
+						readonly="#{facesContext.renderResponse}" />
+				</p:column>
+				<p:column headerText="Data de Retorno"
+					filterBy="#{alu.data_entregue}" sortBy="#{alu.data_entregue}"
+					filterMatchMode="contains">
+					<h:outputText value="#{alu.data_entregue}" />
+				</p:column>
+				<p:column headerText="Registro de Máqiona"
+					filterBy="#{alu.n_registro}" sortBy="#{alu.n_registro}"
+					filterMatchMode="contains">
+					<h:outputText value="#{alu.n_registro}" />
+				</p:column>
+				<p:column headerText="Potência da Máquina"
+					filterBy="#{alu.potencia}" sortBy="#{alu.potencia}"
+					filterMatchMode="gte">
+					<f:facet name="filter">
+						<p:spinner onchange="PF('alugueisTable').filter()"
+							styleClass="year-spinner custom-filter">
+							<f:converter converterId="javax.faces.Integer" />
+						</p:spinner>
+					</f:facet>
+					<h:outputText value="#{alu.potencia}" />
+				</p:column>
+				<p:column headerText="Valor do Contrato"
+					filterBy="#{alu.val_contratado}" sortBy="#{alu.val_contratado}"
+					filterMatchMode="gte">
+					<f:facet name="filter">
+						<p:spinner onchange="PF('alugueisTable').filter()"
+							styleClass="year-spinner custom-filter">
+							<f:converter converterId="javax.faces.Integer" />
+						</p:spinner>
+					</f:facet>
+					<h:outputText value="#{alu.val_contratado}" />
+				</p:column>
+				<p:column headerText="Valor Pago" filterBy="#{alu.valor_pago}"
+					sortBy="#{alu.valor_pago}" filterMatchMode="lte">
+					<f:facet name="filter">
+						<p:spinner onchange="PF('alugueisTable').filter()"
+							styleClass="year-spinner custom-filter">
+							<f:converter converterId="javax.faces.Integer" />
+						</p:spinner>
+					</f:facet>
+					<h:outputText value="#{alu.valor_pago}" />
+				</p:column>
+				<p:column headerText="Ações" style="width:40px;text-align:center">
+					<h:outputText value="#{cli.n_alugueis}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

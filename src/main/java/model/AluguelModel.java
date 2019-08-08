@@ -1,10 +1,10 @@
 package model;
 
+import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
@@ -12,13 +12,12 @@ import javax.faces.bean.ManagedBean;
 
 import bean.AluguelBean;
 import lookUp.AluguelLookUpList;
-import lookUp.MaquinaLookUp;
 import resources.Database;
 import resources.HUtil;
 
-@ManagedBean(name = "alguguelService")
+@ManagedBean
 @ApplicationScoped
-public class AluguelModel {
+public class AluguelModel implements Serializable {
 	public void create(AluguelBean aluguel) {
 		Database db = new Database();
 		Connection conn = null;
@@ -183,6 +182,7 @@ public class AluguelModel {
 
 				while (rs.next()) {
 					aluguel = new AluguelLookUpList();
+					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
 					aluguel.setData_ini(HUtil.dateToUtil(rs.getDate("data_ini")));
 					aluguel.setData_entregue(HUtil.dateToUtil(rs.getDate("data_entregue")));
 					aluguel.setN_registro(rs.getInt("n_registro"));

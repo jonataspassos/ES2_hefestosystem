@@ -11,10 +11,8 @@ import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
 import bean.ClienteBean;
-import lookUp.AluguelLookUpList;
 import lookUp.ClienteLookUpList;
 import resources.Database;
-import resources.HUtil;
 
 @ManagedBean
 @ApplicationScoped

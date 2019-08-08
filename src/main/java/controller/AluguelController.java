@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
@@ -9,45 +8,55 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 
-import bean.AluguelBean;
-import exemploTablePF.CarService;
 import lookUp.AluguelLookUpList;
 import model.AluguelModel;
 
-@ManagedBean(name = "aluguel")
+@ManagedBean(name = "aluguelMB")
 @ViewScoped
 public class AluguelController implements Serializable {
-	private static final long serialVersionUID = 1L;
 	private List<AluguelLookUpList> alugueis;
-	
-	private List<AluguelLookUpList> fil_alugueis;
-	
-	public List<AluguelLookUpList> getFil_alugueis() {
-		return fil_alugueis;
-	}
+	private List<AluguelLookUpList> filteredAlugueis;
+	private AluguelLookUpList selectedAluguel;
 
-	private AluguelBean aluguel = new AluguelBean();
-	
-	@ManagedProperty("#{alguguelService}")
-    private AluguelModel service;
-	
+	@ManagedProperty("#{aluguelModel}")
+	private AluguelModel aluguelService;
+
 	@PostConstruct
 	public void init() {
-		alugueis = service.list();
+		alugueis = aluguelService.list();
 	}
 
 	public List<AluguelLookUpList> getAlugueis() {
 		return alugueis;
 	}
 
-	public void setService(AluguelModel service) {
-		this.service = service;
+	public void setAlugueis(List<AluguelLookUpList> alugueis) {
+		this.alugueis = alugueis;
 	}
 
-	public void setFil_alugueis(List<AluguelLookUpList> fil_alugueis) {
-		this.fil_alugueis = fil_alugueis;
+	public List<AluguelLookUpList> getFilteredAlugueis() {
+		return filteredAlugueis;
 	}
-	
-	
 
+	public void setFilteredAlugueis(List<AluguelLookUpList> filteredAlugueis) {
+		this.filteredAlugueis = filteredAlugueis;
+	}
+
+	public AluguelLookUpList getSelectedAluguel() {
+		return selectedAluguel;
+	}
+
+	public void setSelectedAluguel(AluguelLookUpList selectedAluguel) {
+		this.selectedAluguel = selectedAluguel;
+	}
+
+	public AluguelModel getAluguelService() {
+		return aluguelService;
+	}
+
+	public void setAluguelService(AluguelModel aluguelService) {
+		this.aluguelService = aluguelService;
+	}
+
+	
 }

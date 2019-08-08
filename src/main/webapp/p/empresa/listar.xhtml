@@ -30,7 +30,7 @@
 				emptyMessage="Nenhuma Empresa encontrada com esses critérios"
 				filteredValue="#{empresaMB.filteredEmpresas}" sortMode="multiple">
 				<f:facet name="header">
-					<p:outputPanel>
+					<p:outputPanel style="text-align:end">
 						<h:outputText value="Procure por todos os campos:" />
 						<p:inputText id="globalFilter"
 							onkeyup="PF('empresasTable').filter()" style="width:150px"

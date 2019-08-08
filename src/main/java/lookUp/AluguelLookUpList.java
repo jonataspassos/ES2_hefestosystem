@@ -1,8 +1,11 @@
 package lookUp;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AluguelLookUpList {
+
+public class AluguelLookUpList implements Serializable  {
+	private int n_aluguel;
 	private Date data_ini;
 	private Date data_entregue;
 	private int n_registro;
@@ -44,6 +47,14 @@ public class AluguelLookUpList {
 	}
 	public void setValor_pago(float valor_pago) {
 		this.valor_pago = valor_pago;
+	}
+	
+	
+	public int getN_aluguel() {
+		return n_aluguel;
+	}
+	public void setN_aluguel(int n_aluguel) {
+		this.n_aluguel = n_aluguel;
 	}
 	@Override
 	public String toString() {
