@@ -9,7 +9,62 @@
 	<ui:define name="titulo">Empresas</ui:define>
 	<ui:define name="cabecalho">Listagem de Empresas</ui:define>
 	<ui:define name="corpo">
-		
+		<style type="text/css">
+.ui-filter-column .ui-column-customfilter .custom-filter {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+.year-spinner input {
+	width: 100%;
+	box-sizing: border-box;
+}
+</style>
+		<h:form id="form">
+			<p:dataTable id="tableStateDT" var="emp"
+				value="#{empresaMB.empresas}" widgetVar="empresasTable"
+				multiViewState="true" rows="10" paginator="true"
+				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+				rowsPerPageTemplate="5,10,15" selectionMode="single"
+				selection="#{empresaMB.selectedEmpresa}" rowKey="#{emp.n_empresa}"
+				emptyMessage="Nenhuma Empresa encontrada com esses critérios"
+				filteredValue="#{empresaMB.filteredEmpresas}" sortMode="multiple">
+				<f:facet name="header">
+					<p:outputPanel style="text-align:end">
+						<h:outputText value="Procure por todos os campos:" />
+						<p:inputText id="globalFilter"
+							onkeyup="PF('empresasTable').filter()" style="width:150px"
+							placeholder="pesquisar..." />
+					</p:outputPanel>
+				</f:facet>
+
+				<p:column headerText="CNPJ" filterBy="#{emp.cnpj}" sortBy="#{emp.cnpj}"
+					filterMatchMode="contains">
+					<h:outputText value="#{emp.cnpj}" />
+				</p:column>
+				<p:column headerText="Razão Social" filterBy="#{emp.raz_social}"
+					sortBy="#{emp.raz_social}" filterMatchMode="contains">
+					<h:outputText value="#{emp.raz_social}" />
+				</p:column>
+				<p:column headerText="Telefone" filterBy="#{emp.telefone}"
+					sortBy="#{emp.telefone}" filterMatchMode="contains">
+					<h:outputText value="#{emp.telefone}" />
+				</p:column>
+				<p:column headerText="Nº Alugueis" filterBy="#{emp.n_alugueis}"
+					sortBy="#{emp.n_alugueis}" filterMatchMode="gte">
+					<f:facet name="filter">
+						<p:spinner onchange="PF('empresasTable').filter()"
+							styleClass="year-spinner custom-filter">
+							<f:converter converterId="javax.faces.Integer" />
+						</p:spinner>
+					</f:facet>
+					<h:outputText value="#{emp.n_alugueis}" />
+				</p:column>
+				<p:column headerText="Ações" style="width:40px;text-align:center">
+					<h:outputText value="#{emp.n_alugueis}" />
+				</p:column>
+			</p:dataTable>
+		</h:form>
 	</ui:define>
 
 </ui:composition>

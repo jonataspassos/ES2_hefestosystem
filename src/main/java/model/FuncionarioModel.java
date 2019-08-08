@@ -3,11 +3,20 @@ package model;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.bean.ApplicationScoped;
+import javax.faces.bean.ManagedBean;
 
 import bean.ClienteBean;
 import bean.FuncionarioBean;
+import lookUp.ClienteLookUpList;
+import lookUp.FuncionarioLookUp;
 import resources.Database;
 
+@ManagedBean
+@ApplicationScoped
 public class FuncionarioModel 
 {
 	public void create(FuncionarioBean funcionario) {
@@ -34,6 +43,40 @@ public class FuncionarioModel
 			e.printStackTrace();
 		}
 	}
+	
+	public List<FuncionarioLookUp> list(){
+		FuncionarioLookUp funcionario;
+		Database bd = new Database();
+		Connection conn = null;
+
+		List<FuncionarioLookUp> funcionarios = new ArrayList<FuncionarioLookUp>();
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM FUNCIONARIO_LIST");
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					funcionario = new FuncionarioLookUp();
+					funcionario.setN_funcionario(rs.getInt("n_funcionario"));
+					funcionario.setCpf(rs.getNString("cpf"));
+					funcionario.setNome(rs.getString("nome"));
+					funcionario.setTelefone(rs.getString("telefone"));
+					funcionarios.add(funcionario);
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return funcionarios;
+	} 
 	
 	public FuncionarioBean readBean(FuncionarioBean func) {
 		FuncionarioBean funcionario;
@@ -72,6 +115,7 @@ public class FuncionarioModel
 
 		return null;
 	}
+
 	
 	public void novaSenha(FuncionarioBean funcionario, String senha1, String senha2){
 		Database db = new Database();
