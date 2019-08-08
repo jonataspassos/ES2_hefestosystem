@@ -1,6 +1,7 @@
 package controller;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -15,10 +16,21 @@ public class AutenticationMB {
 	private FuncionarioBean funcionario;
 	private String senha1;
 	private String senha2;
+	
+	@ManagedProperty("#{message}")
+	private MessagesMB messageService;
 
 	public AutenticationMB() {
 		super();
 		this.funcionario = new FuncionarioBean();
+	}
+
+	public MessagesMB getMessageService() {
+		return messageService;
+	}
+
+	public void setMessageService(MessagesMB messageService) {
+		this.messageService = messageService;
 	}
 
 	public void login() {
@@ -34,7 +46,7 @@ public class AutenticationMB {
 					SystemMB.getSystem().redirect("/");
 			}else {
 				//System.out.println("Usuario e/ou senha Incorretos!");
-				(new MessagesMB()).warn("Usuario e/ou senha Incorretos!");
+				messageService.warn("Usuario e/ou senha Incorretos!");
 				//addMessage(, "Usuario e/ou senha Incorretos!");
 			}
 		}
