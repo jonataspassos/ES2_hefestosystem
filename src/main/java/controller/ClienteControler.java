@@ -20,6 +20,8 @@ public class ClienteControler implements Serializable {
 
 	@ManagedProperty("#{clienteModel}")
 	private ClienteModel clienteService;
+	@ManagedProperty("#{message}")
+	private MessagesMB messageService;
 
 	@PostConstruct
 	public void init() {
@@ -49,4 +51,13 @@ public class ClienteControler implements Serializable {
 	public void setFilteredClientes(List<ClienteLookUpList> filteredClientes) {
 		this.filteredClientes = filteredClientes;
 	}
+
+	public MessagesMB getMessageService() {
+		return messageService;
+	}
+
+	public void setMessageService(MessagesMB messageService) {
+		this.messageService = messageService;
+	}
+	
 }

@@ -7,6 +7,7 @@ import bean.MaquinaBean;
 public class MaquinaLookUp extends MaquinaBean{
 	private Date data_ult_revisao;
 	private float horimetro;
+	private String status;
 
 	public float getHorimetro() {
 		return horimetro;

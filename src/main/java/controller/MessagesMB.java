@@ -12,7 +12,7 @@ import javax.faces.bean.ManagedBean;
 public class MessagesMB {
      
     public void info(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", message));
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
     }
      
     public void warn(String message) {
