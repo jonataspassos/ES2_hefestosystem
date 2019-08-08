@@ -39,15 +39,15 @@
 				</f:facet>
 
 				<p:column headerText="Data de Saída" filterBy="#{alu.data_ini}"
-					sortBy="#{alu.data_ini}">
+					sortBy="#{alu.data_ini}" filterMatchMode="gte">
 					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy">
+						<p:calendar pattern="dd/MM/yyyy" >
 							<p:ajax event="dateSelect"
 								oncomplete="PF('alugueisTable').filter()" />
 						</p:calendar>
 					</f:facet>
-					<p:datePicker id="popup" value="#{alu.data_ini}"
-						readonly="#{facesContext.renderResponse}" />
+					<p:datePicker pattern="dd/MM/yyyy" id="popup"
+						value="#{alu.data_ini}" readonly="#{facesContext.renderResponse}" />
 				</p:column>
 				<p:column headerText="Data de Retorno"
 					filterBy="#{alu.data_entregue}" sortBy="#{alu.data_entregue}"
@@ -94,6 +94,18 @@
 				<p:column headerText="Ações" style="width:40px;text-align:center">
 					<h:outputText value="#{cli.n_alugueis}" />
 				</p:column>
+<!-- 				<p:column> -->
+<!-- 					<p:commandButton update="tableStateDT" -->
+<!-- 						onComplete="PF('alugueisTable').clearFilters()" -->
+<!-- 						value="Limpar Filtros" /> -->
+<!-- 				</p:column> -->
+
+				<!-- 				<h:column> -->
+				<!-- 					<p:commandButton update="tableStateDT" -->
+				<!-- 						onComplete="PF('alugueisTable').clearFilters()" -->
+				<!-- 						value="Limpar Filtros" /> -->
+				<!-- 				</h:column> -->
+
 			</p:dataTable>
 		</h:form>
 	</ui:define>

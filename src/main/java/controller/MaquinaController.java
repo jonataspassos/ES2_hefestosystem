@@ -17,12 +17,13 @@ import bean.MaquinaBean;
 import model.MaquinaModel;
 import lookUp.MaquinaLookUp;
 
-@ManagedBean(name="maquina")
+@ManagedBean(name = "maquina")
 @ViewScoped
-@RequestScoped
 public class MaquinaController {
 	@ManagedProperty("#{maquinaModel}")
 	private MaquinaModel maqm;
+	@ManagedProperty("#{message}")
+	private MessagesMB messagesService;
 	private MaquinaBean maquina;
 	private ArrayList<MaquinaLookUp> maquinas;
 	private Integer maquina_id_param;
@@ -33,6 +34,14 @@ public class MaquinaController {
 //		maqm = new MaquinaModel();
 		maquina = new MaquinaBean();
 		maquinas = maqm.list();
+	}
+
+	public MessagesMB getMessagesService() {
+		return messagesService;
+	}
+
+	public void setMessagesService(MessagesMB messagesService) {
+		this.messagesService = messagesService;
 	}
 
 	public MaquinaModel getMaqm() {
@@ -58,31 +67,31 @@ public class MaquinaController {
 	public void setMaquinas(ArrayList<MaquinaLookUp> maquinas) {
 		this.maquinas = maquinas;
 	}
-	
+
 	public String getMaquina_id_param() {
 		FacesContext context = FacesContext.getCurrentInstance();
-        Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
-        String maquina_id = paramMap.get("maquina_id");
-        
+		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+		String maquina_id = paramMap.get("maquina_id");
+
 		return maquina_id;
 	}
 
-	public void setMaquina_id_param(Integer maquina_id) {      
-        this.maquina_id_param = maquina_id;
+	public void setMaquina_id_param(Integer maquina_id) {
+		this.maquina_id_param = maquina_id;
 	}
-	
-	public ArrayList<AluguelBean> getAlugueis(){
+
+	public ArrayList<AluguelBean> getAlugueis() {
 		return maqm.getLastAlugueis(this.getMaquina_id_param());
 	}
-	
+
 	public void createMaquina() throws Exception {
-		if(maqm.create(maquina)) {
-			(new MessagesMB()).info("Máquina cadastrada com sucesso.");
+		if (maqm.create(maquina)) {
+			messagesService.info("Máquina cadastrada com sucesso.");
 			Thread.sleep(5000);
 			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			return;
 		}
-		(new MessagesMB()).error("Error ao tentar cadastrar máquina.");
+		messagesService.error("Error ao tentar cadastrar máquina.");
 	}
-	
+
 }
