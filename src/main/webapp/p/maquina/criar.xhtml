@@ -10,43 +10,37 @@
 	<ui:define name="cabecalho">Cadastrar Máquina</ui:define>
 	<ui:define name="corpo">
 		<h:form>
-		
-			<p:growl id="message" autoUpdate="true" closable="true" showDetail="true" sticky="true"/>
-			
+
+			<p:growl id="message" autoUpdate="true" closable="true"
+				showDetail="true" sticky="true" />
+
 			<div class="p-grid">
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputText id="n_registro"
-								value="#{maquina.maquina.n_registro}" /> <p:outputLabel
-								for="@previous" value="Número de Registro" />
-						</span>
+						<h5>Número de Registro</h5>
+						<p:inputText id="n_registro" value="#{maquina.maquina.n_registro}" />
 					</div>
 				</div>
 
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputText id="marca"
-								value="#{maquina.maquina.marca}" /> <p:outputLabel
-								for="@previous" value="Marca" />
-						</span>
+						<h5>Marca</h5>
+						<p:inputText id="marca" value="#{maquina.maquina.marca}" />
 					</div>
 				</div>
 
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputNumber id="potencia"
-								value="#{maquina.maquina.potencia}" /> <p:outputLabel
-								for="@previous" value="Potência" />
-						</span>
+						<h5>Potência</h5>
+						<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}" />
 					</div>
 				</div>
 
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputNumber
-								id="valor_diaria" value="#{maquina.maquina.valor_diaria}" /> <p:outputLabel
-								for="@previous" value="Valor da diária" />
-						</span>
+						<h5>Valor da diária</h5>
+						<p:inputNumber id="valor_diaria"
+							value="#{maquina.maquina.valor_diaria}" />
 					</div>
 				</div>
 			</div>
@@ -54,11 +48,9 @@
 			<div class="p-grid">
 				<div class="p-col">
 					<div class="box">
-						<span class="ui-float-label"> <p:inputText
-								id="tipo_combustivel"
-								value="#{maquina.maquina.tipo_combustivel}" /> <p:outputLabel
-								for="@previous" value="Tipo de combustível" />
-						</span>
+						<h5>Tipo de combustível</h5>
+						<p:inputText id="tipo_combustivel"
+							value="#{maquina.maquina.tipo_combustivel}" />
 					</div>
 				</div>
 			</div>
