@@ -56,7 +56,7 @@ public class MaquinaController {
 	}
 
 	public MaquinaBean getMaquina() {
-		return maquina;
+		return maqm.readBean(getMaquina_id_param());
 	}
 
 	public void setMaquina(MaquinaBean maquina) {
@@ -81,12 +81,12 @@ public class MaquinaController {
 
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
-			messagesService.info("Máquina cadastrada com sucesso.");
+			messagesService.info("MÃ¡quina cadastrada com sucesso.");
 			Thread.sleep(5000);
 			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			return;
 		}
-		messagesService.error("Error ao tentar cadastrar máquina.");
+		messagesService.error("Error ao tentar cadastrar mï¿½quina.");
 	}
 	
 	public List<String>getMarcas(){

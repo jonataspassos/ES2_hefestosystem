@@ -54,7 +54,7 @@ public class MaquinaModel implements Serializable {
 		return false;
 	}
 
-	public MaquinaBean readBean(Integer maquina_id) {
+	public MaquinaBean readBean(String maquina_id) {
 		MaquinaBean maquina;
 		Database db = new Database();
 		Connection conn = null;
@@ -66,7 +66,7 @@ public class MaquinaModel implements Serializable {
 
 				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA WHERE N_MAQUINA = ?");
 
-				st.setInt(1, maquina_id);
+				st.setString(1, maquina_id);
 
 				ResultSet rs = st.executeQuery();
 

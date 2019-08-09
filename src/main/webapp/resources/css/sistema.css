@@ -1,7 +1,19 @@
 @Charset "utf-8";
 
-body {
-	font-family: 'Roboto', sans-serif !important;
+body, html {
+	font-family: "Open Sans", "Helvetica Neue", sans-serif !important;
+	height: 100%;
+	margin: 0;
+}
+
+.login {
+	background-image: url("/hefestosystem/resources/img/image.jpg");
+	/* Full height */
+	height: 100%;
+	/* Center and scale the image nicely */
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
 }
 
 header {
@@ -39,8 +51,9 @@ p {
 }
 
 #center-form {
+	position: fixed;
 	width: 400px;
-	margin-top: 50px;
+	top: 30%;
 }
 
 .centralizar-externa {
@@ -80,47 +93,47 @@ div.ui-datepicker th, div.ui-datepicker td {
 	border-width: 0 !important;
 }
 
+.btn {
+	height: 36px !important;
+	min-width: 64px !important;
+	padding: 0 16px !important;
+	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px
+		rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
+}
+
 .btn-success {
 	background-color: #4caf50 !important;
 	border-color: #4caf50 !important;
-	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px
-		rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-	min-height: 10px;
-	min-width: 10px;
-	padding: 0 16px !important;
 }
 
 .btn-error {
 	background-color: #ff5252 !important;
 	border-color: #ff5252 !important;
-	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px
-		rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-	min-height: 10px;
-	min-width: 10px;
-	padding: 0 16px !important;
 }
 
 .btn-primary {
 	background-color: #1867c0 !important;
 	border-color: #1867c0 !important;
-	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px
-		rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-	min-height: 10px;
-	min-width: 10px;
-	padding: 0 16px !important;
 }
 
 .btn-secondary {
 	background-color: #5cbbf6 !important;
 	border-color: #5cbbf6 !important;
-	box-shadow: 0px 3px 1px -2px rgba(0, 0, 0, 0.2), 0px 2px 2px 0px
-		rgba(0, 0, 0, 0.14), 0px 1px 5px 0px rgba(0, 0, 0, 0.12) !important;
-	min-height: 10px;
-	min-width: 10px;
-	padding: 0 16px !important;
 }
 
-.ui-button-text {
+.btn-warming {
+	background-color: #fb8c00 !important;
+	border-color: #fb8c00 !important;
+}
+
+.btn-normal {
+	background-color: white !important;
+	color: rgba(0, 0, 0, 0.87) !important;
+	border-color: #f5f5f5 !important;
+	box-shadow: none !important;
+}
+
+.btn-text .ui-button-text {
 	font-size: 0.875rem !important;
 	font-weight: 550 !important;
 	letter-spacing: 0.0892857143em !important;
@@ -128,4 +141,15 @@ div.ui-datepicker th, div.ui-datepicker td {
 	text-transform: uppercase !important;
 	user-select: none !important;
 	white-space: nowrap !important;
+	align-items: center;
+	color: inherit;
+	display: flex;
+	flex: 1 0 auto;
+	justify-content: inherit;
+	line-height: normal;
+	position: relative;
+}
+
+th input.ui-inputfield.ui-inputtext {
+	display: none !important;
 }

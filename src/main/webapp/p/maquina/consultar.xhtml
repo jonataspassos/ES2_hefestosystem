@@ -12,14 +12,22 @@
 		<p:spacer></p:spacer>
 		<p:growl id="growl" life="2000" />
 
-		<div class="p-grid p-col-12 p-justify-start">
-			<p:commandButton class="btn-primary" value="Editar" id="btnEdita"
-				action="#{buttonView.buttonAction}" update="growl"
-				icon="fa fa-pencil-square-o" />
+		<div class="p-grid p-justify-start">
 
-			<p:commandButton class="btn-success" value="Salvar" id="btnSalvar"
-				action="#{buttonView.buttonAction}" update="growl" icon="fa fa-save"
-				disabled="true" />
+			<div class="p-col-2">
+				<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+					value="Cancelar" id="cancel" icon="fa fa-times" />
+			</div>
+			<div class="p-col-2">
+				<p:commandButton class="btn btn-primary btn-text" value="Editar"
+					id="btnEdita" action="#{buttonView.buttonAction}" update="growl"
+					icon="fa fa-pencil-square-o" />
+			</div>
+			<div class="p-col-2">
+				<p:commandButton class="btn btn-success btn-text" value="Salvar"
+					id="btnSalvar" action="#{buttonView.buttonAction}" update="growl"
+					icon="fa fa-save" disabled="true" />
+			</div>
 		</div>
 
 		<div class="p-grid">
@@ -71,23 +79,25 @@
 			<div class="p-col-2 p-dir-col">
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn-primary" value="Revisão"
+						<p:commandButton class="btn btn-primary btn-text" value="Revisão"
 							id="btnRevisao" action="#{buttonView.buttonAction}"
 							update="growl" icon="fa fa-gear" />
 					</div>
 				</div>
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn-primary" value="Alugar" id="btnAluga"
-							action="#{buttonView.buttonAction}" update="growl"
-							icon="fa fa-refresh" />
+						<p:linkButton href="http://localhost:8080/hefestosystem/p/aluguel/alugar.xhtml"
+							class="btn btn-primary btn-text" value="Alugar" id="btnAluga"
+							icon="fa fa-refresh">
+							<f:param name="maquina_id" value="#{maquina.getMaquina_id_param()}" />
+						</p:linkButton>
 					</div>
 				</div>
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn-error" value="Excluir" id="btnExcluir"
-							action="#{buttonView.buttonAction}" update="growl"
-							icon="fa fa-trash" />
+						<p:commandButton class="btn btn-error btn-text" value="Excluir"
+							id="btnExcluir" action="#{buttonView.buttonAction}"
+							update="growl" icon="fa fa-trash" />
 					</div>
 				</div>
 			</div>

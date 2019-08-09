@@ -58,9 +58,13 @@
 			<p:spacer></p:spacer>
 
 			<div class="p-grid">
-				<div class="p-col">
-					<p:commandButton class="btn-secondary" value="Salvar" id="withIcon"
-						action="#{maquina.createMaquina}" icon="fa fa-save" />
+				<div class="p-col-2">
+					<p:linkButton outcome="listar" class="btn btn-error btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-secondary btn-text" value="Salvar"
+						id="save" action="#{maquina.createMaquina}" icon="fa fa-save" />
 				</div>
 			</div>
 		</h:form>
