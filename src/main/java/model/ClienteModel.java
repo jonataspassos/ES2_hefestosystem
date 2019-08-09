@@ -17,6 +17,11 @@ import resources.Database;
 @ManagedBean
 @ApplicationScoped
 public class ClienteModel implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 	public void create(ClienteBean cliente) {
 		Database db = new Database();
 		Connection conn = null;
@@ -85,5 +90,68 @@ public class ClienteModel implements Serializable {
 		}
 
 		return clientes;
+	}
+	
+	public List<String> cpfs() {
+		Database bd = new Database();
+		Connection conn = null;
+
+		List<String> clientes = new ArrayList<String>();
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT CPF FROM CLIENTE");
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					clientes.add(rs.getString("cpf"));
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return clientes;
+	}
+	
+	public ClienteLookUpList read(String cpf) {
+		ClienteLookUpList cliente;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE_LIST WHERE CPF = ?");
+				
+				st.setString(1, cpf);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					cliente = new ClienteLookUpList();
+					cliente.setN_cliente(rs.getInt("n_cliente"));
+					cliente.setCpf(rs.getNString("cpf"));
+					cliente.setNome(rs.getString("nome"));
+					cliente.setTelefone(rs.getString("telefone"));
+					cliente.setN_alugueis(rs.getInt("n_alugueis"));
+					return cliente;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 }

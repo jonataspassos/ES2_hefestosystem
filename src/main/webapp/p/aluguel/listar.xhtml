@@ -9,24 +9,17 @@
 	<ui:define name="titulo">Aluguéis</ui:define>
 	<ui:define name="cabecalho">Listagem de Aluguéis</ui:define>
 	<ui:define name="corpo">
-		<style type="text/css">
-.ui-filter-column .ui-column-customfilter .custom-filter {
-	width: 100%;
-	box-sizing: border-box;
-}
-
-.year-spinner input {
-	width: 100%;
-	box-sizing: border-box;
-}
-</style>
+	<div class="listar-acoes">
+				<p:linkButton outcome="alugar" value="Alugar Máquina"
+					icon="fa fa-plus" />
+			</div>
+		
 		<h:form id="form">
 			<p:dataTable id="tableStateDT" var="alu"
 				value="#{aluguelMB.alugueis}" widgetVar="alugueisTable"
 				multiViewState="true" rows="10" paginator="true"
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-				rowsPerPageTemplate="5,10,15" selectionMode="single"
-				selection="#{aluguelMB.selectedAluguel}" rowKey="#{alu.n_aluguel}"
+				rowsPerPageTemplate="5,10,15" rowKey="#{alu.n_aluguel}"
 				emptyMessage="Nenhum Aluguel encontrado com esses critérios"
 				filteredValue="#{aluguelMB.filteredAlugueis}" sortMode="multiple">
 				<f:facet name="header">

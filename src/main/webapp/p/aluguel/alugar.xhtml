@@ -9,7 +9,86 @@
 	<ui:define name="titulo">Alugar Máquina</ui:define>
 	<ui:define name="cabecalho">Alugar Máquina</ui:define>
 	<ui:define name="corpo">
-		
+
+		<p:steps id="steps" styleClass="p-grid"
+			activeIndex="#{aluguelMB.step}">
+			<p:autoUpdate />
+			<p:menuitem value="Dados Cadastrais" styleClass="p-col" />
+			<p:menuitem value="Especificação do Aluguel" styleClass="p-col" />
+			<p:menuitem value="Confirmação e Pagamento" styleClass="p-col" />
+		</p:steps>
+		<h:form>
+			<p:autoUpdate />
+			<div style="display: #{aluguelMB.getForms(0)}"
+			>
+				<h1>Dados Cadastrais</h1>
+				<h3>Cliente</h3>
+				<p:panelGrid columns="2"
+					id="dadosCLiente">
+					<p:outputLabel value="Informe o CPF: " />
+					<p:inputText value="#{aluguelMB.clienteSel.cpf}"
+						onchange="#{aluguelMB.searchCliente()}" update="dadosCLiente" />
+					<p:outputLabel value="CPF: " />
+					<p:outputLabel value="#{aluguelMB.clienteSel.cpf}" />
+					<p:outputLabel value="Nome: " />
+					<p:outputLabel value="#{aluguelMB.clienteSel.nome	}" />
+					<p:outputLabel value="Telefone: " />
+					<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
+				</p:panelGrid>
+<!-- 									<p:commandButton value="Cadastrar Cliente" /> -->
+				<h3>Empresa</h3>
+				<p:selectBooleanCheckbox value="#{aluguelMB.empresa}"
+					itemLabel="Representa Empresa" update="dadosEmpresa"/>
+				<p:panelGrid columns="2"
+					id="dadosEmpresa" style="display:#{aluguelMB.showEmpresa()}">
+					<p:outputLabel value="Informe o CNPJ: " />
+					<p:inputText value="#{aluguelMB.empresaSel.cnpj}"
+						onchange="#{aluguelMB.searchEmpresa()}" update="dadosEmpresa" />
+					<p:outputLabel value="CPF: " />
+					<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
+					<p:outputLabel value="Nome: " />
+					<p:outputLabel value="#{aluguelMB.empresaSel.raz_social	}" />
+					<p:outputLabel value="Telefone: " />
+					<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
+				</p:panelGrid>
+
+			</div>
+			<div style="display: #{aluguelMB.getForms(1)}"
+			>
+				<h1>Especificação do Aluguel</h1>
+				<p>alskejfnalskdjfnalskdjf alskdjfnlaskjdfnlaskjdfnla
+					alsdkfjnalsdkjfanlsdfjknlkj lasdkjfna lskjdfnlaskjdfnlaksdj
+					flaksjdnf laksjdfnlaskd jfnlaskdj flnasdkjfnlasdkjf nlasdkjfn
+					lasdkjfna lsdkjfn alsdkjfna lsdkjfn alsdkjfn alsdkjfn alsdkjfn
+					alsdkjfn alskjnf laskjdfn laskjdfnlaskjdfn alskjdfnalskdf jnlaksjdf
+					nlasd</p>
+			</div>
+			<div style="display: #{aluguelMB.getForms(2)}"
+			>
+				<h1>Confirmação e Pagamento</h1>
+				<p>alskejfnalskdjfnalskdjf alskdjfnlaskjdfnlaskjdfnla
+					alsdkfjnalsdkjfanlsdfjknlkj lasdkjfna lskjdfnlaskjdfnlaksdj
+					flaksjdnf laksjdfnlaskd jfnlaskdj flnasdkjfnlasdkjf nlasdkjfn
+					lasdkjfna lsdkjfn alsdkjfna lsdkjfn alsdkjfn alsdkjfn alsdkjfn
+					alsdkjfn alskjnf laskjdfn laskjdfnlaskjdfn alskjdfnalskdf jnlaksjdf
+					nlasd</p>
+			</div>
+
+			<div class="p-grid p-justify-between">
+				<div class="p-col-2">
+					<p:commandButton value="Cancelar"
+						 />
+				</div>
+				<div class="p-col-4">
+					<p:commandButton value="anterior"
+						actionListener="#{aluguelMB.backStep()}" />
+					<p:commandButton value="próximo"
+						actionListener="#{aluguelMB.nextStep()}" />
+				</div>
+			</div>
+
+
+		</h:form>
 	</ui:define>
 
-</ui:composition>s
+</ui:composition>
