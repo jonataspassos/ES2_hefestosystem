@@ -11,6 +11,9 @@ import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+import org.primefaces.context.PrimeApplicationContext;
+
 import controller.MessagesMB;
 import bean.AluguelBean;
 import bean.MaquinaBean;
@@ -25,17 +28,18 @@ public class MaquinaController {
 	private MaquinaModel maqm;
 	@ManagedProperty("#{message}")
 	private MessagesMB messagesService;
-	private MaquinaBean maquina;
+	private MaquinaLookUp maquina;
 	private List<MaquinaLookUp> maquinas;
 	private Integer maquina_id_param;
 	private ArrayList<AluguelBean> alugueis;
 	private MaquinaLookUp selectedMaquina;
-	private List<MaquinaLookUp>filteredMaquinas;
+	private List<MaquinaLookUp> filteredMaquinas;
+	private Boolean maquinaEdicao = false;
 
 	@PostConstruct
 	public void init() {
 //		maqm = new MaquinaModel();
-		maquina = new MaquinaBean();
+		maquina = null;
 		maquinas = maqm.list();
 	}
 
@@ -55,11 +59,13 @@ public class MaquinaController {
 		this.maqm = maqm;
 	}
 
-	public MaquinaBean getMaquina() {
-		return maqm.readBean(getMaquina_id_param());
+	public MaquinaLookUp getMaquina() {
+		if (maquina == null)
+			maquina = maqm.read(getMaquina_id_param());
+		return maquina;
 	}
 
-	public void setMaquina(MaquinaBean maquina) {
+	public void setMaquina(MaquinaLookUp maquina) {
 		this.maquina = maquina;
 	}
 
@@ -79,6 +85,14 @@ public class MaquinaController {
 		return maqm.getLastAlugueis(this.getMaquina_id_param());
 	}
 
+	public Boolean getMaquinaEdicao() {
+		return maquinaEdicao;
+	}
+
+	public void setMaquinaEdicao(Boolean maquinaEdicao) {
+		this.maquinaEdicao = maquinaEdicao;
+	}
+
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
 			messagesService.info("Máquina cadastrada com sucesso.");
@@ -88,12 +102,12 @@ public class MaquinaController {
 		}
 		messagesService.error("Error ao tentar cadastrar m�quina.");
 	}
-	
-	public List<String>getMarcas(){
+
+	public List<String> getMarcas() {
 		return maqm.marcas();
 	}
-	
-	public List<String>getTipo_combust(){
+
+	public List<String> getTipo_combust() {
 		return maqm.tipo_combust();
 	}
 
@@ -116,7 +130,17 @@ public class MaquinaController {
 	public List<MaquinaLookUp> getMaquinas() {
 		return maquinas;
 	}
-	
-	
+
+	public void openDialog(Integer option) {
+		switch (option) {
+		case 1:
+			System.out.println("entrou aqui 1");
+//			PrimeFaces.current().executeScript("PF('dlgTirarRevisao').show()");
+			break;
+		case 2:
+			System.out.println("entrou aqui 2");
+//			PrimeFaces.current().executeScript("PF('dlgPorRevisao').show()");
+		}
+	}
 
 }

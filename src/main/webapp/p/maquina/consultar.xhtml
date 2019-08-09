@@ -11,97 +11,131 @@
 	<ui:define name="corpo">
 		<p:spacer></p:spacer>
 		<p:growl id="growl" life="2000" />
-
-		<div class="p-grid p-justify-start">
-
-			<div class="p-col-2">
-				<p:linkButton outcome="listar" class="btn btn-warning btn-text"
-					value="Cancelar" id="cancel" icon="fa fa-times" />
+		<h:form>
+			<div class="p-grid p-justify-start">
+				<p:autoUpdate />
+				<div class="p-col-2">
+					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-primary btn-text" value="Editar"
+						id="btnEdita" action="#{maquina.setMaquinaEdicao(true)}"
+						update="growl" icon="fa fa-pencil-square-o"
+						disabled="#{maquina.maquinaEdicao}" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-success btn-text" value="Salvar"
+						id="btnSalvar" action="#{buttonView.buttonAction}" update="growl"
+						icon="fa fa-save" disabled="#{!maquina.maquinaEdicao}" />
+				</div>
 			</div>
-			<div class="p-col-2">
-				<p:commandButton class="btn btn-primary btn-text" value="Editar"
-					id="btnEdita" action="#{buttonView.buttonAction}" update="growl"
-					icon="fa fa-pencil-square-o" />
-			</div>
-			<div class="p-col-2">
-				<p:commandButton class="btn btn-success btn-text" value="Salvar"
-					id="btnSalvar" action="#{buttonView.buttonAction}" update="growl"
-					icon="fa fa-save" disabled="true" />
-			</div>
-		</div>
 
-		<div class="p-grid">
-			<div class="p-col-10">
-				<div class="p-grid">
-					<div class="p-col">
-						<div class="box">
-							<h5>Número de Registro</h5>
-							<p:inputText id="n_registro"
-								value="#{maquina.maquina.n_registro}" disabled="true" />
+			<div class="p-grid">
+				<div class="p-col-10">
+					<div class="p-grid">
+						<div class="p-col">
+							<div class="box">
+								<h5>Número de Registro</h5>
+								<p:inputText id="n_registro"
+									value="#{maquina.maquina.n_registro}"
+									disabled="#{!maquina.maquinaEdicao}" />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h5>Marca</h5>
+								<p:inputText id="marca" value="#{maquina.maquina.marca}"
+									disabled="#{!maquina.maquinaEdicao}" />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h5>Potência</h5>
+								<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}"
+									disabled="#{!maquina.maquinaEdicao}" />
+							</div>
+						</div>
+
+						<div class="p-col">
+							<div class="box">
+								<h5>Valor da diária</h5>
+								<p:inputNumber id="valor_diaria"
+									value="#{maquina.maquina.valor_diaria}"
+									disabled="#{!maquina.maquinaEdicao}" />
+							</div>
 						</div>
 					</div>
 
-					<div class="p-col">
-						<div class="box">
-							<h5>Marca</h5>
-							<p:inputText id="marca" value="#{maquina.maquina.marca}"
-								disabled="true" />
+					<div class="p-grid">
+						<div class="p-col">
+							<div class="box">
+								<h5>Tipo de combustível</h5>
+								<p:inputText id="tipo_combustivel"
+									value="#{maquina.maquina.tipo_combustivel}"
+									disabled="#{!maquina.maquinaEdicao}" />
+							</div>
 						</div>
-					</div>
-
-					<div class="p-col">
-						<div class="box">
-							<h5>Potência</h5>
-							<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}"
-								disabled="true" />
+						<div class="p-col">
+							<div class="box">
+								<h5>Horímetro</h5>
+								<p:inputText id="horimetro" value="#{maquina.maquina.horimetro}"
+									readonly="true" disabled="true" />
+							</div>
 						</div>
-					</div>
-
-					<div class="p-col">
-						<div class="box">
-							<h5>Valor da diária</h5>
-							<p:inputNumber id="valor_diaria"
-								value="#{maquina.maquina.valor_diaria}" disabled="true" />
+						<div class="p-col">
+							<div class="box">
+								<h5>Status</h5>
+								<p:inputText id="status"
+									value="#{maquina.maquina.status == '2' ? 'Revisao': (maquina.maquina.status == '1'? 'Alugada': 'Disponível')}"
+									readonly="true" disabled="true" />
+							</div>
 						</div>
 					</div>
 				</div>
-
-				<div class="p-grid">
+				<div class="p-col-2 p-dir-col">
 					<div class="p-col">
-						<div class="box">
-							<h5>Tipo de combustível</h5>
-							<p:inputText id="tipo_combustivel"
-								value="#{maquina.maquina.tipo_combustivel}" disabled="true" />
+						<div class="p-grid p-justify-end">
+							<p:commandButton class="btn btn-primary btn-text"
+								value="#{maquina.maquina.status == '2' ? 'Retirar da Revisão' : 'Por em Revisão'}"
+								id="btnRevisao" update="growl" icon="fa fa-gear"
+								disabled="#{maquina.maquina.status == '1'}"
+								onclick="#{maquina.maquina.status == '2' ? maquina.openDialog(2) : maquina.openDialog(1)}" />
+						</div>
+
+						<p:dialog header="Por em Revisão" widgetVar="dlgPorRevisao"
+							modal="true" height="100" style="display: none;">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
+
+						<p:dialog header="Retirar da Revisão" widgetVar="dlgTirarRevisao"
+							modal="true" height="100" style="display: none;">
+							<h:outputText value="This is a Modal Dialog." />
+						</p:dialog>
+
+					</div>
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:linkButton href="#{system.path()}/p/aluguel/alugar.xhtml"
+								class="btn btn-primary btn-text" value="Alugar" id="btnAluga"
+								icon="fa fa-refresh">
+								<f:param name="maquina_id"
+									value="#{maquina.getMaquina_id_param()}" />
+							</p:linkButton>
+						</div>
+					</div>
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:commandButton class="btn btn-error btn-text" value="Excluir"
+								id="btnExcluir" action="#{buttonView.buttonAction}"
+								update="growl" icon="fa fa-trash" />
 						</div>
 					</div>
 				</div>
 			</div>
-			<div class="p-col-2 p-dir-col">
-				<div class="p-col">
-					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn btn-primary btn-text" value="Revisão"
-							id="btnRevisao" action="#{buttonView.buttonAction}"
-							update="growl" icon="fa fa-gear" />
-					</div>
-				</div>
-				<div class="p-col">
-					<div class="p-grid p-justify-end">
-						<p:linkButton href="http://localhost:8080/hefestosystem/p/aluguel/alugar.xhtml"
-							class="btn btn-primary btn-text" value="Alugar" id="btnAluga"
-							icon="fa fa-refresh">
-							<f:param name="maquina_id" value="#{maquina.getMaquina_id_param()}" />
-						</p:linkButton>
-					</div>
-				</div>
-				<div class="p-col">
-					<div class="p-grid p-justify-end">
-						<p:commandButton class="btn btn-error btn-text" value="Excluir"
-							id="btnExcluir" action="#{buttonView.buttonAction}"
-							update="growl" icon="fa fa-trash" />
-					</div>
-				</div>
-			</div>
-		</div>
+		</h:form>
 
 		<div class="p-grid">
 			<div class="p-col-10">
@@ -113,7 +147,6 @@
 								<strong>Hora de Saída:</strong> #{aluguel.hori_saida}, 
 								<strong>Hora de Retorno:</strong> #{aluguel.hori_retorno}
 							</p:dataList>
-							<!-- 							<h:outputText value="#{maquina.maquina_id_param}" /> -->
 						</h:panelGrid>
 					</p:tab>
 					<p:tab title="Últimas Revisões"></p:tab>

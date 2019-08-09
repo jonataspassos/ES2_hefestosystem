@@ -54,8 +54,8 @@ public class MaquinaModel implements Serializable {
 		return false;
 	}
 
-	public MaquinaBean readBean(String maquina_id) {
-		MaquinaBean maquina;
+	public MaquinaLookUp read(String maquina_id) {
+		MaquinaLookUp maquina;
 		Database db = new Database();
 		Connection conn = null;
 
@@ -64,14 +64,14 @@ public class MaquinaModel implements Serializable {
 			conn = db.getConnection();
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA WHERE N_MAQUINA = ?");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA_LIST WHERE N_MAQUINA = ?");
 
 				st.setString(1, maquina_id);
 
 				ResultSet rs = st.executeQuery();
 
 				if (rs.next()) {
-					maquina = new MaquinaBean();
+					maquina = new MaquinaLookUp();
 
 					maquina.setN_maquina(rs.getInt("n_maquina"));
 					maquina.setN_registro(rs.getInt("n_registro"));
@@ -79,6 +79,8 @@ public class MaquinaModel implements Serializable {
 					maquina.setPotencia(rs.getFloat("potencia"));
 					maquina.setValor_diaria(rs.getFloat("val_diaria"));
 					maquina.setTipo_combustivel(rs.getString("tipo_combust"));
+					maquina.setHorimetro(rs.getInt("horimetro"));
+					maquina.setStatus(rs.getString("status"));
 
 					return maquina;
 				}
