@@ -1,6 +1,8 @@
 package lookUp;
 
-public class ClienteLookUpList {
+import java.io.Serializable;
+
+public class ClienteLookUpList implements Serializable{
 	private int n_cliente;
 	private String cpf;
 	private String nome;
@@ -36,6 +38,4 @@ public class ClienteLookUpList {
 	public void setN_alugueis(int n_alugueis) {
 		this.n_alugueis = n_alugueis;
 	}
-	
-	
 }
