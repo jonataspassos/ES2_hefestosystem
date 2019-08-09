@@ -24,11 +24,6 @@ public class MaquinaLookUp extends MaquinaBean{
 	public void setData_ult_revisao(Date data_ult_revisao) {
 		this.data_ult_revisao = data_ult_revisao;
 	}
-	
-	@Override
-	public String toString() {
-		return "";
-	}
 
 	public String getStatus() {
 		return status;
@@ -36,5 +31,11 @@ public class MaquinaLookUp extends MaquinaBean{
 
 	public void setStatus(String status) {
 		this.status = status;
-	}	
+	}
+
+	@Override
+	public String toString() {
+		return "" + getN_registro() + " - " + getMarca() + " - "
+				+ getPotencia() + "kVa";
+	}
 }
