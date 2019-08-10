@@ -26,7 +26,7 @@
 				</div>
 				<div class="p-col-2">
 					<p:commandButton class="btn btn-success btn-text" value="Salvar"
-						id="btnSalvar" action="#{buttonView.buttonAction}" update="growl"
+						id="btnSalvar" action="#{maquina.salvarMaquina()}" update="growl"
 						icon="fa fa-save" disabled="#{!maquina.maquinaEdicao}" />
 				</div>
 			</div>
@@ -75,7 +75,10 @@
 								<h5>Tipo de combustível</h5>
 								<p:inputText id="tipo_combustivel"
 									value="#{maquina.maquina.tipo_combustivel}"
-									disabled="#{!maquina.maquinaEdicao}" />
+									disabled="#{!maquina.maquinaEdicao}" >
+									 <p:keyFilter regEx="/^\w{5,10}$/"/> 
+									</p:inputText>
+
 							</div>
 						</div>
 						<div class="p-col">
@@ -99,20 +102,49 @@
 					<div class="p-col">
 						<div class="p-grid p-justify-end">
 							<p:commandButton class="btn btn-primary btn-text"
-								value="#{maquina.maquina.status == '2' ? 'Retirar da Revisão' : 'Por em Revisão'}"
+								value="#{maquina.maquina.status == '2' ? 'Ret. da Revisão' : 'Por em Revisão'}"
 								id="btnRevisao" update="growl" icon="fa fa-gear"
 								disabled="#{maquina.maquina.status == '1'}"
-								onclick="#{maquina.maquina.status == '2' ? maquina.openDialog(2) : maquina.openDialog(1)}" />
+								action="#{maquina.openDialog(maquina.maquina.status)}" />
 						</div>
 
 						<p:dialog header="Por em Revisão" widgetVar="dlgPorRevisao"
-							modal="true" height="100" style="display: none;">
-							<h:outputText value="This is a Modal Dialog." />
+							modal="true" height="300" width="40%">
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Motivo:</h4>
+									<p:inputTextarea rows="4" cols="50"
+										value="#{maquina.revisao.motivo}" />
+								</div>
+							</div>
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Horímetro:</h4>
+									<p:inputNumber minValue="0"
+										value="#{maquina.revisao.horimetro}" />
+								</div>
+							</div>
+							<br></br>
+							<p:commandButton class="btn btn-primary btn-text"
+								value="Confirmar" id="btnConfirmarRev"
+								action="#{maquina.putRevisao}" />
+
 						</p:dialog>
 
 						<p:dialog header="Retirar da Revisão" widgetVar="dlgTirarRevisao"
-							modal="true" height="100" style="display: none;">
-							<h:outputText value="This is a Modal Dialog." />
+							modal="true" height="300" width="40%">
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Horímetro de Retorno:</h4>
+									<p:inputNumber minValue="0"
+										value="#{maquina.revisao.hori_retorno}" />
+								</div>
+							</div>
+							<br></br>
+							<p:commandButton class="btn btn-primary btn-text"
+								value="Confirmar" id="btnConfirmarCancelRev"
+								action="#{maquina.cancelRevisao}" />
+
 						</p:dialog>
 
 					</div>
@@ -120,7 +152,7 @@
 						<div class="p-grid p-justify-end">
 							<p:linkButton href="#{system.path()}/p/aluguel/alugar.xhtml"
 								class="btn btn-primary btn-text" value="Alugar" id="btnAluga"
-								icon="fa fa-refresh">
+								icon="fa fa-refresh" disabled="#{maquina.maquina.status != '0'}">
 								<f:param name="maquina_id"
 									value="#{maquina.getMaquina_id_param()}" />
 							</p:linkButton>
@@ -129,8 +161,9 @@
 					<div class="p-col">
 						<div class="p-grid p-justify-end">
 							<p:commandButton class="btn btn-error btn-text" value="Excluir"
-								id="btnExcluir" action="#{buttonView.buttonAction}"
-								update="growl" icon="fa fa-trash" />
+								disabled="#{maquina.maquina.status != '0'}" id="btnExcluir"
+								action="#{buttonView.buttonAction}" update="growl"
+								icon="fa fa-trash" />
 						</div>
 					</div>
 				</div>
@@ -144,12 +177,23 @@
 						<h:panelGrid>
 							<p:dataList value="#{maquina.alugueis}" var="aluguel">
 								<strong>Início:</strong> #{aluguel.data_ini}, <strong>Fim:</strong> #{aluguel.data_final}, 
-								<strong>Hora de Saída:</strong> #{aluguel.hori_saida}, 
-								<strong>Hora de Retorno:</strong> #{aluguel.hori_retorno}
+								<strong>Horímetro de Saída:</strong> #{aluguel.hori_saida}, 
+								<strong>Horímetro de Retorno:</strong> #{aluguel.hori_retorno}
 							</p:dataList>
 						</h:panelGrid>
 					</p:tab>
-					<p:tab title="Últimas Revisões"></p:tab>
+					<p:tab title="Últimas Revisões">
+						<h:panelGrid>
+							<p:dataList value="#{maquina.revisoes}" var="revisao">
+								<strong>Data:</strong> #{revisao.data.toString()},  
+								<strong>Data de Retorno:</strong> #{revisao.data_retorno.toString()},
+								<strong>Horímetro:</strong> #{revisao.horimetro}, 
+								<strong>Horímetro de Retorno:</strong> #{revisao.hori_retorno}
+								<br></br>
+								#{revisao.motivo}
+							</p:dataList>
+						</h:panelGrid>
+					</p:tab>
 				</p:accordionPanel>
 			</div>
 		</div>
