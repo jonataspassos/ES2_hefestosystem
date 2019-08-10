@@ -9,7 +9,6 @@
 	<ui:define name="titulo">Alugar Máquina</ui:define>
 	<ui:define name="cabecalho">Alugar Máquina</ui:define>
 	<ui:define name="corpo">
-
 		<p:steps id="steps" styleClass="p-grid"
 			activeIndex="#{aluguelMB.step}">
 			<p:autoUpdate />
@@ -19,52 +18,82 @@
 		</p:steps>
 		<h:form>
 			<p:autoUpdate />
-			<div style="display: #{aluguelMB.getForms(0)}"
-			>
+			<div style="display: #{aluguelMB.getForms(0)}">
 				<h1>Dados Cadastrais</h1>
-				<h3>Cliente</h3>
-				<p:panelGrid columns="2"
-					id="dadosCLiente">
-					<p:outputLabel value="Informe o CPF: " />
-					<p:inputText value="#{aluguelMB.clienteSel.cpf}"
-						onchange="#{aluguelMB.searchCliente()}" update="dadosCLiente" />
-					<p:outputLabel value="CPF: " />
-					<p:outputLabel value="#{aluguelMB.clienteSel.cpf}" />
-					<p:outputLabel value="Nome: " />
-					<p:outputLabel value="#{aluguelMB.clienteSel.nome	}" />
-					<p:outputLabel value="Telefone: " />
-					<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
-				</p:panelGrid>
-<!-- 									<p:commandButton value="Cadastrar Cliente" /> -->
-				<h3>Empresa</h3>
-				<p:selectBooleanCheckbox value="#{aluguelMB.empresa}"
-					itemLabel="Representa Empresa" update="dadosEmpresa"/>
-				<p:panelGrid columns="2"
-					id="dadosEmpresa" style="display:#{aluguelMB.showEmpresa()}">
-					<p:outputLabel value="Informe o CNPJ: " />
-					<p:inputText value="#{aluguelMB.empresaSel.cnpj}"
-						onchange="#{aluguelMB.searchEmpresa()}" update="dadosEmpresa" />
-					<p:outputLabel value="CPF: " />
-					<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
-					<p:outputLabel value="Nome: " />
-					<p:outputLabel value="#{aluguelMB.empresaSel.raz_social	}" />
-					<p:outputLabel value="Telefone: " />
-					<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
-				</p:panelGrid>
+				<div class="p-grid p-justify-between">
+					<div class="p-col-6">
+						<!-- Cliente Form -->
+						<h3>Cliente</h3>
+						<p:panelGrid columns="2" id="dadosCLiente">
+							<p:outputLabel value="Informe o CPF*: " />
+							<p:inputText value="#{aluguelMB.clienteSel.cpf}" required="true"
+								onchange="#{aluguelMB.searchCliente()}" update="dadosCLiente" />
 
+							<p:outputLabel value="CPF: " />
+							<p:outputLabel value="#{aluguelMB.clienteSel.cpf}" />
+							<p:outputLabel value="Nome: " />
+							<p:outputLabel value="#{aluguelMB.clienteSel.nome	}" />
+							<p:outputLabel value="Telefone: " />
+							<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
+						</p:panelGrid>
+						<p:linkButton style="display:#{aluguelMB.showPlusCliente()}"
+							href="#{system.path()}/p/cliente/listar.xhtml"
+							class="btn btn-primary btn-text" value="Cadastrar Cliente"
+							id="btnCliente" icon="fa fa-plus">
+							<f:param name="cpf" value="#{aluguelMB.clienteSel.cpf}" />
+						</p:linkButton>
+					</div>
+					<!-- Cliente Form -->
+					<div class="p-col-6">
+						<!-- Empresa Form -->
+						<h3>Empresa</h3>
+						<p:selectBooleanCheckbox value="#{aluguelMB.empresa}"
+							itemLabel="Representa Empresa">
+							<p:ajax update="dadosEmpresa" />
+						</p:selectBooleanCheckbox>
+						<p:panelGrid columns="2" id="dadosEmpresa"
+							style="display:#{aluguelMB.showEmpresa()}">
+							<p:outputLabel value="Informe o CNPJ: " />
+							<p:inputText value="#{aluguelMB.empresaSel.cnpj}"
+								onchange="#{aluguelMB.searchEmpresa()}" update="dadosEmpresa" />
+							<p:outputLabel value="CPF: " />
+							<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
+							<p:outputLabel value="Nome: " />
+							<p:outputLabel value="#{aluguelMB.empresaSel.raz_social	}" />
+							<p:outputLabel value="Telefone: " />
+							<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
+						</p:panelGrid>
+						<p:linkButton style="display:#{aluguelMB.showPlusEmpresa()}"
+							href="#{system.path()}/p/empresa/listar.xhtml"
+							class="btn btn-primary btn-text" value="Cadastrar Empresa"
+							id="btnEmpresa" icon="fa fa-plus">
+							<f:param name="cnpj" value="#{aluguelMB.empresaSel.cnpj}" />
+						</p:linkButton>
+					</div>
+					<!-- Empresa Form -->
+				</div>
+				<!-- Forms -->
 			</div>
-			<div style="display: #{aluguelMB.getForms(1)}"
-			>
+			<!-- Dados Cadastrais -->
+			<div style="display: #{aluguelMB.getForms(1)}">
 				<h1>Especificação do Aluguel</h1>
-				<p>alskejfnalskdjfnalskdjf alskdjfnlaskjdfnlaskjdfnla
-					alsdkfjnalsdkjfanlsdfjknlkj lasdkjfna lskjdfnlaskjdfnlaksdj
-					flaksjdnf laksjdfnlaskd jfnlaskdj flnasdkjfnlasdkjf nlasdkjfn
-					lasdkjfna lsdkjfn alsdkjfna lsdkjfn alsdkjfn alsdkjfn alsdkjfn
-					alsdkjfn alskjnf laskjdfn laskjdfnlaskjdfn alskjdfnalskdf jnlaksjdf
-					nlasd</p>
+				<p:panelGrid id="dadosAluguel">
+					<p:outputLabel for="range" value="Período do aluguel: " />
+        			<p:datePicker id="range" pattern="dd/MM/yyyy" selectionMode="range" value="#{aluguelMB.period}" readonlyInput="true" >
+        				<p:ajax update="dadosAluguel"/>
+        			</p:datePicker>
+        			
+        			<p:outputLabel for="maq" value="Máquina: " />
+            		<p:selectOneMenu id="maq" value="#{aluguelMB.maquinaSel}" style="width:150px">
+                		<f:selectItem itemLabel="Selecione a máquina" itemValue="" noSelectionOption="true"/>
+		                <f:selectItems value="#{aluguelMB.maquinas}" />
+            		</p:selectOneMenu>
+            		
+            		<p:outputLabel value="Horímetro: "/>
+            		<p:inputText value="#{aluguelMB.aluguelSel.hori_saida}"/>
+        		</p:panelGrid>
 			</div>
-			<div style="display: #{aluguelMB.getForms(2)}"
-			>
+			<div style="display: #{aluguelMB.getForms(2)}">
 				<h1>Confirmação e Pagamento</h1>
 				<p>alskejfnalskdjfnalskdjf alskdjfnlaskjdfnlaskjdfnla
 					alsdkfjnalsdkjfanlsdfjknlkj lasdkjfna lskjdfnlaskjdfnlaksdj
@@ -76,8 +105,7 @@
 
 			<div class="p-grid p-justify-between">
 				<div class="p-col-2">
-					<p:commandButton value="Cancelar"
-						 />
+					<p:commandButton value="Cancelar" />
 				</div>
 				<div class="p-col-4">
 					<p:commandButton value="anterior"

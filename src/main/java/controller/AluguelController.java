@@ -2,23 +2,26 @@ package controller;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 import bean.AluguelBean;
-import bean.ClienteBean;
-import bean.EmpresaBean;
-import bean.MaquinaBean;
 import lookUp.AluguelLookUpList;
 import lookUp.ClienteLookUpList;
 import lookUp.EmpresaLookUpList;
+import lookUp.MaquinaLookUp;
 import model.AluguelModel;
 import model.ClienteModel;
 import model.EmpresaModel;
+import model.MaquinaModel;
 
 @ManagedBean(name = "aluguelMB")
 @ViewScoped
@@ -36,11 +39,13 @@ public class AluguelController implements Serializable {
 	
 	private ClienteLookUpList clienteSel;
 	private EmpresaLookUpList empresaSel;
-	private MaquinaBean maquinaSel;
-	
+	private MaquinaLookUp maquinaSel;
+	private List<MaquinaLookUp> maquinas;
 	
 	private int step = 0;
 	private boolean empresa = false;
+	private boolean consultFrom = true;
+	private List<Date>period;
 
 	@ManagedProperty("#{aluguelModel}")
 	private AluguelModel aluguelService;
@@ -50,12 +55,108 @@ public class AluguelController implements Serializable {
 	
 	@ManagedProperty("#{empresaModel}")
 	private EmpresaModel empresaService;
+	
+	@ManagedProperty("#{maquinaModel}")
+	private MaquinaModel maquinaService;
+	
+	@ManagedProperty("#{message}")
+	private MessagesMB messageService;
 
 	@PostConstruct
 	public void init() {
 		
 	}
+	
+	public void nextStep() {
+		if(clienteSel.getNome()!=null) {
+		if(this.step<2)
+			this.step++;
+		}else {
+			
+		}
+		
+	}
+	
+	public void backStep() {
+		if(this.step>0)
+			this.step--;
+		
+	}
+	
+	
+	
+	public void save() {
+		getAluguelSel().setN_funcionario_fk(AutenticationMB.getFuncionarioDaSessao().getN_funcionario());
+		getAluguelSel().setN_cliente_fk(getClienteSel().getN_cliente());
+		getAluguelSel().setN_maquina_fk(getMaquinaSel().getN_maquina());
+		if(empresa) {
+			getAluguelSel().setN_empresa_fk(getEmpresaSel().getN_empresa());
+		}
+	}
+	
+	public void cancel() {
+		
+	}
 
+	public String getForms(int i) {
+		if(i==step)
+			return "inherit";
+		else
+			return "none";
+	}
+	
+	public void searchCliente() {
+		String cpf = this.getClienteSel().getCpf();
+		this.clienteSel = clienteService.read(this.clienteSel.getCpf());
+		if(this.clienteSel != null)
+			this.getAluguelSel().setN_cliente_fk(this.clienteSel.getN_cliente());
+		else {
+			this.getClienteSel().setCpf(cpf);
+			System.out.println("Esse Cliente não Existe!");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente não Existe!"));
+			
+		}
+	}
+
+	public String showEmpresa() {
+		if(empresa)
+			return "inherit";
+		else
+			return "none";
+	}
+	
+	public void searchEmpresa() {
+		String cnpj = this.getEmpresaSel().getCnpj();
+		this.empresaSel = empresaService.read(this.empresaSel.getCnpj());
+		if(this.empresaSel != null)
+			this.getAluguelSel().setN_empresa_fk(this.empresaSel.getN_empresa());
+		else {
+			this.getEmpresaSel().setCnpj(cnpj);
+		}
+	}
+	
+	public String showPlusCliente() {
+		if(clienteSel.getNome()==null)
+			return "inherit";
+		else
+			return "none";
+	}
+	
+	public String showPlusEmpresa() {
+		if(empresaSel.getRaz_social()==null)
+			return "inherit";
+		else
+			return "none";
+	}
+	
+	public String getMaquina_id_param() {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+		String maquina_id = paramMap.get("maquina_id");
+
+		return maquina_id;
+	}
+	
 	public List<AluguelLookUpList> getAlugueis() {
 		if(alugueis == null)
 			alugueis = aluguelService.list();
@@ -99,29 +200,6 @@ public class AluguelController implements Serializable {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
-	public void nextStep() {
-		if(this.step<2)
-			this.step++;
-		
-	}
-	
-	public void backStep() {
-		if(this.step>0)
-			this.step--;
-		
-	}
-	
-	public void cancel() {
-		
-	}
-
-	public String getForms(int i) {
-		if(i==step)
-			return "inherit";
-		else
-			return "none";
-	}
 
 	public boolean isEmpresa() {
 		return empresa;
@@ -151,46 +229,68 @@ public class AluguelController implements Serializable {
 		this.empresaSel = empresaSel;
 	}
 
-	public MaquinaBean getMaquinaSel() {
-		if(maquinaSel == null)
-			maquinaSel = new MaquinaBean();
+	public MaquinaLookUp getMaquinaSel() {
+		if(maquinaSel == null) {
+			maquinaSel = new MaquinaLookUp();
+			if(consultFrom) {
+				String i = getMaquina_id_param();
+				if(i != null) {
+					maquinaSel.setN_maquina(Integer.parseInt(i));
+				}else {
+					consultFrom = false;
+				}
+			}
+		}
 		return maquinaSel;
 	}
 
-	public void setMaquinaSel(MaquinaBean maquinaSel) {
+	public void setMaquinaSel(MaquinaLookUp maquinaSel) {
 		this.maquinaSel = maquinaSel;
 	}
 	public void setClienteService(ClienteModel clienteService) {
 		this.clienteService = clienteService;
-	}
-	
-	public void searchCliente() {
-		this.clienteSel = clienteService.read(this.clienteSel.getCpf());
-		if(this.clienteSel != null)
-			this.getAluguelSel().setN_cliente_fk(this.clienteSel.getN_cliente());
-		else {
-			
-		}
-	}
-
-	public String showEmpresa() {
-		if(empresa)
-			return "inherit";
-		else
-			return "none";
-	}
+	}	
 
 	public void setEmpresaService(EmpresaModel empresaService) {
 		this.empresaService = empresaService;
 	}
-	
-	public void searchEmpresa() {
-		this.empresaSel = empresaService.read(this.empresaSel.getCnpj());
-		if(this.empresaSel != null)
-			this.getAluguelSel().setN_empresa_fk(this.empresaSel.getN_empresa());
-		else {
-			
+
+	public void setMessageService(MessagesMB messageService) {
+		this.messageService = messageService;
+	}
+
+	public MessagesMB getMessageService() {
+		return messageService;
+	}
+
+	public void setMaquinaService(MaquinaModel maquinaService) {
+		this.maquinaService = maquinaService;
+	}
+
+	public List<Date> getPeriod() {
+		if(period == null) {
+			period = new ArrayList<Date>();
 		}
+		if(period.size()>1) {
+			System.out.println(period.get(0));
+			System.out.println(period.get(1));
+		}
+		return period;
+	}
+
+	public void setPeriod(List<Date> period) {
+		this.period = period;
+	}
+
+	public List<MaquinaLookUp> getMaquinas() {
+		if(maquinas == null) {
+			maquinas = maquinaService.list();
+			System.out.println(maquinas);
+		}
+		return maquinas;
 	}
 	
+	
+	
 }
+

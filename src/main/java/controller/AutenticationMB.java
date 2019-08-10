@@ -84,8 +84,6 @@ public class AutenticationMB {
 	}
 	
 	public String testAutentication() {
-		System.out.println(this);
-		System.out.println(SystemMB.getSystem());
 		if(!logado()) {
 			SystemMB.getSystem().redirect("/p/autenticacao/login.xhtml");
 		}

@@ -1,6 +1,8 @@
 package lookUp;
 
-public class EmpresaLookUpList {
+import java.io.Serializable;
+
+public class EmpresaLookUpList implements Serializable{
 	private int n_empresa;
 	private String cnpj;
 	private String raz_social;
