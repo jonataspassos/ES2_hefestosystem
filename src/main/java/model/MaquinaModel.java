@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -135,7 +138,7 @@ public class MaquinaModel implements Serializable {
 		return maquinas;
 	}
 
-	public void update(MaquinaBean maquina) {
+	public void update(MaquinaLookUp maquina) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -144,13 +147,16 @@ public class MaquinaModel implements Serializable {
 
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_UPDATE(?,?,?,?,?)");
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_UPDATE(?, ?,?,?,?,?)");
 
-				st.setString(1, "" + maquina.getN_registro());
-				st.setString(2, maquina.getMarca());
-				st.setString(3, "" + maquina.getPotencia());
-				st.setString(4, "" + maquina.getValor_diaria());
-				st.setString(5, maquina.getTipo_combustivel());
+				NumberFormat df = new DecimalFormat("#0.00");
+				
+				st.setInt(1, maquina.getN_maquina());
+				st.setInt(2, maquina.getN_registro());
+				st.setString(3, maquina.getMarca());
+				st.setFloat(4, Float.parseFloat(df.format(maquina.getPotencia())));
+				st.setFloat(5, Float.parseFloat(df.format(maquina.getValor_diaria())));
+				st.setString(6, maquina.getTipo_combustivel());
 
 				st.execute();
 
@@ -189,14 +195,14 @@ public class MaquinaModel implements Serializable {
 		ArrayList<AluguelBean> alugueis = new ArrayList<AluguelBean>();
 		Database db = new Database();
 		Connection conn = null;
-		
+
 		try {
 			conn = db.getConnection();
-			if(conn != null) {
+			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT FIRST 5 * FROM ALUGUEL WHERE N_MAQUINA_FK = ?");
-				
+
 				st.setString(1, maquina_id);
-				
+
 				ResultSet rs = st.executeQuery();
 
 				while (rs.next()) {
@@ -211,14 +217,14 @@ public class MaquinaModel implements Serializable {
 
 					alugueis.add(aluguel);
 				}
-				
+
 				st.close();
 				conn.close();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return alugueis;
 	}
 
@@ -226,90 +232,145 @@ public class MaquinaModel implements Serializable {
 		ArrayList<RevisaoBean> revisoes = new ArrayList<RevisaoBean>();
 		Database db = new Database();
 		Connection conn = null;
-		
+
 		try {
 			conn = db.getConnection();
-			if(conn != null) {
+			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT FIRST 5 * FROM REVISAO WHERE N_MAQUINA_FK = ?");
-				
+
 				st.setString(1, maquina_id);
-				
+
 				ResultSet rs = st.executeQuery();
+
+				String date;
 
 				while (rs.next()) {
 					RevisaoBean revisao = new RevisaoBean();
-					
 
-//					aluguel.setData_entregue(rs.getDate("data_entregue"));
-//					aluguel.setData_final(rs.getDate("data_final"));
-//					aluguel.setData_ini(rs.getDate("data_ini"));
-//					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
-//					aluguel.setHori_saida(rs.getInt("hori_saida"));
-//					aluguel.setHori_retorno(rs.getInt("hori_retorno"));
+//					revisao.setN_revisao(rs.getInt("n_revisao"));
+//					revisao.setN_maquina_fk(rs.getInt("n_maquina_fk"));
+
+					date = rs.getString("data");
+					revisao.setData(date != null ? RevisaoBean.dateFromString(date) : null);
+					revisao.setMotivo(rs.getString("motivo"));
+					revisao.setHorimetro(rs.getInt("horimetro"));
+
+					date = rs.getString("data_retorno");
+					revisao.setData_retorno(date != null ? RevisaoBean.dateFromString(date) : null);
+					revisao.setHori_retorno(rs.getInt("hori_retorno"));
 
 					revisoes.add(revisao);
 				}
-				
+
 				st.close();
 				conn.close();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return revisoes;
 	}
-	
-	public List<String> marcas(){
+
+	public List<String> marcas() {
 		Database db = new Database();
 		Connection conn = null;
-		List<String>marcas = new ArrayList<String>();
-		
+		List<String> marcas = new ArrayList<String>();
+
 		try {
 			conn = db.getConnection();
-			if(conn != null) {
+			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT * FROM MARCA_LIST");
-				
+
 				ResultSet rs = st.executeQuery();
 
 				while (rs.next()) {
 					marcas.add(rs.getString("marca"));
 				}
-				
+
 				st.close();
 				conn.close();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return marcas;
 	}
-	
-	public List<String> tipo_combust(){
+
+	public List<String> tipo_combust() {
 		Database db = new Database();
 		Connection conn = null;
-		List<String>tipos_combust = new ArrayList<String>();
-		
+		List<String> tipos_combust = new ArrayList<String>();
+
 		try {
 			conn = db.getConnection();
-			if(conn != null) {
+			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT * FROM tipo_combust_list");
-				
+
 				ResultSet rs = st.executeQuery();
 
 				while (rs.next()) {
 					tipos_combust.add(rs.getString("tipo_combust"));
 				}
-				
+
 				st.close();
 				conn.close();
 			}
-		}catch(Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		return tipos_combust;
+	}
+
+	public void createRevisao(RevisaoBean revisao) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+			conn = db.getConnection();
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE REVISAO_CREATE(?, ?, ?, ?)");
+
+				st.setInt(1, revisao.getN_maquina_fk());
+				st.setString(2, revisao.getData().toString());
+				st.setString(3, revisao.getMotivo());
+				st.setInt(4, revisao.getHorimetro());
+
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void cancelRevisao(RevisaoBean revisao) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+			conn = db.getConnection();
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement(
+						"UPDATE REVISAO SET DATA_RETORNO=?, HORI_RETORNO=? WHERE N_REVISAO=(SELECT MAX(N_REVISAO) FROM REVISAO)");
+
+				st.setString(1, revisao.getData_retorno().toString());
+				st.setInt(2, revisao.getHori_retorno());
+
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 	}
 
 }

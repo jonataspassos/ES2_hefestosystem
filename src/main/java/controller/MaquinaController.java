@@ -7,19 +7,17 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
-import javax.faces.bean.RequestScoped;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.context.PrimeApplicationContext;
 
 import controller.MessagesMB;
 import bean.AluguelBean;
-import bean.MaquinaBean;
-//import lookUp.UsuarioLookUpList;
+import bean.RevisaoBean;
 import model.MaquinaModel;
 import lookUp.MaquinaLookUp;
+import java.time.LocalDate;
 
 @ManagedBean(name = "maquina")
 @ViewScoped
@@ -30,16 +28,22 @@ public class MaquinaController {
 	private MessagesMB messagesService;
 	private MaquinaLookUp maquina;
 	private List<MaquinaLookUp> maquinas;
-	private Integer maquina_id_param;
+	private String maquina_id_param;
 	private ArrayList<AluguelBean> alugueis;
+	private ArrayList<RevisaoBean> revisoes;
 	private MaquinaLookUp selectedMaquina;
 	private List<MaquinaLookUp> filteredMaquinas;
-	private Boolean maquinaEdicao = false;
+	private Boolean maquinaEdicao;
+	private RevisaoBean revisao;
 
 	@PostConstruct
 	public void init() {
-//		maqm = new MaquinaModel();
 		maquina = null;
+		revisao = null;
+		alugueis = null;
+		revisoes = null;
+		maquina_id_param = null;
+		maquinaEdicao = false;
 		maquinas = maqm.list();
 	}
 
@@ -69,20 +73,44 @@ public class MaquinaController {
 		this.maquina = maquina;
 	}
 
-	public String getMaquina_id_param() {
-		FacesContext context = FacesContext.getCurrentInstance();
-		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
-		String maquina_id = paramMap.get("maquina_id");
-
-		return maquina_id;
+	public RevisaoBean getRevisao() {
+		if (revisao == null)
+			revisao = new RevisaoBean();
+		return revisao;
 	}
 
-	public void setMaquina_id_param(Integer maquina_id) {
+	public void setRevisao(RevisaoBean revisao) {
+		this.revisao = revisao;
+	}
+
+	public String getMaquina_id_param() {
+		if (maquina_id_param == null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+			maquina_id_param = paramMap.get("maquina_id");
+		}
+
+		return maquina_id_param;
+	}
+
+	public void setMaquina_id_param(String maquina_id) {
 		this.maquina_id_param = maquina_id;
 	}
 
 	public ArrayList<AluguelBean> getAlugueis() {
-		return maqm.getLastAlugueis(this.getMaquina_id_param());
+		if(alugueis == null) 
+			alugueis = maqm.getLastAlugueis(getMaquina_id_param());
+		return alugueis;
+	}
+
+	public ArrayList<RevisaoBean> getRevisoes() {
+		if (revisoes == null)
+			revisoes = maqm.getLastRevisoes(getMaquina_id_param());
+		return revisoes;
+	}
+
+	public void setRevisoes(ArrayList<RevisaoBean> revisoes) {
+		this.revisoes = revisoes;
 	}
 
 	public Boolean getMaquinaEdicao() {
@@ -133,14 +161,39 @@ public class MaquinaController {
 
 	public void openDialog(Integer option) {
 		switch (option) {
-		case 1:
-			System.out.println("entrou aqui 1");
-//			PrimeFaces.current().executeScript("PF('dlgTirarRevisao').show()");
+		case 0:
+			PrimeFaces.current().executeScript("PF('dlgPorRevisao').show()");
 			break;
 		case 2:
-			System.out.println("entrou aqui 2");
-//			PrimeFaces.current().executeScript("PF('dlgPorRevisao').show()");
+			PrimeFaces.current().executeScript("PF('dlgTirarRevisao').show()");
 		}
+	}
+
+	public void putRevisao() {
+		LocalDate date = LocalDate.now();
+		if (revisao != null) {
+			revisao.setData(date);
+			revisao.setN_maquina_fk(Integer.parseInt(getMaquina_id_param()));
+			maqm.createRevisao(revisao);
+			return;
+		}
+
+		System.out.println("Error: Revisão não foi instanciada.");
+	}
+	
+	public void cancelRevisao() {
+		LocalDate date = LocalDate.now();
+		if (revisao != null) {
+			revisao.setData_retorno(date);
+//			revisao.setN_maquina_fk(Integer.parseInt(getMaquina_id_param()));
+			maqm.cancelRevisao(revisao);
+			return;
+		}
+	}
+	
+	public void salvarMaquina() {
+		if(maquina != null)
+			maqm.update(maquina);
 	}
 
 }
