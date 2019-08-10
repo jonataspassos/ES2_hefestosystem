@@ -9,30 +9,34 @@
 	<ui:define name="titulo">Máquinas</ui:define>
 	<ui:define name="cabecalho">Cadastrar Máquina</ui:define>
 	<ui:define name="corpo">
-		<h:form>
 
-			<p:growl id="message" autoUpdate="true" closable="true"
-				showDetail="true" sticky="true" />
+		<h:form>
+			<p:growl id="message" autoUpdate="true" showDetail="true"
+				sticky="true" closable="true" />
 
 			<div class="p-grid">
 				<div class="p-col">
 					<div class="box">
 						<h5>Número de Registro</h5>
-						<p:inputText id="n_registro" value="#{maquina.maquina.n_registro}" />
+						<p:inputText id="n_registro" value="#{maquina.maquina.n_registro}"
+							required="true" />
 					</div>
 				</div>
 
 				<div class="p-col">
 					<div class="box">
 						<h5>Marca</h5>
-						<p:inputText id="marca" value="#{maquina.maquina.marca}" />
+						<p:inputText id="marca" value="#{maquina.maquina.marca}">
+							<f:validateLength minimum="1" maximum="30" required="true" />
+						</p:inputText>
 					</div>
 				</div>
 
 				<div class="p-col">
 					<div class="box">
 						<h5>Potência</h5>
-						<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}" />
+						<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}"
+							required="true" />
 					</div>
 				</div>
 
@@ -40,7 +44,7 @@
 					<div class="box">
 						<h5>Valor da diária</h5>
 						<p:inputNumber id="valor_diaria"
-							value="#{maquina.maquina.valor_diaria}" />
+							value="#{maquina.maquina.valor_diaria}" required="true" />
 					</div>
 				</div>
 			</div>
@@ -50,7 +54,9 @@
 					<div class="box">
 						<h5>Tipo de combustível</h5>
 						<p:inputText id="tipo_combustivel"
-							value="#{maquina.maquina.tipo_combustivel}" />
+							value="#{maquina.maquina.tipo_combustivel}">
+							<f:validateLength minimum="1" maximum="10" required="true" />
+						</p:inputText>
 					</div>
 				</div>
 			</div>
@@ -60,11 +66,12 @@
 			<div class="p-grid">
 				<div class="p-col-2">
 					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
-						value="Cancelar" id="cancel" icon="fa fa-times" />
+						value="Cancelar" id="cancel" icon="fa fa-times" required="true" />
 				</div>
 				<div class="p-col-2">
 					<p:commandButton class="btn btn-secondary btn-text" value="Salvar"
-						id="save" action="#{maquina.createMaquina}" icon="fa fa-save" />
+						id="save" action="#{maquina.createMaquina}" icon="fa fa-save"
+						update="@form" />
 				</div>
 			</div>
 		</h:form>

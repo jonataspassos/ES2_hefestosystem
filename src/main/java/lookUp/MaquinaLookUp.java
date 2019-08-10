@@ -4,7 +4,7 @@ import java.util.Date;
 
 import bean.MaquinaBean;
 
-public class MaquinaLookUp extends MaquinaBean{
+public class MaquinaLookUp extends MaquinaBean {
 	private Date data_ult_revisao;
 	private float horimetro;
 	private String status;
@@ -35,7 +35,6 @@ public class MaquinaLookUp extends MaquinaBean{
 
 	@Override
 	public String toString() {
-		return "" + getN_registro() + " - " + getMarca() + " - "
-				+ getPotencia() + "kVa";
+		return "" + getN_registro() + " - " + getMarca() + " - " + getPotencia() + "kVa";
 	}
 }
