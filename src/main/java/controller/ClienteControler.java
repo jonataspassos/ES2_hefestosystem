@@ -135,13 +135,15 @@ public class ClienteControler {
 	public void createCliente() throws Exception {
 		if (cliente != null) {
 			System.out.println(cliente);
-			if (clienteService.create(cliente)) {
-				messagesService.info("Cliente cadastrado com sucesso.");
-				Thread.sleep(5000);
-				SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
-				return;
-			}
-			messagesService.error("Error ao tentar cadastrar cliente.");
+			System.out.println(cliente_end);
+			System.out.println(cliente_tel);
+//			if (clienteService.create(cliente)) {
+//				messagesService.info("Cliente cadastrado com sucesso.");
+//				Thread.sleep(5000);
+//				SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
+//				return;
+//			}
+//			messagesService.error("Error ao tentar cadastrar cliente.");
 		}
 	}
 
