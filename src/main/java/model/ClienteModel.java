@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
-import java.text.DecimalFormat;
-import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +12,6 @@ import javax.faces.bean.ManagedBean;
 
 import bean.ClienteBean;
 import lookUp.ClienteLookUpList;
-import lookUp.MaquinaLookUp;
 import resources.Database;
 
 @ManagedBean
@@ -38,12 +35,14 @@ public class ClienteModel implements Serializable {
 				
 				String cpf = cliente.getCpf();
 				cpf = cpf.replaceAll("[^0-9]", "");
-				
-				System.out.println(cpf);
+			
 				st.setString(1, cpf);
 				st.setString(2, cliente.getNome());
-
-				st.execute();	
+				
+				ResultSet res = st.executeQuery();
+				res.next();
+				
+				cliente.setN_cliente(res.getInt("out_id"));
 
 				st.close();
 				conn.close();
@@ -74,7 +73,7 @@ public class ClienteModel implements Serializable {
 				while (rs.next()) {
 					cliente = new ClienteLookUpList();
 					cliente.setN_cliente(rs.getInt("n_cliente"));
-					cliente.setCpf(rs.getNString("cpf"));
+					cliente.setCpf(rs.getString("cpf"));
 					cliente.setNome(rs.getString("nome"));
 					cliente.setTelefone(rs.getString("telefone"));
 					cliente.setN_alugueis(rs.getInt("n_alugueis"));

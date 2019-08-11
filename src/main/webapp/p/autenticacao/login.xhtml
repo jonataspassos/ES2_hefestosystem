@@ -9,25 +9,28 @@
 	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="formulario">
 		<h:form>
-		<p:panel id="form-login" header="Login">
+			<p:panel id="form-login" class="form-login" header="Login">
 				<p:messages id="messages" showDetail="true" closable="true">
-        			<p:autoUpdate />
-    			</p:messages>
+					<p:autoUpdate />
+				</p:messages>
 				<div>
 					<h3 style="margin-top: 0px; margin-bottom: 0px">CPF*:</h3>
-					<p:inputText style="width:90%;" id="login"
-						value="#{autentication.funcionario.cpf}" required="true"/>
+					<p:inputText class="full-width" id="login"
+						value="#{autentication.funcionario.cpf}" required="true" />
 					<p:message for="login" />
-					
+
 					<h3 style="margin-bottom: 0px">Senha*:</h3>
-					<p:password style="width:90%;" id="pass"
-						value="#{autentication.funcionario.senha}" required="true"/>
+					<p:password class="full-width" id="pass"
+						value="#{autentication.funcionario.senha}" required="true" />
 					<p:message for="pass" />
 				</div>
-				<div class="centralizar-externa">
-					<p:commandButton style="width:90%; margin-top:10px"
-						update="form-login" value="Entrar" 
-						actionListener="#{autentication.login()}"/>
+
+				<p:spacer />
+
+				<div class="p-grid p-justify-center text-center">
+					<p:commandButton class="btn btn-primary btn-text"
+						update="form-login" value="Entrar"
+						actionListener="#{autentication.login()}" />
 				</div>
 			</p:panel>
 		</h:form>

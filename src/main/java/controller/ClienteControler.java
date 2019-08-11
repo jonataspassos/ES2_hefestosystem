@@ -14,6 +14,8 @@ import bean.EndClienteBean;
 import bean.TelClienteBean;
 import lookUp.ClienteLookUpList;
 import model.ClienteModel;
+import model.EndClienteModel;
+import model.TelClienteModel;
 
 @ManagedBean(name = "clienteMB")
 @ViewScoped
@@ -29,6 +31,10 @@ public class ClienteControler {
 
 	@ManagedProperty("#{clienteModel}")
 	private ClienteModel clienteService;
+	@ManagedProperty("#{endClienteModel}")
+	private EndClienteModel endClienteService;
+	@ManagedProperty("#{telClienteModel}")
+	private TelClienteModel telClienteService;
 	@ManagedProperty("#{message}")
 	private MessagesMB messagesService;
 
@@ -60,6 +66,10 @@ public class ClienteControler {
 
 	public void setClienteService(ClienteModel clienteService) {
 		this.clienteService = clienteService;
+	}
+
+	public ClienteModel getClienteService() {
+		return clienteService;
 	}
 
 	public void setFilteredClientes(List<ClienteLookUpList> filteredClientes) {
@@ -132,18 +142,38 @@ public class ClienteControler {
 		this.cliente = cliente;
 	}
 
+	public EndClienteModel getEndClienteService() {
+		return endClienteService;
+	}
+
+	public void setEndClienteService(EndClienteModel endClienteService) {
+		this.endClienteService = endClienteService;
+	}
+
+	public TelClienteModel getTelClienteService() {
+		return telClienteService;
+	}
+
+	public void setTelClienteService(TelClienteModel telClienteService) {
+		this.telClienteService = telClienteService;
+	}
+
 	public void createCliente() throws Exception {
 		if (cliente != null) {
-			System.out.println(cliente);
-			System.out.println(cliente_end);
-			System.out.println(cliente_tel);
-//			if (clienteService.create(cliente)) {
-//				messagesService.info("Cliente cadastrado com sucesso.");
-//				Thread.sleep(5000);
-//				SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
-//				return;
-//			}
-//			messagesService.error("Error ao tentar cadastrar cliente.");
+//			System.out.println(cliente);
+//			System.out.println(cliente_end);
+//			System.out.println(cliente_tel);
+			if (clienteService.create(cliente)) {
+				cliente_end.setN_cliente_fk(cliente.getN_cliente());
+				cliente_tel.setN_cliente_fk(cliente.getN_cliente());
+				if (endClienteService.create(cliente_end) && telClienteService.create(cliente_tel)) {
+					messagesService.info("Cliente cadastrado com sucesso.");
+					Thread.sleep(5000);
+					SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
+					return;
+				}
+			}
+			messagesService.error("Error ao tentar cadastrar cliente.");
 		}
 	}
 
@@ -163,29 +193,30 @@ public class ClienteControler {
 		}
 		System.out.println("Error: Cliente não foi instanciado.");
 	}
-	
+
 	public void setClientCpf(String cpf) {
 		cliente.setCpf(cpf.replaceAll("[^0-9]", ""));
 	}
+
 	public String getClientCpf() {
 		String r = cliente.getCpf();
-		if(r!=null)
-		return r.substring(0, 2)+"."+r.substring(3, 5)+"."+r.substring(6, 8)+"-"+r.substring(9, 11);
-		else
-			return "";
+		if (r != null)
+			return r.substring(0, 2) + "." + r.substring(3, 5) + "." + r.substring(6, 8) + "-" + r.substring(9, 11);
+		return "";
 	}
-	
+
 	public void setClientPhone(String phone) {
 		phone = phone.replaceAll("[^0-9]", "");
 		try {
 			cliente_tel.setNumero_tel(Integer.parseInt(phone));
-		}catch (NumberFormatException e) {
-			
+		} catch (NumberFormatException e) {
+
 		}
-		
+
 	}
+
 	public String getClientPhone() {
-		return String.format("%d-%d", cliente_tel.getNumero_tel()/10000,cliente_tel.getNumero_tel()%10000);
+		return String.format("%d-%d", cliente_tel.getNumero_tel() / 10000, cliente_tel.getNumero_tel() % 10000);
 	}
 
 }
