@@ -70,23 +70,32 @@ public class AluguelController implements Serializable {
 	}
 
 	public void nextStep(){
-		if (clienteSel.getNome() != null) {
-			if (this.step < 2) {
+		switch (step) {
+		case 0:
+			if (clienteSel.getNome() != null
+					&& (!empresa || empresaSel.getRaz_social() !=null)) {
 				this.step++;
 			}else {
-				System.out.println("Concluindo");
-				save();
+				System.out.println("Preencha todos os campos!!");
 			}
-		}else {
-			
+			break;
+		case 1:
+			if(maquinaSel2.getMarca()!=null && getHoras()!=null) {
+				
+				descontos[0] = HUtil.descNdias(getNdias());
+				descontos[1] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
+				descontos[2] = HUtil.descVip(empresa?getEmpresaSel().getN_alugueis() :getClienteSel().getN_alugueis());
+				setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2]);
+				
+				this.step++;
+			}else {
+				System.out.println("Preencha todos os campos!!");
+			}
+			break;
+		case 2:
+				save();
+			break;
 		}
-		if (step == 2) {
-			descontos[0] = HUtil.descNdias(getNdias());
-			descontos[1] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
-			descontos[2] = HUtil.descVip(getClienteSel().getN_alugueis());
-			setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2]);
-		}
-
 	}
 
 	public void backStep() {
@@ -112,7 +121,7 @@ public class AluguelController implements Serializable {
 		
 		System.out.println("Máquina Alugada");
 		messageService.info("Máquina Alugada");
-		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml");
+		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml?aluguel_id="+id);
 	}
 
 	public void cancel() {
