@@ -107,13 +107,13 @@ public class AluguelController implements Serializable {
 	
 	public void searchCliente() {
 		String cpf = this.getClienteSel().getCpf();
-		this.clienteSel = clienteService.read(this.clienteSel.getCpf());
+		this.clienteSel = clienteService.readLookUp(this.clienteSel.getCpf());
 		if(this.clienteSel != null)
 			this.getAluguelSel().setN_cliente_fk(this.clienteSel.getN_cliente());
 		else {
 			this.getClienteSel().setCpf(cpf);
-			System.out.println("Esse Cliente não Existe!");
-			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente não Existe!"));
+			System.out.println("Esse Cliente nï¿½o Existe!");
+			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente nï¿½o Existe!"));
 			
 		}
 	}

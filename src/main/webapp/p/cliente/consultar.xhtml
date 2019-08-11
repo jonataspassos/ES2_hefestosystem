@@ -1,0 +1,95 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:define name="titulo">Clientes</ui:define>
+	<ui:define name="cabecalho">Consultar Cliente</ui:define>
+	<ui:define name="corpo">
+		<p:spacer></p:spacer>
+		<p:growl id="growl" life="2000" />
+		<h:form>
+			<div class="p-grid p-justify-start">
+				<p:autoUpdate />
+				<div class="p-col-2">
+					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-primary btn-text" value="Editar"
+						id="btnEdita" action="#{clienteMB.setClienteEdicao(true)}"
+						update="growl" icon="fa fa-pencil-square-o"
+						disabled="#{clienteMB.clienteEdicao}" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-success btn-text" value="Salvar"
+						id="btnSalvar" action="#{clienteMB.salvarCliente()}" update="growl"
+						icon="fa fa-save" disabled="#{!clienteMB.clienteEdicao}" />
+				</div>
+			</div>
+
+			<div class="p-grid">
+				<div class="p-col-10">
+					<div class="p-grid">
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Nome</h5>
+								<p:inputText id="nome" class="full-width"
+									value="#{clienteMB.cliente.nome}" required="true"
+									disabled="#{!clienteMB.clienteEdicao}">
+									<f:validateLength minimum="1" maximum="30" />
+								</p:inputText>
+							</div>
+						</div>
+
+						<div class="p-col-3">
+							<div class="box">
+								<h5>CPF</h5>
+								<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
+									mask="999.999.999-99" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+						
+						<div class="p-col-3">
+							<div class="box">
+								<h5>CPF</h5>
+								<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
+									mask="(99) 9999-9999" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+					</div>
+				</div>
+
+
+				<div class="p-col-2 p-dir-col">
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:commandButton class="btn btn-error btn-text" value="Excluir"
+								id="btnExcluir" action="#{cliente.excluirCliente}"
+								update="growl" icon="fa fa-trash">
+								<p:confirm header="Confirmação"
+									message="Tem certeza de que deseja excluir o cliente?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+							</p:confirmDialog>
+						</div>
+					</div>
+				</div>
+
+			</div>
+
+		</h:form>
+	</ui:define>
+</ui:composition>

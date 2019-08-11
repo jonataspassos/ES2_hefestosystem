@@ -22,5 +22,9 @@ public class ClienteBean {
 	public void setNome(String nome) {
 		this.nome = nome;
 	}
-
+	@Override
+	public String toString() {
+		return "ClienteBean [n_cliente=" + n_cliente + ", cpf=" + cpf + ", nome=" + nome + "]";
+	}
+	
 }

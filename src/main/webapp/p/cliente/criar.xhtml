@@ -1,0 +1,124 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:define name="titulo">Clientes</ui:define>
+	<ui:define name="cabecalho">Cadastrar Cliente</ui:define>
+	<ui:define name="corpo">
+		<h:form>
+			<p:growl id="message" autoUpdate="true" showDetail="true"
+				sticky="true" closable="true" />
+
+			<div class="p-grid">
+				<div class="p-col-3">
+					<div class="box">
+						<h5>Nome</h5>
+						<p:inputText id="nome" class="full-width"
+							value="#{clienteMB.cliente.nome}" required="true">
+							<f:validateLength minimum="1" maximum="30" />
+						</p:inputText>
+					</div>
+				</div>
+
+				<div class="p-col-3">
+					<div class="box">
+						<h5>CPF</h5>
+						<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
+							mask="999.999.999-99" required="true" />
+					</div>
+				</div>
+			</div>
+
+			<h3 class="titulo">Telefone Principal</h3>
+			<hr></hr>
+			<div class="p-grid">
+				<div class="p-col-2">
+					<div class="box">
+						<h5>DDD</h5>
+						<p:inputMask id="ddd" value="#{clienteMB.cliente_tel.ddd}" mask="99"
+							required="true" />
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>Número</h5>
+						<p:inputMask id="numero_tel" value="#{clienteMB.cliente_tel.numero_tel}" mask="99999-9999"
+							required="true" />
+					</div>
+				</div>
+			</div>
+
+			<h3 class="titulo">Endereço Principal</h3>
+			<hr></hr>
+
+			<div class="p-grid">
+				<div class="p-col-2">
+					<div class="box">
+						<h5>UF</h5>
+						<p:inputMask id="uf" value="#{clienteMB.cliente_end.uf}" mask="a*"
+							required="true" />
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>Cidade</h5>
+						<p:inputText id="cidade" value="#{clienteMB.cliente_end.cidade}"
+							required="true">
+							<f:validateLength minimum="1" maximum="20" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>Bairro</h5>
+						<p:inputText id="bairro" value="#{clienteMB.cliente_end.bairro}"
+							required="true">
+							<f:validateLength minimum="1" maximum="20" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>Rua</h5>
+						<p:inputText id="rua" value="#{clienteMB.cliente_end.rua}"
+							required="true">
+							<f:validateLength minimum="1" maximum="30" />
+						</p:inputText>
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>Número</h5>
+						<p:inputNumber id="numero" value="#{clienteMB.cliente_end.numero}"
+							required="true" minValue="0" maxValue="9999999999" />
+					</div>
+				</div>
+				<div class="p-col-2">
+					<div class="box">
+						<h5>CEP</h5>
+						<p:inputMask id="cep" value="#{clienteMB.cliente_end.cep}"
+							mask="99999-999" required="true" />
+					</div>
+				</div>
+			</div>
+
+			<p:spacer></p:spacer>
+
+			<div class="p-grid">
+				<div class="p-col-2">
+					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times" required="true" />
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-secondary btn-text" value="Salvar"
+						id="save" action="#{clienteMB.createCliente}" icon="fa fa-save"
+						update="@form" />
+				</div>
+			</div>
+		</h:form>
+	</ui:define>
+</ui:composition>

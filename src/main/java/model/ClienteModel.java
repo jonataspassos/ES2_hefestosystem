@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.text.DecimalFormat;
+import java.text.NumberFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import javax.faces.bean.ManagedBean;
 
 import bean.ClienteBean;
 import lookUp.ClienteLookUpList;
+import lookUp.MaquinaLookUp;
 import resources.Database;
 
 @ManagedBean
@@ -22,7 +25,7 @@ public class ClienteModel implements Serializable {
 	 */
 	private static final long serialVersionUID = 1L;
 
-	public void create(ClienteBean cliente) {
+	public Boolean create(ClienteBean cliente) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -32,29 +35,25 @@ public class ClienteModel implements Serializable {
 			if (conn != null) {
 
 				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE CLIENTE_CREATE(?,?)");
-
-				st.setString(1, "" + cliente.getCpf());
+				
+				String cpf = cliente.getCpf();
+				cpf = cpf.replaceAll("[^0-9]", "");
+				
+				System.out.println(cpf);
+				st.setString(1, cpf);
 				st.setString(2, cliente.getNome());
 
-				st.execute();
+				st.execute();	
 
 				st.close();
 				conn.close();
+				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
-	}
-
-	public static void main(String[] args) {
-		ClienteModel cliente = new ClienteModel();
-		ClienteBean clienteBean = new ClienteBean();
-
-		clienteBean.setCpf("93221351298");
-		clienteBean.setNome("Cigano");
-
-		cliente.create(clienteBean);
-
+		return false;
 	}
 
 	public List<ClienteLookUpList> list() {
@@ -120,7 +119,7 @@ public class ClienteModel implements Serializable {
 		return clientes;
 	}
 	
-	public ClienteLookUpList read(String cpf) {
+	public ClienteLookUpList readLookUp(String cliente_id) {
 		ClienteLookUpList cliente;
 		Database bd = new Database();
 		Connection conn = null;
@@ -129,9 +128,9 @@ public class ClienteModel implements Serializable {
 			conn = bd.getConnection();
 
 			if (conn != null) {
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE_LIST WHERE CPF = ?");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE_LIST WHERE N_CLIENTE = ?");
 				
-				st.setString(1, cpf);
+				st.setString(1, cliente_id);
 
 				ResultSet rs = st.executeQuery();
 
@@ -153,5 +152,67 @@ public class ClienteModel implements Serializable {
 		}
 
 		return null;
+	}
+	
+	public ClienteBean read(String cliente_id) {
+		ClienteBean cliente;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE WHERE N_CLIENTE = ?");
+				
+				st.setString(1, cliente_id);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					cliente = new ClienteBean();
+					cliente.setN_cliente(rs.getInt("n_cliente"));
+					cliente.setCpf(rs.getNString("cpf"));
+					cliente.setNome(rs.getString("nome"));
+					return cliente;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public void update(ClienteBean cliente) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+			conn = db.getConnection();
+
+			if (conn != null) {
+
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE CLIENTE_UPDATE(?,?,?)");
+
+				st.setInt(1, cliente.getN_cliente());
+				st.setString(2, (cliente.getCpf()).replaceAll("[^0-9]", ""));
+				st.setString(3, cliente.getNome());
+
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(String cliente_id) {
+		
 	}
 }
