@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class AluguelBean {
+public class AluguelBean implements Serializable{
 	private int n_aluguel;
 	private int n_cliente_fk;
 	private int n_funcionario_fk;

@@ -1,10 +1,12 @@
 package model;
 
 import java.io.Serializable;
+import java.io.ObjectInputStream.GetField;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ApplicationScoped;
@@ -18,9 +20,11 @@ import resources.HUtil;
 @ManagedBean
 @ApplicationScoped
 public class AluguelModel implements Serializable {
-	public void create(AluguelBean aluguel) {
+	public int create(AluguelBean aluguel) {
 		Database db = new Database();
 		Connection conn = null;
+		
+		int id = 0;
 
 		conn = db.getConnection();
 
@@ -38,6 +42,14 @@ public class AluguelModel implements Serializable {
 				st.setFloat(7, aluguel.getVal_contratado());
 				st.setFloat(8, aluguel.getTempo_hd());
 				st.execute();
+				
+				st = conn.prepareStatement("SELECT * FROM ALUGUEL_ID");
+
+				ResultSet rs = st.executeQuery();
+
+				if(rs.next()) {
+					id = rs.getInt("id");
+				}
 
 				st.close();
 				conn.close();
@@ -45,6 +57,7 @@ public class AluguelModel implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return id;
 	}
 
 	public void update(AluguelBean aluguel) {
@@ -212,7 +225,6 @@ public class AluguelModel implements Serializable {
 //		l.setHori_saida(123456);
 //		l.setVal_contratado(723.8f);
 //		l.setTempo_hd(6);
-//		
 //		(new AluguelModel()).create(l);
 		
 		List<AluguelLookUpList> alugueis = (new AluguelModel()).list();
