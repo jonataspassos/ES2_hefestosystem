@@ -404,9 +404,7 @@ public class AluguelController implements Serializable {
 		String cpf = this.getClienteSel().getCpf();
 		System.out.println(cpf);
 		this.clienteSel = clienteService.readLookUp(cpf);
-		if (this.clienteSel != null)
-			this.getAluguelSel().setN_cliente_fk(this.clienteSel.getN_cliente());
-		else {
+		if (this.clienteSel == null){
 			clienteSel = new ClienteLookUpList();
 			this.clienteSel.setCpf(cpf);
 			System.out.println("Esse Cliente não Existe!");
@@ -418,9 +416,7 @@ public class AluguelController implements Serializable {
 	public void searchEmpresa() {
 		String cnpj = this.getEmpresaSel().getCnpj();
 		this.empresaSel = empresaService.read(this.empresaSel.getCnpj());
-		if (this.empresaSel != null)
-			this.getAluguelSel().setN_empresa_fk(this.empresaSel.getN_empresa());
-		else {
+		if (this.empresaSel == null){
 			empresaSel = new EmpresaLookUpList();
 			this.empresaSel.setCnpj(cnpj);
 		}
