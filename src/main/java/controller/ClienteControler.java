@@ -163,5 +163,29 @@ public class ClienteControler {
 		}
 		System.out.println("Error: Cliente não foi instanciado.");
 	}
+	
+	public void setClientCpf(String cpf) {
+		cliente.setCpf(cpf.replaceAll("[^0-9]", ""));
+	}
+	public String getClientCpf() {
+		String r = cliente.getCpf();
+		if(r!=null)
+		return r.substring(0, 2)+"."+r.substring(3, 5)+"."+r.substring(6, 8)+"-"+r.substring(9, 11);
+		else
+			return "";
+	}
+	
+	public void setClientPhone(String phone) {
+		phone = phone.replaceAll("[^0-9]", "");
+		try {
+			cliente_tel.setNumero_tel(Integer.parseInt(phone));
+		}catch (NumberFormatException e) {
+			
+		}
+		
+	}
+	public String getClientPhone() {
+		return String.format("%d-%d", cliente_tel.getNumero_tel()/10000,cliente_tel.getNumero_tel()%10000);
+	}
 
 }

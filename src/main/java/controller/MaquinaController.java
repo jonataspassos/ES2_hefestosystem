@@ -17,11 +17,13 @@ import bean.AluguelBean;
 import bean.RevisaoBean;
 import model.MaquinaModel;
 import lookUp.MaquinaLookUp;
+
+import java.io.Serializable;
 import java.time.LocalDate;
 
 @ManagedBean(name = "maquina")
 @ViewScoped
-public class MaquinaController {
+public class MaquinaController implements Serializable{
 	@ManagedProperty("#{maquinaModel}")
 	private MaquinaModel maqm;
 	@ManagedProperty("#{message}")
@@ -171,6 +173,7 @@ public class MaquinaController {
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
 			messagesService.info("Máquina cadastrada com sucesso.");
+			maquina = new MaquinaLookUp();
 			Thread.sleep(5000);
 			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			return;
@@ -202,6 +205,7 @@ public class MaquinaController {
 	public void salvarMaquina() {
 		if (maquina != null) {
 			maqm.update(maquina);
+			maquinaEdicao = false;
 			return;
 		}
 
@@ -214,6 +218,23 @@ public class MaquinaController {
 			return;
 		}
 		System.out.println("Error: Máquina não foi instanciada.");
+	}
+	
+	public void setMaqPotencia(Double potencia) {
+		System.out.println(potencia);
+		maquina.setPotencia(potencia.floatValue());
+	}
+	
+	public Double getMaqPotencia() {
+		return new Double(maquina.getPotencia());
+	}
+	
+	public void setMaqDiaria(Double potencia) {
+		System.out.println(potencia);
+		maquina.setValor_diaria(potencia.floatValue());
+	}
+	public Double getMaqDiaria() {
+		return new Double(maquina.getValor_diaria());
 	}
 
 }

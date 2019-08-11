@@ -34,12 +34,12 @@ public class MaquinaModel implements Serializable {
 
 				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_CREATE(?,?,?,?,?)");
 
-				NumberFormat df = new DecimalFormat("#0.00");
+				//NumberFormat df = new DecimalFormat("#0.00");Float.parseFloat(df.format(
 
 				st.setInt(1, maquina.getN_registro());
 				st.setString(2, maquina.getMarca());
-				st.setFloat(3, Float.parseFloat(df.format(maquina.getPotencia())));
-				st.setFloat(4, Float.parseFloat(df.format(maquina.getValor_diaria())));
+				st.setFloat(3, maquina.getPotencia());
+				st.setFloat(4, maquina.getValor_diaria());
 				st.setString(5, maquina.getTipo_combustivel());
 
 				st.execute();
@@ -150,13 +150,13 @@ public class MaquinaModel implements Serializable {
 
 				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_UPDATE(?,?,?,?,?,?)");
 
-				NumberFormat df = new DecimalFormat("#0.00");
+				//NumberFormat df = new DecimalFormat("#0.00"); Float.parseFloat(df.format(
 
 				st.setInt(1, maquina.getN_maquina());
 				st.setInt(2, maquina.getN_registro());
 				st.setString(3, maquina.getMarca());
-				st.setFloat(4, Float.parseFloat(df.format(maquina.getPotencia())));
-				st.setFloat(5, Float.parseFloat(df.format(maquina.getValor_diaria())));
+				st.setFloat(4, maquina.getPotencia());
+				st.setFloat(5, maquina.getValor_diaria());
 				st.setString(6, maquina.getTipo_combustivel());
 
 				st.execute();
@@ -379,6 +379,49 @@ public class MaquinaModel implements Serializable {
 			e.printStackTrace();
 		}
 
+	}
+	
+	public List<MaquinaLookUp> list(int status){
+		MaquinaLookUp maquina;
+		Database bd = new Database();
+		Connection conn = null;
+
+		List<MaquinaLookUp> maquinas = new ArrayList<MaquinaLookUp>();
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM MAQUINA_LIST WHERE STATUS = ?");
+				
+				st.setInt(1, status);
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					maquina = new MaquinaLookUp();
+
+					maquina.setN_maquina(rs.getInt("n_maquina"));
+					maquina.setN_registro(rs.getInt("n_registro"));
+					maquina.setMarca(rs.getString("marca"));
+					maquina.setPotencia(rs.getFloat("potencia"));
+					maquina.setValor_diaria(rs.getFloat("val_diaria"));
+					maquina.setTipo_combustivel(rs.getString("tipo_combust"));
+					maquina.setData_ult_revisao(rs.getDate("data_ult_revisao"));
+					maquina.setHorimetro(rs.getInt("horimetro"));
+					maquina.setStatus(rs.getString("status"));
+
+					maquinas.add(maquina);
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return maquinas;
 	}
 
 }

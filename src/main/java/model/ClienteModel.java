@@ -119,7 +119,7 @@ public class ClienteModel implements Serializable {
 		return clientes;
 	}
 	
-	public ClienteLookUpList readLookUp(String cliente_id) {
+	public ClienteLookUpList readLookUp(int cliente_id) {
 		ClienteLookUpList cliente;
 		Database bd = new Database();
 		Connection conn = null;
@@ -130,7 +130,42 @@ public class ClienteModel implements Serializable {
 			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE_LIST WHERE N_CLIENTE = ?");
 				
-				st.setString(1, cliente_id);
+				st.setInt(1, cliente_id);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					cliente = new ClienteLookUpList();
+					cliente.setN_cliente(rs.getInt("n_cliente"));
+					cliente.setCpf(rs.getNString("cpf"));
+					cliente.setNome(rs.getString("nome"));
+					cliente.setTelefone(rs.getString("telefone"));
+					cliente.setN_alugueis(rs.getInt("n_alugueis"));
+					return cliente;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
+	public ClienteLookUpList readLookUp(String cpf) {
+		ClienteLookUpList cliente;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM CLIENTE_LIST WHERE CPF = ?");
+				
+				st.setString(1, cpf);
 
 				ResultSet rs = st.executeQuery();
 

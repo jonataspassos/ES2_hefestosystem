@@ -1,10 +1,11 @@
 package lookUp;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import bean.MaquinaBean;
 
-public class MaquinaLookUp extends MaquinaBean {
+public class MaquinaLookUp extends MaquinaBean implements Serializable{
 	private Date data_ult_revisao;
 	private float horimetro;
 	private String status;

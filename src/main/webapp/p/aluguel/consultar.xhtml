@@ -9,5 +9,104 @@
 	<ui:define name="titulo">Aluguel</ui:define>
 	<ui:define name="cabecalho">Consultar Aluguel</ui:define>
 	<ui:define name="corpo">
+		<p:spacer></p:spacer>
+		<p:growl id="growl" life="2000" />
+		<h:form>
+			<div class="p-grid p-justify-start">
+				<p:autoUpdate />
+				<div class="p-col-2">
+					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times" />
+				</div>
+			</div>
+
+			<div class="p-grid">
+				<div class="p-col-10">
+					
+					
+				</div>
+				<div class="p-col-2 p-dir-col">
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:commandButton class="btn btn-primary btn-text"
+								value="Registrar Retorno"
+								id="btnReturn" update="growl" icon="fa fa-gear"
+								disabled="#{maquina.maquina.status == '1'}"
+								action="PF('dlgReturn').show()" />
+						</div>
+
+						<p:dialog header="Registrar Retorno" widgetVar="dlgReturn"
+							modal="true" height="300" width="40%">
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Data de Retorno:</h4>
+							        <p:datePicker id="popup" value="#{calendarView.date2}" />
+								</div>
+							</div>
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Horímetro:</h4>
+									<p:inputNumber minValue="0"
+										value="#{maquina.revisao.horimetro}" />
+								</div>
+							</div>
+							<br></br>
+							<p:commandButton class="btn btn-primary btn-text"
+								value="Confirmar" id="btnConfirmarRev"
+								action="#{maquina.putRevisao}" />
+
+						</p:dialog>
+
+						
+					</div>
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:linkButton href="#{system.path()}/p/aluguel/alugar.xhtml"
+								class="btn btn-primary btn-text" value="Alugar" id="btnAluga"
+								icon="fa fa-refresh" disabled="#{maquina.maquina.status != '0'}">
+								<f:param name="maquina_id"
+									value="#{maquina.getMaquina_id_param()}" />
+							</p:linkButton>
+						</div>
+						<p:dialog header="Retirar da Revisão" widgetVar="dlgTirarRevisao"
+							modal="true" height="300" width="40%">
+							<div class="p-grid">
+								<div class="p-col">
+									<h4>Horímetro de Retorno:</h4>
+									<p:inputNumber minValue="0"
+										value="#{maquina.revisao.hori_retorno}" />
+								</div>
+							</div>
+							<br></br>
+							<p:commandButton class="btn btn-primary btn-text"
+								value="Confirmar" id="btnConfirmarCancelRev"
+								action="#{maquina.cancelRevisao}" />
+
+						</p:dialog>
+						
+					</div>
+					<div class="p-col">
+						<div class="p-grid p-justify-end">
+							<p:commandButton class="btn btn-error btn-text" value="Excluir"
+								disabled="#{maquina.maquina.status != '0'}" id="btnExcluir"
+								action="#{maquina.excluirMaquina}" update="growl"
+								icon="fa fa-trash">
+								<p:confirm header="Confirmação"
+									message="Tem certeza de que deseja excluir a máquina?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+							</p:confirmDialog>
+						</div>
+					</div>
+				</div>
+		</h:form>
 	</ui:define>
+
 </ui:composition>

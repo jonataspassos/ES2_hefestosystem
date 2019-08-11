@@ -10,7 +10,7 @@ import javax.faces.bean.ManagedBean;
 
 @ManagedBean(name = "message")
 @ApplicationScoped
-public class MessagesMB{
+public class MessagesMB implements Serializable{
 
 	public void info(String message) {
 		FacesContext.getCurrentInstance().addMessage(null,

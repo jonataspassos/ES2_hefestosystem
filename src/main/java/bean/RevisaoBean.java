@@ -1,8 +1,9 @@
 package bean;
 
+import java.io.Serializable;
 import java.time.LocalDate;
 
-public class RevisaoBean {
+public class RevisaoBean implements Serializable{
 	private int n_revisao;
 	private int n_maquina_fk;
 	private LocalDate data;

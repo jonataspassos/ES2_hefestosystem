@@ -215,6 +215,43 @@ public class AluguelModel implements Serializable {
 		return alugueis;
 	}
 
+	public AluguelLookUpList read(int n_aluguel) {
+		AluguelLookUpList aluguel;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM ALUGUEL_LIST WHERE N_ALUGUEL = ?");
+				
+				st.setInt(1, n_aluguel);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					aluguel = new AluguelLookUpList();
+					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
+					aluguel.setData_ini(HUtil.dateToUtil(rs.getDate("data_ini")));
+					aluguel.setData_entregue(HUtil.dateToUtil(rs.getDate("data_entregue")));
+					aluguel.setN_registro(rs.getInt("n_registro"));
+					aluguel.setPotencia(rs.getFloat("potencia"));
+					aluguel.setVal_contratado(rs.getFloat("val_contratado"));
+					aluguel.setValor_pago(rs.getFloat("valor_pago"));
+					return aluguel;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
 	public static void main(String[] args) {
 //		AluguelBean l = new AluguelBean();
 //		l.setN_cliente_fk(0);
