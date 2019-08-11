@@ -21,43 +21,217 @@
 			</div>
 
 			<div class="p-grid">
-				<div class="p-col-10">
-					
-					
-				</div>
+				<div class="p-col-10"></div>
 				<div class="p-col-2 p-dir-col">
 					<div class="p-col">
 						<div class="p-grid p-justify-end">
 							<p:commandButton class="btn btn-primary btn-text"
-								value="Registrar Retorno"
-								id="btnReturn" update="growl" icon="fa fa-gear"
-								disabled="#{maquina.maquina.status == '1'}"
-								action="PF('dlgReturn').show()" />
+								value="Registrar Retorno" id="btnReturn" update="growl"
+								icon="fa fa-gear" action="#{aluguelConsultMB.openDialog(0)}" />
 						</div>
 
 						<p:dialog header="Registrar Retorno" widgetVar="dlgReturn"
-							modal="true" height="300" width="40%">
+							modal="true" height="350" width="40%" id="dlgReturnId">
 							<div class="p-grid">
-								<div class="p-col">
+								<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+    	var d = new Date(date.year,date.month, date.day);
+        return '<span style="background-color:' + ((d.getTime() < #{aluguelConsultMB.aluguelSel.data_final.getTime()} && d.getTime() > #{aluguelConsultMB.aluguelSel.data_ini.getTime()}) ? '#81C784' : 'inherit') + ';'
+        		+'border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' 
+        		+ date.day + '</span>';
+    }
+    //]]>
+</script>
+								<div class="p-col-4">
 									<h4>Data de Retorno:</h4>
-							        <p:datePicker id="popup" value="#{calendarView.date2}" />
+									<p:datePicker value="#{aluguelConsultMB.retorno}" 
+										dateTemplate="dateTemplateFunc" pattern="dd/MM/yyyy" />
 								</div>
 							</div>
+							
 							<div class="p-grid">
-								<div class="p-col">
-									<h4>Horímetro:</h4>
+								<div class="p-col-4">
+									<h4>Horímetro de Saída:</h4>
+									<p:outputLabel
+										value="#{aluguelConsultMB.aluguelSel.hori_saida}" />
+								</div>
+								<div class="p-col-4">
+									<h4>Horímetro Previsto:</h4>
+									<p:outputLabel
+										value="#{aluguelConsultMB.horiPrevis}" />
+								</div>
+								<div class="p-col-4">
+									<h4>Horímetro de Retorno:</h4>
 									<p:inputNumber minValue="0"
-										value="#{maquina.revisao.horimetro}" />
+										value="#{aluguelConsultMB.horiRetorno}"><p:ajax listener="#{aluguelConsultMB.updateMulta()}"/> </p:inputNumber>
 								</div>
 							</div>
-							<br></br>
+
+							<p:accordionPanel style="display: #{aluguelConsultMB.showMulta}"
+								widgetVar="multaAccordion" activeIndex="-1">
+								<p:tab title="Multa">
+									<p>Esta multa é por motivo de #{aluguelConsultMB.motivo}.
+										Por isso, é recalculado o valor contratado desconsiderando o
+										desconto por fidelização e incluindo o serviço prestado por
+										fora do contratado.</p>
+									<div class="ui-g">
+										<!-- Máquina -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Máquina" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="Diária" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="Nº Dias" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="Valor" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Máquina descrição -->
+										<div class="ui-g-6">
+											<p:outputLabel value="#{aluguelConsultMB.maquinaSel}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel
+												value="R$#{aluguelConsultMB.maquinaSel.valor_diaria}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.ndiasPrev}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="R$#{aluguelConsultMB.valor}" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Desconto -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Multa" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="%" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="+R$" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="R$" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Atraso na devolução -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Atraso na devolução" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.descAbDias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.delAbDias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.valAbDias}" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Abuso de horas -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Abuso de horas" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.descAbHoras}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.delAbHoras}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.valAbHoras}" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Desconto -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Descontos" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="%" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="-R$" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="R$" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Desconto Nº de Dias -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Nº de Dias" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.descNdias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.delNdias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.valNdias}" />
+										</div>
+									</div>
+									<div class="ui-g">
+										<!-- Desconto Horas/dia -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Horas/Dia" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.descHdias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.delHdias}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.valHdias}" />
+										</div>
+									</div>
+
+									<div class="ui-g">
+										<!-- Desconto personalizado -->
+										<div class="ui-g-6">
+											<p:outputLabel value="Personalizado" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.descPers}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.delPers}" />
+										</div>
+										<div class="ui-g-2">
+											<p:outputLabel value="#{aluguelConsultMB.valPers}" />
+										</div>
+									</div>
+
+								</p:tab>
+							</p:accordionPanel>
+							<div class="ui-g">
+								<!-- Total -->
+								<div class="ui-g-6"></div>
+								<div class="ui-g-2">
+									<p:outputLabel value="Total" />
+								</div>
+								<div class="ui-g-4">
+									<p:inputText value="#{aluguelConsultMB.total}" />
+								</div>
+							</div>
 							<p:commandButton class="btn btn-primary btn-text"
 								value="Confirmar" id="btnConfirmarRev"
 								action="#{maquina.putRevisao}" />
 
 						</p:dialog>
 
-						
+
 					</div>
 					<div class="p-col">
 						<div class="p-grid p-justify-end">
@@ -83,7 +257,7 @@
 								action="#{maquina.cancelRevisao}" />
 
 						</p:dialog>
-						
+
 					</div>
 					<div class="p-col">
 						<div class="p-grid p-justify-end">
@@ -106,6 +280,7 @@
 						</div>
 					</div>
 				</div>
+			</div>
 		</h:form>
 	</ui:define>
 

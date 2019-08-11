@@ -252,6 +252,49 @@ public class AluguelModel implements Serializable {
 		return null;
 	}
 	
+	public AluguelBean readBean(int n_aluguel) {
+		AluguelBean aluguel;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM ALUGUEL WHERE N_ALUGUEL = ?");
+				
+				st.setInt(1, n_aluguel);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					aluguel = new AluguelBean();
+					aluguel.setN_aluguel(rs.getInt("n_aluguel"));
+					aluguel.setData_ini(HUtil.dateToUtil(rs.getDate("data_ini")));
+					aluguel.setData_entregue(HUtil.dateToUtil(rs.getDate("data_entregue")));
+					aluguel.setData_final(HUtil.dateToUtil(rs.getDate("data_final")));
+					aluguel.setVal_contratado(rs.getFloat("val_contratado"));
+					aluguel.setValor_pago(rs.getFloat("valor_pago"));
+					aluguel.setHori_retorno(rs.getInt("hori_retorno"));
+					aluguel.setHori_saida(rs.getInt("hori_saida"));
+					aluguel.setN_cliente_fk(rs.getInt("n_cliente_fk"));
+					aluguel.setN_empresa_fk(rs.getInt("n_empresa_fk"));
+					aluguel.setN_funcionario_fk(rs.getInt("n_funcionario_fk"));
+					aluguel.setN_maquina_fk(rs.getInt("n_maquina_fk"));
+					aluguel.setTempo_hd(rs.getFloat("tempo_hd"));
+					return aluguel;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+	
 	public static void main(String[] args) {
 //		AluguelBean l = new AluguelBean();
 //		l.setN_cliente_fk(0);
