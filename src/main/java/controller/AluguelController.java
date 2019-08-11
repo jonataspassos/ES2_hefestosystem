@@ -243,6 +243,7 @@ public class AluguelController implements Serializable {
 
 	public void setHoras(String horas) {
 		horas = horas.replaceAll("[^0-9]", "");
+		System.out.println(horas);
 		try {
 			getAluguelSel().setTempo_hd(Integer.parseInt(horas));
 		} catch (NumberFormatException e) {
@@ -324,11 +325,16 @@ public class AluguelController implements Serializable {
 	}
 
 	public void setTotal(String total) {
-		total = total.replaceAll("[^0-9.]", "");
-		getAluguelSel().setVal_contratado(Float.parseFloat(total));
-		descontos[3] = getAluguelSel().getVal_contratado() / valFidelf();
-		System.out.println("" + descontos[3] + " " + getAluguelSel().getVal_contratado() + " " + valFidelf());
-
+		float convert;
+		try {
+			convert = Float.parseFloat(total);
+		}catch (NumberFormatException e) {
+			total = total.replaceAll("[^0-9,]", "");
+			total = total.replaceAll(",", ".");
+			convert = Float.parseFloat(total);
+		}
+		
+		getAluguelSel().setVal_contratado(convert);
 	}
 
 	public String getTotal() {
@@ -337,6 +343,9 @@ public class AluguelController implements Serializable {
 
 	
 //----------------- Methods ---------------------------//	
+	public void updateDescontos() {
+		descontos[3] = getAluguelSel().getVal_contratado() / valFidelf();
+	}
 	public void nextStep() {
 		switch (step) {
 		case 0:
@@ -369,7 +378,6 @@ public class AluguelController implements Serializable {
 	public void backStep() {
 		if (this.step > 0)
 			this.step--;
-
 	}
 
 	public void save() {
@@ -402,7 +410,6 @@ public class AluguelController implements Serializable {
 	
 	public void searchCliente() {
 		String cpf = this.getClienteSel().getCpf();
-		System.out.println(cpf);
 		this.clienteSel = clienteService.readLookUp(cpf);
 		if (this.clienteSel == null){
 			clienteSel = new ClienteLookUpList();

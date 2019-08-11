@@ -16,7 +16,7 @@
 			<p:menuitem value="Especificação do Aluguel" styleClass="p-col" />
 			<p:menuitem value="Confirmação e Pagamento" styleClass="p-col" />
 		</p:steps>
-		<h:form>
+		<h:form id="form">
 			<p:autoUpdate />
 			<div style="display: #{aluguelMB.getForms(0)}">
 				<h1>Dados Cadastrais</h1>
@@ -151,7 +151,7 @@
 				<div class="ui-g"><!-- Total -->
 				    <div class="ui-g-8"></div>
 				    <div class="ui-g-2"><p:outputLabel value="Total"/></div>
-				    <div class="ui-g-2"><p:inputText value = "#{aluguelMB.total}"/> </div>
+				    <div class="ui-g-2"><p:inputText value = "#{aluguelMB.total}"><p:ajax listener="#{aluguelMB.updateDescontos()}"/></p:inputText> </div>
 				</div>
 			</div>
 
@@ -164,7 +164,7 @@
 					<p:commandButton value="anterior" disabled="#{aluguelMB.disabledAnterior}"
 						actionListener="#{aluguelMB.backStep()}" />
 					<p:commandButton value="#{aluguelMB.valueProximo}"
-						actionListener="#{aluguelMB.nextStep()}" />
+						actionListener="#{aluguelMB.nextStep()}"/>
 				</div>
 			</div>
 

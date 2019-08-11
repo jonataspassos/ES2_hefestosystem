@@ -37,7 +37,6 @@ public class AluguelConsultController implements Serializable{
 	private float[] descontos = { 1.0f, 1.0f, 1.0f, 1.0f, 1.0f };
 	//atraso, abuso, n_dias, horas, personalizado
 	private Date retorno;
-	private float newValue;
 
 	// ------------------Managed Propetys -------------------------//
 	@ManagedProperty("#{aluguelModel}")
@@ -120,13 +119,6 @@ public class AluguelConsultController implements Serializable{
 	public void setRetorno(Date retorno) {
 		this.retorno = retorno;
 	}
-	public float getNewValue() {
-		return newValue;
-	}
-
-	public void setNewValue(float newValue) {
-		this.newValue = newValue;
-	}
 
 	//----------------------Unreall Get Set -----------------------//
 	public String getMotivo() {
@@ -141,43 +133,55 @@ public class AluguelConsultController implements Serializable{
 	}
 
 	public float getValor() {
-		return getNdias() * maquinaSel.getValor_diaria();
+		return getNdiasPrev() * maquinaSel.getValor_diaria();
 	}
 	
 	public String getDescAbDias() {
-		return String.format("%.2f %%", descontos[2] * 100);
+		return String.format("%.2f %%", descontos[0] * 100);
 	}
 	
 	public String getDescAbHoras() {
-		return String.format("%.2f %%", descontos[2] * 100);
-	}
-
-	public String getDescNdias() {
-		return String.format("%.2f %%", descontos[0] * 100);
-	}
-
-	public String getDescHdias() {
 		return String.format("%.2f %%", descontos[1] * 100);
 	}
 
-	public String getDescPers() {
+	public String getDescNdias() {
+		return String.format("%.2f %%", descontos[2] * 100);
+	}
+
+	public String getDescHdias() {
 		return String.format("%.2f %%", descontos[3] * 100);
 	}
 
-	public float valNdiasf() {
+	public String getDescPers() {
+		return String.format("%.2f %%", descontos[4] * 100);
+	}
+	
+	public float valAbDiasf() {
 		return getValor() * descontos[0];
+	}
+	
+	public float valAbHorasf() {
+		return valAbDiasf() * descontos[1];
+	}
+
+	public float valNdiasf() {
+		return valAbHorasf() * descontos[2];
 	}
 
 	public float valHdiasf() {
-		return valNdiasf() * descontos[1];
-	}
-
-	public float valFidelf() {
-		return valHdiasf() * descontos[2];
+		return valNdiasf() * descontos[3];
 	}
 
 	public float valPersf() {
-		return valFidelf() * descontos[3];
+		return valHdiasf() * descontos[4];
+	}
+	
+	public String getValAbDias() {
+		return String.format("R$%.2f", valAbDiasf());
+	}
+	
+	public String getValAbHoras() {
+		return String.format("R$%.2f", valAbHorasf());
 	}
 
 	public String getValNdias() {
@@ -188,34 +192,35 @@ public class AluguelConsultController implements Serializable{
 		return String.format("R$%.2f", valHdiasf());
 	}
 
-	public String getValFidel() {
-		return String.format("R$%.2f", valFidelf());
-	}
-
 	public String getValPers() {
 		return String.format("R$%.2f", valPersf());
 	}
+	
+	public String getDelAbDias() {
+		return String.format("R$%.2f", valAbDiasf() - getValor());
+	}
+	
+	public String getDelAbHoras() {
+		return String.format("R$%.2f", valAbHorasf() - valAbDiasf());
+	}
 
 	public String getDelNdias() {
-		return String.format("R$%.2f", valNdiasf() - getValor());
+		return String.format("R$%.2f", valNdiasf() - valAbHorasf());
 	}
 
 	public String getDelHdias() {
 		return String.format("R$%.2f", valHdiasf() - valNdiasf());
 	}
 
-	public String getDelFidel() {
-		return String.format("R$%.2f", valFidelf() - valHdiasf());
-	}
-
 	public String getDelPers() {
-		return String.format("R$%.2f", valPersf() - valFidelf());
+		return String.format("R$%.2f", valPersf() - valHdiasf());
 	}
 
 	public void setTotal(String total) {
-		total = total.replaceAll("[^0-9.]", "");
+		total = total.replaceAll("[^0-9,]", "");
+		total = total.replaceAll(",", ".");
 		getAluguelSel().setVal_contratado(Float.parseFloat(total));
-		descontos[4] = aluguelSel.getVal_contratado() / valFidelf();
+		descontos[4] = aluguelSel.getVal_contratado() / valHdiasf();
 	}
 
 	public String getTotal() {
@@ -225,11 +230,18 @@ public class AluguelConsultController implements Serializable{
 		if(descontos[0] != 1.0f || descontos[1] != 1.0f) {
 			return "inherit";
 		}else {
-			return "none";
+			return "inherit";
 		}
 	}
 	public String getHoriPrevis() {
 		return ""+ (aluguelSel.getTempo_hd()*getNdias() + aluguelSel.getHori_saida());
+	}
+	
+	public void setHoriRetorno(int hori) {
+		aluguelSel.setHori_retorno(hori);
+	}
+	public int getHoriRetorno() {
+		return aluguelSel.getHori_retorno();
 	}
 	//----------------------Methods--------------------------------//
 	public String getAluguel_id_param() {
@@ -251,7 +263,10 @@ public class AluguelConsultController implements Serializable{
 	}
 	
 	public void updateMulta() {
-		
+		System.out.println(getNdias());
+		System.out.println(getNdiasPrev());
+		descontos[0]= getNdias()/getNdiasPrev();
+		PrimeFaces.current().executeScript("PF('dlgReturn').show()");
 	}
 	
 }

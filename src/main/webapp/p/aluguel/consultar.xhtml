@@ -64,7 +64,7 @@
 								<div class="p-col-4">
 									<h4>Horímetro de Retorno:</h4>
 									<p:inputNumber minValue="0"
-										value="#{maquina.revisao.horimetro}" />
+										value="#{aluguelConsultMB.horiRetorno}"><p:ajax listener="#{aluguelConsultMB.updateMulta()}"/> </p:inputNumber>
 								</div>
 							</div>
 
@@ -100,7 +100,7 @@
 												value="R$#{aluguelConsultMB.maquinaSel.valor_diaria}" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.ndias}" />
+											<p:outputLabel value="#{aluguelConsultMB.ndiasPrev}" />
 										</div>
 										<div class="ui-g-2">
 											<p:outputLabel value="R$#{aluguelConsultMB.valor}" />
@@ -127,13 +127,13 @@
 											<p:outputLabel value="Atraso na devolução" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.descFidel}" />
+											<p:outputLabel value="#{aluguelConsultMB.descAbDias}" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.delFidel}" />
+											<p:outputLabel value="#{aluguelConsultMB.delAbDias}" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.newValue}" />
+											<p:outputLabel value="#{aluguelConsultMB.valAbDias}" />
 										</div>
 									</div>
 									<div class="ui-g">
@@ -142,13 +142,13 @@
 											<p:outputLabel value="Abuso de horas" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.descFidel}" />
+											<p:outputLabel value="#{aluguelConsultMB.descAbHoras}" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.delFidel}" />
+											<p:outputLabel value="#{aluguelConsultMB.delAbHoras}" />
 										</div>
 										<div class="ui-g-2">
-											<p:outputLabel value="#{aluguelConsultMB.valFidel}" />
+											<p:outputLabel value="#{aluguelConsultMB.valAbHoras}" />
 										</div>
 									</div>
 									<div class="ui-g">
