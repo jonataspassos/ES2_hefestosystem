@@ -69,31 +69,31 @@ public class AluguelController implements Serializable {
 
 	}
 
-	public void nextStep(){
+	public void nextStep() {
 		switch (step) {
 		case 0:
-			if (clienteSel.getNome() != null
-					&& (!empresa || empresaSel.getRaz_social() !=null)) {
+			if (clienteSel.getNome() != null && (!empresa || empresaSel.getRaz_social() != null)) {
 				this.step++;
-			}else {
+			} else {
 				System.out.println("Preencha todos os campos!!");
 			}
 			break;
 		case 1:
-			if(maquinaSel2.getMarca()!=null && getHoras()!=null) {
-				
+			if (maquinaSel2.getMarca() != null && getHoras() != null) {
+
 				descontos[0] = HUtil.descNdias(getNdias());
 				descontos[1] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
-				descontos[2] = HUtil.descVip(empresa?getEmpresaSel().getN_alugueis() :getClienteSel().getN_alugueis());
+				descontos[2] = HUtil
+						.descVip(empresa ? getEmpresaSel().getN_alugueis() : getClienteSel().getN_alugueis());
 				setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2]);
-				
+
 				this.step++;
-			}else {
+			} else {
 				System.out.println("Preencha todos os campos!!");
 			}
 			break;
 		case 2:
-				save();
+			save();
 			break;
 		}
 	}
@@ -104,24 +104,24 @@ public class AluguelController implements Serializable {
 
 	}
 
-	public void save(){
+	public void save() {
 		getAluguelSel().setN_funcionario_fk(AutenticationMB.getFuncionarioDaSessao().getN_funcionario());
 		aluguelSel.setN_cliente_fk(getClienteSel().getN_cliente());
 		aluguelSel.setN_maquina_fk(getMaquinaSel2().getN_maquina());
 		aluguelSel.setData_ini(getPeriod().get(0));
 		aluguelSel.setData_final(period.get(1));
-		
+
 		int id = aluguelService.create(aluguelSel);
-		
+
 		if (empresa) {
 			aluguelSel.setN_aluguel(id);
 			aluguelSel.setN_empresa_fk(getEmpresaSel().getN_empresa());
 			aluguelService.setEmpresa(aluguelSel);
 		}
-		
-		System.out.println("Máquina Alugada");
-		messageService.info("Máquina Alugada");
-		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml?aluguel_id="+id);
+
+		System.out.println("Mï¿½quina Alugada");
+		messageService.info("Mï¿½quina Alugada");
+		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml?aluguel_id=" + id);
 	}
 
 	public void cancel() {
@@ -141,25 +141,24 @@ public class AluguelController implements Serializable {
 		else
 			return "true";
 	}
-	
+
 	public String getValueProximo() {
 		if (2 == step)
 			return "Concluir";
 		else
-			return "Próximo";
+			return "Prï¿½ximo";
 	}
 
 	public void searchCliente() {
 		String cpf = this.getClienteSel().getCpf();
-		this.clienteSel = clienteService.read(this.clienteSel.getCpf());
+		this.clienteSel = clienteService.readLookUp(this.clienteSel.getCpf());
 		if (this.clienteSel != null)
 			this.getAluguelSel().setN_cliente_fk(this.clienteSel.getN_cliente());
 		else {
 			this.getClienteSel().setCpf(cpf);
-			System.out.println("Esse Cliente não Existe!");
+			System.out.println("Esse Cliente nï¿½o Existe!");
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente não Existe!"));
-
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente nï¿½o Existe!"));
 		}
 	}
 

@@ -157,6 +157,10 @@ div.ui-datepicker th, div.ui-datepicker td {
 	position: relative;
 }
 
-th input.ui-inputfield.ui-inputtext {
+th input.ui-inputfield.ui-inputtext, .ui-column-customfilter {
 	display: none !important;
+}
+
+.full-width {
+	width: 100%;
 }

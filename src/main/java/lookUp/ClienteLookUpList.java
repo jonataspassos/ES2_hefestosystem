@@ -1,8 +1,6 @@
 package lookUp;
 
-import java.io.Serializable;
-
-public class ClienteLookUpList implements Serializable{
+public class ClienteLookUpList{
 	private int n_cliente;
 	private String cpf;
 	private String nome;
