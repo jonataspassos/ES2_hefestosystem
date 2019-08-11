@@ -9,18 +9,18 @@
 	<ui:define name="titulo">Login</ui:define>
 	<ui:define name="formulario">
 		<h:form>
-			<p:panel id="form-login" class="form-login" header="Login">
+			<p:panel id="form-login" header="Login">
 				<p:messages id="messages" showDetail="true" closable="true">
 					<p:autoUpdate />
 				</p:messages>
 				<div>
 					<h3 style="margin-top: 0px; margin-bottom: 0px">CPF*:</h3>
-					<p:inputText class="full-width" id="login"
+					<p:inputText class="full-width input-style-1" id="login"
 						value="#{autentication.funcionario.cpf}" required="true" />
 					<p:message for="login" />
 
 					<h3 style="margin-bottom: 0px">Senha*:</h3>
-					<p:password class="full-width" id="pass"
+					<p:password class="full-width input-style-1" id="pass"
 						value="#{autentication.funcionario.senha}" required="true" />
 					<p:message for="pass" />
 				</div>

@@ -10,29 +10,32 @@
 	<ui:define name="cabecalho">Consultar Cliente</ui:define>
 	<ui:define name="corpo">
 		<p:spacer></p:spacer>
-		<p:growl id="growl" life="2000" />
-		<h:form>
-			<div class="p-grid p-justify-start">
-				<p:autoUpdate />
-				<div class="p-col-2">
-					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
-						value="Cancelar" id="cancel" icon="fa fa-times" />
-				</div>
-				<div class="p-col-2">
-					<p:commandButton class="btn btn-primary btn-text" value="Editar"
-						id="btnEdita" action="#{clienteMB.setClienteEdicao(true)}"
-						update="growl" icon="fa fa-pencil-square-o"
-						disabled="#{clienteMB.clienteEdicao}" />
-				</div>
-				<div class="p-col-2">
-					<p:commandButton class="btn btn-success btn-text" value="Salvar"
-						id="btnSalvar" action="#{clienteMB.salvarCliente()}" update="growl"
-						icon="fa fa-save" disabled="#{!clienteMB.clienteEdicao}" />
-				</div>
-			</div>
+		<div class="p-grid">
+			<div class="p-col-10">
+				<h:form id="form">
+					<p:autoUpdate></p:autoUpdate>
+					<p:growl id="msgs" life="3000" showDetail="true" />
 
-			<div class="p-grid">
-				<div class="p-col-10">
+					<div class="p-grid p-justify-start">
+						<p:autoUpdate />
+						<div class="p-col-2">
+							<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+								value="Cancelar" id="cancel" icon="fa fa-times" />
+						</div>
+						<div class="p-col-2">
+							<p:commandButton class="btn btn-primary btn-text" value="Editar"
+								id="btnEdita" action="#{clienteMB.setClienteEdicao(true)}"
+								update="form:msgs" icon="fa fa-pencil-square-o"
+								disabled="#{clienteMB.clienteEdicao}" />
+						</div>
+						<div class="p-col-2">
+							<p:commandButton class="btn btn-success btn-text" value="Salvar"
+								id="btnSalvar" action="#{clienteMB.salvarCliente()}"
+								update="form:msgs" icon="fa fa-save"
+								disabled="#{!clienteMB.clienteEdicao}" />
+						</div>
+					</div>
+
 					<div class="p-grid">
 						<div class="p-col-3">
 							<div class="box">
@@ -48,39 +51,232 @@
 						<div class="p-col-3">
 							<div class="box">
 								<h5>CPF</h5>
-								<p:inputMask id="cpf" value="#{clienteMB.cliente.cpf}"
+								<p:inputMask id="cpf" value="#{clienteMB.clientCpf}"
 									mask="999.999.999-99" required="true"
 									disabled="#{!clienteMB.clienteEdicao}" />
 							</div>
 						</div>
 					</div>
-				</div>
 
-
-				<div class="p-col-2 p-dir-col">
-					<div class="p-col">
-						<div class="p-grid p-justify-end">
-							<p:commandButton class="btn btn-error btn-text" value="Excluir"
-								id="btnExcluir" action="#{cliente.excluirCliente}"
-								update="growl" icon="fa fa-trash">
-								<p:confirm header="Confirmação"
-									message="Tem certeza de que deseja excluir o cliente?"
-									icon="pi pi-exclamation-triangle" />
-							</p:commandButton>
-
-							<p:confirmDialog global="true" showEffect="fade"
-								hideEffect="fade">
-								<p:commandButton value="Sim" type="button"
-									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
-								<p:commandButton value="Não" type="button"
-									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
-							</p:confirmDialog>
+					<h3 class="titulo">Telefones</h3>
+					<hr></hr>
+					<div class="p-grid">
+						<div class="p-col-3">
+							<div class="box">
+								<h5>DDD</h5>
+								<p:inputMask id="ddd" value="#{clienteMB.cliente_tel.ddd}"
+									mask="99" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Número</h5>
+								<p:inputMask id="numero_tel" value="#{clienteMB.clientPhone}"
+									mask="99999-9999" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
 						</div>
 					</div>
-				</div>
+				</h:form>
 
+				<h:form id="form1">
+					<p:autoUpdate></p:autoUpdate>
+					<p:growl id="msgs1" life="3000" showDetail="true" />
+
+
+					<h3 class="titulo">Endereços</h3>
+					<hr></hr>
+
+					<div class="p-grid">
+						<div class="p-col-3">
+							<div class="box">
+								<h5>UF</h5>
+								<p:inputMask id="uf" value="#{clienteMB.cliente_end.uf}"
+									mask="a*" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Cidade</h5>
+								<p:inputText id="cidade" value="#{clienteMB.cliente_end.cidade}"
+									required="true" disabled="#{!clienteMB.clienteEdicao}">
+									<f:validateLength minimum="1" maximum="20" />
+								</p:inputText>
+							</div>
+						</div>
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Bairro</h5>
+								<p:inputText id="bairro" value="#{clienteMB.cliente_end.bairro}"
+									required="true" disabled="#{!clienteMB.clienteEdicao}">
+									<f:validateLength minimum="1" maximum="20" />
+								</p:inputText>
+							</div>
+						</div>
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Rua</h5>
+								<p:inputText id="rua" value="#{clienteMB.cliente_end.rua}"
+									required="true" disabled="#{!clienteMB.clienteEdicao}">
+									<f:validateLength minimum="1" maximum="30" />
+								</p:inputText>
+							</div>
+						</div>
+					</div>
+
+					<div class="p-grid">
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Número</h5>
+								<p:inputNumber id="numero"
+									value="#{clienteMB.cliente_end.numero}" required="true"
+									minValue="0" maxValue="9999999999"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+						<div class="p-col-3">
+							<div class="box">
+								<h5>CEP</h5>
+								<p:inputMask id="cep" value="#{clienteMB.cliente_end.cep}"
+									mask="99999-999" required="true"
+									disabled="#{!clienteMB.clienteEdicao}" />
+							</div>
+						</div>
+
+					</div>
+					<div class="p-grid p-col">
+						<p:autoUpdate></p:autoUpdate>
+						<p:dataTable id="enderecos" widgetVar="end" var="endereco"
+							value="#{clienteMB.enderecos}" editable="true"
+							style="margin-bottom:20px" rowEditMode="lazy" cellEditMode="lazy">
+							<f:facet name="header">Endereços</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{clienteMB.onEnderecoRowEdit}"
+								update="form1:msgs1" />
+							<p:ajax event="rowEditCancel"
+								listener="#{clienteMB.onEnderecoRowCancel}" update="form1:msgs1" />
+
+							<p:column headerText="UF">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.uf}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{endereco.uf}" mask="a*" required="true" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Cidade">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.cidade}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.cidade}" style="width:100%"
+											label="Cidade">
+											<f:validateLength minimum="1" maximum="20" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.bairro}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.bairro}" style="width:100%"
+											label="Bairro">
+											<f:validateLength minimum="1" maximum="20" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Rua">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.rua}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.rua}" style="width:100%"
+											label="Rua">
+											<f:validateLength minimum="1" maximum="30" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Número">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.numero}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.numero}" style="width:100%"
+											label="Número">
+											<f:validateLength minimum="1" maximum="10" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="CEP">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.cep}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{endereco.cep}" mask="99999-999"
+											required="true" label="CEP" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="width:32px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+						<div class="p-col text-right pr-0">
+							<p:commandButton id="btnAddEndereco"
+								value="Adicionar novo endereço" class="btn btn-success btn-text"
+								update="form1:msgs1" icon="fa fa-plus"
+								action="#{clienteMB.onEnderecoAddNew()}" />
+
+							<!-- 								<p:commandButton class="btn btn-success btn-text" value="Salvar" -->
+							<!-- 								id="btnSalvar" action="#{clienteMB.salvarCliente()}" -->
+							<!-- 								update="msgs" icon="fa fa-save" -->
+							<!-- 								disabled="#{!clienteMB.clienteEdicao}" /> -->
+
+						</div>
+					</div>
+				</h:form>
 			</div>
+			<div class="p-col-2 p-dir-col">
+				<div class="p-col">
+					<div class="p-grid p-justify-end">
+						<p:commandButton class="btn btn-error btn-text" value="Excluir"
+							id="btnExcluir" action="#{cliente.excluirCliente}" update="form1:msgs1"
+							icon="fa fa-trash">
+							<p:confirm header="Confirmação"
+								message="Tem certeza de que deseja excluir o cliente?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
 
-		</h:form>
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Sim" type="button"
+								styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+							<p:commandButton value="Não" type="button"
+								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+						</p:confirmDialog>
+					</div>
+				</div>
+			</div>
+		</div>
 	</ui:define>
 </ui:composition>

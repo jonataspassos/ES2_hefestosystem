@@ -4,10 +4,15 @@ import java.util.List;
 import java.util.Map;
 
 import javax.annotation.PostConstruct;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.PrimeFaces;
+import org.primefaces.event.CellEditEvent;
+import org.primefaces.event.RowEditEvent;
 
 import bean.ClienteBean;
 import bean.EndClienteBean;
@@ -22,6 +27,8 @@ import model.TelClienteModel;
 public class ClienteControler {
 	private List<ClienteLookUpList> clientes;
 	private List<ClienteLookUpList> filteredClientes;
+	private List<EndClienteBean> enderecos;
+	private List<TelClienteBean> tels;
 	private ClienteLookUpList selectedCliente;
 	private ClienteBean cliente;
 	private TelClienteBean cliente_tel;
@@ -43,9 +50,11 @@ public class ClienteControler {
 		clientes = clienteService.list();
 		cliente = null;
 		cliente_id_param = null;
-		clienteEdicao = false;
+		clienteEdicao = true;
 		cliente_end = null;
 		cliente_tel = null;
+		enderecos = null;
+		tels = null;
 	}
 
 	public ClienteLookUpList getSelectedCliente() {
@@ -158,6 +167,56 @@ public class ClienteControler {
 		this.telClienteService = telClienteService;
 	}
 
+	public List<EndClienteBean> getEnderecos() {
+		if (enderecos == null)
+			enderecos = endClienteService.readEnderecos(getCliente_id_param());
+		return enderecos;
+	}
+
+	public void setEnderecos(List<EndClienteBean> enderecos) {
+		this.enderecos = enderecos;
+	}
+
+	public List<TelClienteBean> getTels() {
+		if (tels == null)
+			tels = telClienteService.readTels(getCliente_id_param());
+		return tels;
+	}
+
+	public void setTels(List<TelClienteBean> tels) {
+		this.tels = tels;
+	}
+
+	public void onEnderecoRowEdit(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Endereço Editado.", ((EndClienteBean) event.getObject()).getRua());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onEnderecoRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edição Cancelada.", ((EndClienteBean) event.getObject()).getRua());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onEnderecoAddNew() {
+		System.out.println("TESTE");
+		System.out.println(getCliente_end());
+		System.out.println(cliente);
+		enderecos.add(getCliente_end());
+		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onEnderecoCellEdit(CellEditEvent event) {
+		Object oldValue = event.getOldValue();
+		Object newValue = event.getNewValue();
+
+		if (newValue != null && !newValue.equals(oldValue)) {
+			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cédula modificada",
+					"Velha: " + oldValue + ", Nova:" + newValue);
+			FacesContext.getCurrentInstance().addMessage(null, msg);
+		}
+	}
+
 	public void createCliente() throws Exception {
 		if (cliente != null) {
 //			System.out.println(cliente);
@@ -178,12 +237,16 @@ public class ClienteControler {
 	}
 
 	public void salvarCliente() {
-		if (cliente != null) {
-			clienteService.update(cliente);
-			return;
-		}
+		System.out.println(getCliente_end());
+		System.out.println(cliente);
+//		if (cliente != null) {
+//			clienteService.update(cliente);
+//			return;
+//		}
 
-		System.out.println("Error: Cliente não foi instanciado.");
+		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error.",
+				"Error: Cliente não foi instanciado.");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
 	public void excluirMaquina() {
@@ -201,7 +264,8 @@ public class ClienteControler {
 	public String getClientCpf() {
 		String r = cliente.getCpf();
 		if (r != null)
-			return r.substring(0, 2) + "." + r.substring(3, 5) + "." + r.substring(6, 8) + "-" + r.substring(9, 11);
+			return r;
+//			return r.substring(0, 2) + "." + r.substring(3, 5) + "." + r.substring(6, 8) + "-" + r.substring(9, 11);
 		return "";
 	}
 
