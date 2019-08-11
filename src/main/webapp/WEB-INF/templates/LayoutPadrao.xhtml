@@ -12,8 +12,8 @@
 	</title>
 	<h:outputStylesheet library="css" name="sistema.css" />
 	<h:outputStylesheet library="css" name="primeflex.css" />
-<!-- 	<h:outputStylesheet library="css" name="https://www.primefaces.org/showcase/javax.faces.resource/primeicons/primeicons.css.xhtml?ln=primefaces&v=7.1-SNAPSHOT"/> -->
-<!-- 	<h:outputStylesheet library="css" name="primeflex.scss" /> -->
+	<!-- 	<h:outputStylesheet library="css" name="https://www.primefaces.org/showcase/javax.faces.resource/primeicons/primeicons.css.xhtml?ln=primefaces&v=7.1-SNAPSHOT"/> -->
+	<!-- 	<h:outputStylesheet library="css" name="primeflex.scss" /> -->
 </h:head>
 
 <h:body>
@@ -38,24 +38,22 @@
 					<p:menuitem value="Aluguel" icon="pi pi-users"
 						url="#{system.path()}/p/aluguel/listar.xhtml" />
 				</p:submenu>
-				<p:submenu label="Sistema" icon="pi pi-list">
-					<p:menuitem value="Perfil" url="#" icon="pi pi-info" />
-					<p:menuitem value="Configurações" url="#" icon="pi pi-info" />
-				</p:submenu>
-				<p:menuitem value="Help" url="#" icon="pi pi-info" />
 				<f:facet name="options">
 
 					<!-- <p:inputText style="margin:1px 10px 1px 1px;" placeholder="Search" /> -->
-					<p:commandButton class="btn btn-normal btn-text" value="Logout" icon="pi pi-sign-out"
-						action="#{autentication.logout}" />
+					<p:commandButton class="btn btn-normal btn-text" value="Logout"
+						icon="pi pi-sign-out" action="#{autentication.logout}" />
 				</f:facet>
 			</p:menubar>
-			<p:growl id="messages" autoUpdate="true" showDetail="true" closable="true">
+			<p:growl id="message" autoUpdate="true" showDetail="true"
+				sticky="true" closable="true">
 				<p:autoUpdate />
 			</p:growl>
 		</h:form>
 		<div class="conteudo">
-			<h1 class="titulo"> <ui:insert name="cabecalho"/> </h1>
+			<h1 class="titulo">
+				<ui:insert name="cabecalho" />
+			</h1>
 			<hr></hr>
 			<ui:insert name="corpo" />
 		</div>

@@ -39,12 +39,13 @@ public class MaquinaController {
 	@PostConstruct
 	public void init() {
 		maquina = null;
+		messagesService = new MessagesMB();
 		revisao = null;
 		alugueis = null;
 		revisoes = null;
 		maquina_id_param = null;
 		maquinaEdicao = false;
-		maquinas = maqm.list();
+		maquinas = null;
 	}
 
 	public MessagesMB getMessagesService() {
@@ -64,8 +65,14 @@ public class MaquinaController {
 	}
 
 	public MaquinaLookUp getMaquina() {
-		if (maquina == null)
+		String param_id = getMaquina_id_param();
+		if (maquina == null) {
+			if (param_id == null) {
+				maquina = new MaquinaLookUp();
+				return maquina;
+			}
 			maquina = maqm.read(getMaquina_id_param());
+		}
 		return maquina;
 	}
 
@@ -98,7 +105,7 @@ public class MaquinaController {
 	}
 
 	public ArrayList<AluguelBean> getAlugueis() {
-		if(alugueis == null) 
+		if (alugueis == null)
 			alugueis = maqm.getLastAlugueis(getMaquina_id_param());
 		return alugueis;
 	}
@@ -119,16 +126,6 @@ public class MaquinaController {
 
 	public void setMaquinaEdicao(Boolean maquinaEdicao) {
 		this.maquinaEdicao = maquinaEdicao;
-	}
-
-	public void createMaquina() throws Exception {
-		if (maqm.create(maquina)) {
-			messagesService.info("Máquina cadastrada com sucesso.");
-			Thread.sleep(5000);
-			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
-			return;
-		}
-		messagesService.error("Error ao tentar cadastrar m�quina.");
 	}
 
 	public List<String> getMarcas() {
@@ -156,6 +153,8 @@ public class MaquinaController {
 	}
 
 	public List<MaquinaLookUp> getMaquinas() {
+		if (maquinas == null)
+			maquinas = maqm.list();
 		return maquinas;
 	}
 
@@ -169,6 +168,16 @@ public class MaquinaController {
 		}
 	}
 
+	public void createMaquina() throws Exception {
+		if (maqm.create(maquina)) {
+			messagesService.info("Máquina cadastrada com sucesso.");
+			Thread.sleep(5000);
+			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
+			return;
+		}
+		messagesService.error("Error ao tentar cadastrar máquina.");
+	}
+
 	public void putRevisao() {
 		LocalDate date = LocalDate.now();
 		if (revisao != null) {
@@ -180,20 +189,31 @@ public class MaquinaController {
 
 		System.out.println("Error: Revisão não foi instanciada.");
 	}
-	
+
 	public void cancelRevisao() {
 		LocalDate date = LocalDate.now();
 		if (revisao != null) {
 			revisao.setData_retorno(date);
-//			revisao.setN_maquina_fk(Integer.parseInt(getMaquina_id_param()));
 			maqm.cancelRevisao(revisao);
 			return;
 		}
 	}
-	
+
 	public void salvarMaquina() {
-		if(maquina != null)
+		if (maquina != null) {
 			maqm.update(maquina);
+			return;
+		}
+
+		System.out.println("Error: Máquina não foi instanciada.");
+	}
+
+	public void excluirMaquina() {
+		if (maquina != null) {
+			maqm.delete(getMaquina_id_param());
+			return;
+		}
+		System.out.println("Error: Máquina não foi instanciada.");
 	}
 
 }

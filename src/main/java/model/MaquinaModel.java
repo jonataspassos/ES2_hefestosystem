@@ -23,8 +23,7 @@ import resources.Database;
 @ApplicationScoped
 public class MaquinaModel implements Serializable {
 
-	public Boolean create(MaquinaBean maquina) {
-
+	public Boolean create(MaquinaLookUp maquina) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -35,10 +34,12 @@ public class MaquinaModel implements Serializable {
 
 				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_CREATE(?,?,?,?,?)");
 
-				st.setString(1, "" + maquina.getN_registro());
+				NumberFormat df = new DecimalFormat("#0.00");
+
+				st.setInt(1, maquina.getN_registro());
 				st.setString(2, maquina.getMarca());
-				st.setString(3, "" + maquina.getPotencia());
-				st.setString(4, "" + maquina.getValor_diaria());
+				st.setFloat(3, Float.parseFloat(df.format(maquina.getPotencia())));
+				st.setFloat(4, Float.parseFloat(df.format(maquina.getValor_diaria())));
 				st.setString(5, maquina.getTipo_combustivel());
 
 				st.execute();
@@ -147,10 +148,10 @@ public class MaquinaModel implements Serializable {
 
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_UPDATE(?, ?,?,?,?,?)");
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_UPDATE(?,?,?,?,?,?)");
 
 				NumberFormat df = new DecimalFormat("#0.00");
-				
+
 				st.setInt(1, maquina.getN_maquina());
 				st.setInt(2, maquina.getN_registro());
 				st.setString(3, maquina.getMarca());
@@ -168,7 +169,7 @@ public class MaquinaModel implements Serializable {
 		}
 	}
 
-	public void delete(MaquinaBean maquina) {
+	public void delete(String maquina_id) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -177,10 +178,17 @@ public class MaquinaModel implements Serializable {
 			conn = db.getConnection();
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_DELETE(?)");
+				PreparedStatement st = conn.prepareStatement("DELETE FROM REVISAO WHERE N_MAQUINA_FK = ?");
+				st.setInt(1, Integer.parseInt(maquina_id));
+				st.execute();
 
-				st.setInt(1, maquina.getN_maquina());
+				st = conn.prepareStatement("DELETE FROM AlUGUEL WHERE N_MAQUINA_FK = ?");
+				st.setInt(1, Integer.parseInt(maquina_id));
+				st.execute();
 
+				st = conn.prepareStatement("EXECUTE PROCEDURE MAQUINA_DELETE(?)");
+//				PreparedStatement st = conn.prepareStatement("DELETE FROM MAQUINA WHERE N_MAQUINA = ?");
+				st.setInt(1, Integer.parseInt(maquina_id));
 				st.execute();
 
 				st.close();

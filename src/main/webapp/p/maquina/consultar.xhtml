@@ -39,7 +39,7 @@
 								<h5>Número de Registro</h5>
 								<p:inputText id="n_registro"
 									value="#{maquina.maquina.n_registro}"
-									disabled="#{!maquina.maquinaEdicao}" />
+									disabled="#{!maquina.maquinaEdicao}"/>
 							</div>
 						</div>
 
@@ -47,7 +47,9 @@
 							<div class="box">
 								<h5>Marca</h5>
 								<p:inputText id="marca" value="#{maquina.maquina.marca}"
-									disabled="#{!maquina.maquinaEdicao}" />
+									disabled="#{!maquina.maquinaEdicao}">
+									<f:validateLength minimum="1" maximum="30"/>
+								</p:inputText>
 							</div>
 						</div>
 
@@ -55,7 +57,7 @@
 							<div class="box">
 								<h5>Potência</h5>
 								<p:inputNumber id="potencia" value="#{maquina.maquina.potencia}"
-									disabled="#{!maquina.maquinaEdicao}" />
+									disabled="#{!maquina.maquinaEdicao}"/>
 							</div>
 						</div>
 
@@ -64,7 +66,7 @@
 								<h5>Valor da diária</h5>
 								<p:inputNumber id="valor_diaria"
 									value="#{maquina.maquina.valor_diaria}"
-									disabled="#{!maquina.maquinaEdicao}" />
+									disabled="#{!maquina.maquinaEdicao}"/>
 							</div>
 						</div>
 					</div>
@@ -75,9 +77,9 @@
 								<h5>Tipo de combustível</h5>
 								<p:inputText id="tipo_combustivel"
 									value="#{maquina.maquina.tipo_combustivel}"
-									disabled="#{!maquina.maquinaEdicao}" >
-									 <p:keyFilter regEx="/^\w{5,10}$/"/> 
-									</p:inputText>
+									disabled="#{!maquina.maquinaEdicao}">
+									<f:validateLength minimum="1" maximum="10"/>
+								</p:inputText>
 
 							</div>
 						</div>
@@ -114,14 +116,14 @@
 								<div class="p-col">
 									<h4>Motivo:</h4>
 									<p:inputTextarea rows="4" cols="50"
-										value="#{maquina.revisao.motivo}" />
+										value="#{maquina.revisao.motivo}" maxlength="255"/>
 								</div>
 							</div>
 							<div class="p-grid">
 								<div class="p-col">
 									<h4>Horímetro:</h4>
 									<p:inputNumber minValue="0"
-										value="#{maquina.revisao.horimetro}" />
+										value="#{maquina.revisao.horimetro}"/>
 								</div>
 							</div>
 							<br></br>
@@ -137,7 +139,7 @@
 								<div class="p-col">
 									<h4>Horímetro de Retorno:</h4>
 									<p:inputNumber minValue="0"
-										value="#{maquina.revisao.hori_retorno}" />
+										value="#{maquina.revisao.hori_retorno}"/>
 								</div>
 							</div>
 							<br></br>
@@ -162,8 +164,20 @@
 						<div class="p-grid p-justify-end">
 							<p:commandButton class="btn btn-error btn-text" value="Excluir"
 								disabled="#{maquina.maquina.status != '0'}" id="btnExcluir"
-								action="#{buttonView.buttonAction}" update="growl"
-								icon="fa fa-trash" />
+								action="#{maquina.excluirMaquina}" update="growl"
+								icon="fa fa-trash">
+								<p:confirm header="Confirmação"
+									message="Tem certeza de que deseja excluir a máquina?"
+									icon="pi pi-exclamation-triangle" />
+							</p:commandButton>
+
+							<p:confirmDialog global="true" showEffect="fade"
+								hideEffect="fade">
+								<p:commandButton value="Sim" type="button"
+									styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+								<p:commandButton value="Não" type="button"
+									styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+							</p:confirmDialog>
 						</div>
 					</div>
 				</div>
