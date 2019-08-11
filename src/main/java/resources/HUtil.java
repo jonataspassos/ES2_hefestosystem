@@ -15,23 +15,29 @@ public class HUtil {
 			return null;
 	}
 	
-	/*public static void main(String [] args) {
-		java.util.Date util = new java.util.Date(1567209600000l);
-		java.sql.Date sql = new java.sql.Date(1567209600000l);
-		
-		
-		
-		System.out.println(1567209600000l);
-		System.out.println(util);
-		System.out.println(dateToSql(util));
-		
-		System.out.println(sql);
-		System.out.println(dateToUtil(sql));
-		
-		System.out.println("\tutil\tsql");
-		System.out.println("y\t"+util.getYear()+"\t"+sql.getYear());
-		System.out.println("m\t"+util.getMonth()+"\t"+sql.getMonth());
-		System.out.println("d\t"+util.getDay()+"\t"+sql.getDay());
-	}*/
+	public static void main(String [] args) {
+		java.util.Date d1 = new java.util.Date(1565492400000l);
+		java.util.Date d2 = new java.util.Date(1566615600000l);
+		System.out.println();
+	}
+	
+	public static float f(float x,float apc,float dec,float min) {
+		return (float)(((1-min)/Math.PI)*(Math.atan((apc-x)/dec)-Math.atan(apc/dec)));
+	}
+	public static float d1(float x,float apc,float dec,float min) {
+		return 1+f(x, apc, dec, min);
+	}
+	public static float d2(float x,float apc,float dec,float min) {
+		return min - f(x, apc, dec, min);
+	}
+	
+	public static float descNdias(float x) {
+		return d1(x,50,18,0.2f);
+	}
+	public static float descHorasDias(float x) {
+		return d2(x, 6, 1.3f, 0.2f);
+	}
+	public static float descVip(float x) {
+		return d1(x, 10, 3, 0.6f);
+	}
 }
-

@@ -31,66 +31,43 @@
 					</p:outputPanel>
 				</f:facet>
 
-				<p:column headerText="Data de Saída" filterBy="#{alu.data_ini}"
-					sortBy="#{alu.data_ini}" filterMatchMode="gte">
-					<f:facet name="filter">
-						<p:calendar pattern="dd/MM/yyyy" widgetVar="calendarWidget">
-							<p:ajax event="dateSelect"
-								oncomplete="PF('alugueisTable').filter()" />
-						</p:calendar>
-					</f:facet>
+				<p:column headerText="Data de Saída"
+					sortBy="#{alu.data_ini}">
 					<p:datePicker pattern="dd/MM/yyyy" id="popup"
 						value="#{alu.data_ini}" readonly="#{facesContext.renderResponse}" />
 				</p:column>
 				<p:column headerText="Data de Retorno"
-					filterBy="#{alu.data_entregue}" sortBy="#{alu.data_entregue}"
-					filterMatchMode="contains">
+					sortBy="#{alu.data_entregue}">
 					<h:outputText value="#{alu.data_entregue}" />
 				</p:column>
-				<p:column headerText="Registro de Máqiona"
+				<p:column headerText="Registro de Máquina"
 					filterBy="#{alu.n_registro}" sortBy="#{alu.n_registro}"
 					filterMatchMode="contains">
 					<h:outputText value="#{alu.n_registro}" />
 				</p:column>
 				<p:column headerText="Potência da Máquina"
-					filterBy="#{alu.potencia}" sortBy="#{alu.potencia}"
-					filterMatchMode="gte">
-					<f:facet name="filter">
-						<p:spinner onchange="PF('alugueisTable').filter()"
-							styleClass="year-spinner custom-filter">
-							<f:converter converterId="javax.faces.Integer" />
-						</p:spinner>
-					</f:facet>
+					sortBy="#{alu.potencia}">
 					<h:outputText value="#{alu.potencia}" />
 				</p:column>
 				<p:column headerText="Valor do Contrato"
-					filterBy="#{alu.val_contratado}" sortBy="#{alu.val_contratado}"
-					filterMatchMode="gte">
-					<f:facet name="filter">
-						<p:spinner onchange="PF('alugueisTable').filter()"
-							styleClass="year-spinner custom-filter">
-							<f:converter converterId="javax.faces.Integer" />
-						</p:spinner>
-					</f:facet>
+					sortBy="#{alu.val_contratado}">
 					<h:outputText value="#{alu.val_contratado}" />
 				</p:column>
-				<p:column headerText="Valor Pago" filterBy="#{alu.valor_pago}"
-					sortBy="#{alu.valor_pago}" filterMatchMode="lte">
-					<f:facet name="filter">
-						<p:spinner onchange="PF('alugueisTable').filter()"
-							styleClass="year-spinner custom-filter">
-							<f:converter converterId="javax.faces.Integer" />
-						</p:spinner>
-					</f:facet>
+				<p:column headerText="Valor Pago"
+					sortBy="#{alu.valor_pago}">
 					<h:outputText value="#{alu.valor_pago}" />
 				</p:column>
-				<p:column headerText="Ações" style="width:40px;text-align:center">
-					<h:outputText value="#{cli.n_alugueis}" />
-				</p:column>
-				<p:column>
-					<p:commandButton value="Reset"
-						onclick="PF('calendarWidget').setDate(null);PF('alugueisTable').clearFilters()" />
-				</p:column>
+				<p:column headerText="Ações" class="text-center"
+						style="width:40px;text-align:center">
+						<p:linkButton class="btn-primary" outcome="consultar"
+							icon="fa fa-eye" title="Consultar Aluguel">
+							<f:param name="aluguel_id" value="#{alu.n_aluguel}" />
+						</p:linkButton>
+					</p:column>
+<!-- 				<p:column> -->
+<!-- 					<p:commandButton value="Reset" -->
+<!-- 						onclick="PF('calendarWidget').setDate(null);PF('alugueisTable').clearFilters()" /> -->
+<!-- 				</p:column> -->
 
 			</p:dataTable>
 		</h:form>
