@@ -11,13 +11,14 @@
 	<ui:define name="corpo">
 		<p:spacer></p:spacer>
 		<div class="p-grid">
-			<div class="p-col-10">
-				<h:form id="form">
-					<p:autoUpdate></p:autoUpdate>
-					<p:growl id="msgs" life="3000" showDetail="true" />
 
+			<p:autoUpdate />
+			<p:growl id="msgs" life="3000" showDetail="true" />
+
+			<div class="p-col-10">
+				<h:form id="form1">
+					<p:autoUpdate></p:autoUpdate>
 					<div class="p-grid p-justify-start">
-						<p:autoUpdate />
 						<div class="p-col-2">
 							<p:linkButton outcome="listar" class="btn btn-warning btn-text"
 								value="Cancelar" id="cancel" icon="fa fa-times" />
@@ -25,14 +26,13 @@
 						<div class="p-col-2">
 							<p:commandButton class="btn btn-primary btn-text" value="Editar"
 								id="btnEdita" action="#{clienteMB.setClienteEdicao(true)}"
-								update="form:msgs" icon="fa fa-pencil-square-o"
+								update="msgs" icon="fa fa-pencil-square-o"
 								disabled="#{clienteMB.clienteEdicao}" />
 						</div>
 						<div class="p-col-2">
 							<p:commandButton class="btn btn-success btn-text" value="Salvar"
-								id="btnSalvar" action="#{clienteMB.salvarCliente()}"
-								update="form:msgs" icon="fa fa-save"
-								disabled="#{!clienteMB.clienteEdicao}" />
+								id="btnSalvar" action="#{clienteMB.salvarCliente}" update="msgs"
+								icon="fa fa-save" disabled="#{!clienteMB.clienteEdicao}" />
 						</div>
 					</div>
 
@@ -57,7 +57,9 @@
 							</div>
 						</div>
 					</div>
-
+				</h:form>
+				<h:form id="form2">
+					<p:autoUpdate></p:autoUpdate>
 					<h3 class="titulo">Telefones</h3>
 					<hr></hr>
 					<div class="p-grid">
@@ -78,13 +80,61 @@
 							</div>
 						</div>
 					</div>
+
+					<div class="p-col text-right pr-0">
+						<p:commandButton id="btnAddTel" value="Adicionar novo número"
+							class="btn btn-success btn-text" update="table1"
+							icon="fa fa-plus" action="#{clienteMB.onTelAddNew}" />
+
+					</div>
+
+
+					<div class="p-grid p-col">
+						<p:dataTable id="table1" widgetVar="tel1" var="tel"
+							value="#{clienteMB.tels}" style="margin-bottom:20px"
+							editMode="row" editable="true">
+
+							<f:facet name="header">Números</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{clienteMB.onTelRowEdit}"
+								update="msgs" />
+							<p:ajax event="rowEditCancel"
+								listener="#{clienteMB.onTelRowCancel}" update="msgs" />
+
+							<p:column headerText="DDD">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tel.ddd}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{tel.ddd}" mask="99" required="true"
+											label="DDD" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Número">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tel.numero_tel}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputNumber value="#{tel.numero_tel}" style="width:100%"
+											label="Número" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="width:32px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+					</div>
 				</h:form>
 
-				<h:form id="form1">
+				<h:form id="form3">
 					<p:autoUpdate></p:autoUpdate>
-					<p:growl id="msgs1" life="3000" showDetail="true" />
-
-
 					<h3 class="titulo">Endereços</h3>
 					<hr></hr>
 
@@ -146,17 +196,25 @@
 						</div>
 
 					</div>
+
+					<div class="p-col text-right pr-0">
+						<p:commandButton id="btnAddEndereco"
+							value="Adicionar novo endereço" class="btn btn-success btn-text"
+							update="msgs" icon="fa fa-plus"
+							action="#{clienteMB.onEnderecoAddNew}" />
+
+					</div>
 					<div class="p-grid p-col">
-						<p:autoUpdate></p:autoUpdate>
 						<p:dataTable id="enderecos" widgetVar="end" var="endereco"
-							value="#{clienteMB.enderecos}" editable="true"
-							style="margin-bottom:20px" rowEditMode="lazy" cellEditMode="lazy">
+							value="#{clienteMB.enderecos}" style="margin-bottom:20px">
+							<p:autoUpdate />
+
 							<f:facet name="header">Endereços</f:facet>
 
 							<p:ajax event="rowEdit" listener="#{clienteMB.onEnderecoRowEdit}"
-								update="form1:msgs1" />
+								update="msgs" />
 							<p:ajax event="rowEditCancel"
-								listener="#{clienteMB.onEnderecoRowCancel}" update="form1:msgs1" />
+								listener="#{clienteMB.onEnderecoRowCancel}" update="msgs" />
 
 							<p:column headerText="UF">
 								<p:cellEditor>
@@ -242,18 +300,6 @@
 							</p:column>
 
 						</p:dataTable>
-						<div class="p-col text-right pr-0">
-							<p:commandButton id="btnAddEndereco"
-								value="Adicionar novo endereço" class="btn btn-success btn-text"
-								update="form1:msgs1" icon="fa fa-plus"
-								action="#{clienteMB.onEnderecoAddNew()}" />
-
-							<!-- 								<p:commandButton class="btn btn-success btn-text" value="Salvar" -->
-							<!-- 								id="btnSalvar" action="#{clienteMB.salvarCliente()}" -->
-							<!-- 								update="msgs" icon="fa fa-save" -->
-							<!-- 								disabled="#{!clienteMB.clienteEdicao}" /> -->
-
-						</div>
 					</div>
 				</h:form>
 			</div>
@@ -261,7 +307,7 @@
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
 						<p:commandButton class="btn btn-error btn-text" value="Excluir"
-							id="btnExcluir" action="#{cliente.excluirCliente}" update="form1:msgs1"
+							id="btnExcluir" action="#{cliente.excluirCliente}" update="msgs"
 							icon="fa fa-trash">
 							<p:confirm header="Confirmação"
 								message="Tem certeza de que deseja excluir o cliente?"

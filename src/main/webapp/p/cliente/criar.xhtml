@@ -9,10 +9,10 @@
 	<ui:define name="titulo">Clientes</ui:define>
 	<ui:define name="cabecalho">Cadastrar Cliente</ui:define>
 	<ui:define name="corpo">
-		<h:form>
-			<p:growl id="message" autoUpdate="true" showDetail="true"
-				sticky="true" closable="true" />
-
+		<p:autoUpdate></p:autoUpdate>
+		<p:growl id="msgs" life="3000" showDetail="true" />
+		
+		<h:form id="form">
 			<div class="p-grid">
 				<div class="p-col-3">
 					<div class="box">
@@ -39,15 +39,15 @@
 				<div class="p-col-2">
 					<div class="box">
 						<h5>DDD</h5>
-						<p:inputMask id="ddd" value="#{clienteMB.cliente_tel.ddd}" mask="99"
-							required="true" />
+						<p:inputMask id="ddd" value="#{clienteMB.cliente_tel.ddd}"
+							mask="99" required="true" />
 					</div>
 				</div>
 				<div class="p-col-2">
 					<div class="box">
 						<h5>Número</h5>
-						<p:inputMask id="numero_tel" value="#{clienteMB.clientPhone}" mask="99999-9999"
-							required="true" />
+						<p:inputMask id="numero_tel" value="#{clienteMB.clientPhone}"
+							mask="99999-9999" required="true" />
 					</div>
 				</div>
 			</div>
@@ -116,7 +116,7 @@
 				<div class="p-col-2">
 					<p:commandButton class="btn btn-secondary btn-text" value="Salvar"
 						id="save" action="#{clienteMB.createCliente}" icon="fa fa-save"
-						update="@form" />
+						update="msgs" />
 				</div>
 			</div>
 		</h:form>

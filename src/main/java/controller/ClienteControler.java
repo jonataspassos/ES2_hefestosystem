@@ -199,9 +199,10 @@ public class ClienteControler {
 
 	public void onEnderecoAddNew() {
 		System.out.println("TESTE");
-		System.out.println(getCliente_end());
-		System.out.println(cliente);
-		enderecos.add(getCliente_end());
+		System.out.println(cliente_end);
+		
+		enderecos.add(cliente_end);
+		
 		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -216,12 +217,31 @@ public class ClienteControler {
 			FacesContext.getCurrentInstance().addMessage(null, msg);
 		}
 	}
+	
+	public void onTelRowEdit(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Telefone Editado.", "" + ((TelClienteBean) event.getObject()).getNumero_tel());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onTelRowCancel(RowEditEvent event) {
+		FacesMessage msg = new FacesMessage("Edição Cancelada.", "" + ((TelClienteBean) event.getObject()).getNumero_tel());
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
+
+	public void onTelAddNew() {
+		System.out.println("TESTE");
+		System.out.println(cliente_tel);
+		
+		System.out.println(tels.size());
+		this.tels.add(cliente_tel);
+		System.out.println(tels.size());
+		
+		FacesMessage msg = new FacesMessage("Novo Número Adicionado.", "");
+		FacesContext.getCurrentInstance().addMessage(null, msg);
+	}
 
 	public void createCliente() throws Exception {
 		if (cliente != null) {
-//			System.out.println(cliente);
-//			System.out.println(cliente_end);
-//			System.out.println(cliente_tel);
 			if (clienteService.create(cliente)) {
 				cliente_end.setN_cliente_fk(cliente.getN_cliente());
 				cliente_tel.setN_cliente_fk(cliente.getN_cliente());
