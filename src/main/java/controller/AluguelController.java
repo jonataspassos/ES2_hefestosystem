@@ -114,7 +114,6 @@ public class AluguelController implements Serializable {
 
 	
 	public ClienteLookUpList getClienteSel() {
-		System.out.println(clienteSel);
 		return clienteSel;
 	}
 

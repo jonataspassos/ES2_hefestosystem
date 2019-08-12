@@ -33,12 +33,23 @@
 
 				<p:column headerText="Data de Saída"
 					sortBy="#{alu.data_ini}">
-					<p:datePicker pattern="dd/MM/yyyy" id="popup"
+					<p:datePicker pattern="dd/MM/yyyy"
 						value="#{alu.data_ini}" readonly="#{facesContext.renderResponse}" />
 				</p:column>
 				<p:column headerText="Data de Retorno"
 					sortBy="#{alu.data_entregue}">
-					<h:outputText value="#{alu.data_entregue}" />
+					<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc_#{alu.n_aluguel}(date) {
+    	var d = new Date(date.year,date.month, date.day);
+        return '<span style="background-color:' + ((d.getTime() <= #{alu.data_final.getTime()} && d.getTime() >= #{alu.data_ini.getTime()}) ? '#81C784' : 'inherit') + ';'
+        		+'border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' 
+        		+ date.day + '</span>';
+    }
+    //]]>
+</script>
+					<p:datePicker pattern="dd/MM/yyyy" dateTemplate="dateTemplateFunc_#{alu.n_aluguel}"
+						value="#{alu.data_entregue}" readonly="#{facesContext.renderResponse}" />
 				</p:column>
 				<p:column headerText="Registro de Máquina"
 					filterBy="#{alu.n_registro}" sortBy="#{alu.n_registro}"

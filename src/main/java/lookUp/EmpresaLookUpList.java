@@ -39,4 +39,10 @@ public class EmpresaLookUpList implements Serializable{
 		this.n_alugueis = n_alugueis;
 	}
 	
+	@Override
+	public String toString() {
+		return "" + cnpj + " - " + raz_social + " - "
+				+ telefone;
+	}
+	
 }

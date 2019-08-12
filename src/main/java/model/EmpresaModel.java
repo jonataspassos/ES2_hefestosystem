@@ -112,4 +112,38 @@ public class EmpresaModel implements Serializable {
 		return null;
 	}
 
+	public EmpresaLookUpList read(int n_empresa_fk) {
+		EmpresaLookUpList empresa;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE N_EMPRESA = ?");
+				
+				st.setInt(1, n_empresa_fk);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					empresa = new EmpresaLookUpList();
+					empresa.setN_empresa(rs.getInt("n_empresa"));
+					empresa.setCnpj(rs.getNString("cnpj"));
+					empresa.setRaz_social(rs.getString("raz_social"));
+					empresa.setTelefone(rs.getString("telefone"));
+					empresa.setN_alugueis(rs.getInt("n_alugueis"));
+					return empresa;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }

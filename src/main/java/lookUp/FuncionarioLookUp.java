@@ -1,6 +1,8 @@
 package lookUp;
 
-public class FuncionarioLookUp {
+import java.io.Serializable;
+
+public class FuncionarioLookUp implements Serializable{
 	private int n_funcionario;
 	private String cpf;
 	private String nome;
@@ -30,5 +32,10 @@ public class FuncionarioLookUp {
 		this.telefone = telefone;
 	}
 	
+	@Override
+	public String toString() {
+		return "" + cpf + " - " + nome + " - "
+				+ telefone;
+	}
 	
 }

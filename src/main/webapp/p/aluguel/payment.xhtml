@@ -1,0 +1,57 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:define name="titulo">Aluguel</ui:define>
+	<ui:define name="cabecalho">Registrar Pagamento</ui:define>
+	<ui:define name="corpo">
+		<h:form>
+			<p:growl id="growl" life="2000" />
+			<p:autoUpdate />
+			
+			<h4>Valor do aluguel</h4>
+			<p:outputLabel value="R$#{aluguelConsultMB.aluguelSel.val_contratado}"/>
+			<h4>Valor pago</h4>
+			<p:outputLabel value="R$#{aluguelConsultMB.aluguelSel.valor_pago}"/>
+			<h4>Valor a pagar</h4>
+			<p:outputLabel value="R$#{aluguelConsultMB.aluguelSel.val_contratado-aluguelConsultMB.aluguelSel.valor_pago}"/>
+			<h4>Dinheiro</h4>
+			<p:inputText value="#{aluguelConsultMB.entradaDinheiro}">
+				<p:autoUpdate/>
+			</p:inputText>
+
+			<div class="p-grid p-justify-between">
+				<div class="p-col-2">
+					<p:linkButton outcome="consultar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times">
+						<f:param name="aluguel_id"
+							value="#{aluguelConsultMB.aluguelSel.n_aluguel}" />
+					</p:linkButton>
+				</div>
+				<div class="p-col-2">
+					<p:commandButton class="btn btn-primary btn-text"
+						value="Realizar Pagamento" id="btnExcluir" update="growl"
+						icon="fa fa-trash" action="#{aluguelConsultMB.payment()}">
+						<p:confirm header="Confirmação" message="Confirma Pagamento?"
+							icon="pi pi-exclamation-triangle" />
+					</p:commandButton>
+
+					<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						<p:commandButton value="Sim" type="button"
+							styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+						<p:commandButton value="Não" type="button"
+							styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+					</p:confirmDialog>
+				</div>
+			</div>
+			<div class="p-col">
+				
+			</div>
+		</h:form>
+	</ui:define>
+
+</ui:composition>

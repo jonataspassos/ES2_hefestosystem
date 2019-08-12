@@ -3,6 +3,11 @@ package lookUp;
 import java.io.Serializable;
 
 public class ClienteLookUpList implements Serializable{
+	@Override
+	public String toString() {
+		return "" + cpf + " - " + nome + " - "
+				+ telefone;
+	}
 	private int n_cliente;
 	private String cpf;
 	private String nome;

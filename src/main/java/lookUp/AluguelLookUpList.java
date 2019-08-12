@@ -8,6 +8,8 @@ public class AluguelLookUpList implements Serializable  {
 	private int n_aluguel;
 	private Date data_ini;
 	private Date data_entregue;
+	private Date data_final;
+	
 	private int n_registro;
 	private float potencia;
 	private float val_contratado;
@@ -56,6 +58,14 @@ public class AluguelLookUpList implements Serializable  {
 	public void setN_aluguel(int n_aluguel) {
 		this.n_aluguel = n_aluguel;
 	}
+	
+	public Date getData_final() {
+		return data_final;
+	}
+	public void setData_final(Date data_final) {
+		this.data_final = data_final;
+	}
+	
 	@Override
 	public String toString() {
 		return "AluguelLookUpList [data_ini=" + data_ini + ", data_entregue=" + data_entregue + ", n_registro="

@@ -202,6 +202,7 @@ public class AluguelModel implements Serializable {
 					aluguel.setPotencia(rs.getFloat("potencia"));
 					aluguel.setVal_contratado(rs.getFloat("val_contratado"));
 					aluguel.setValor_pago(rs.getFloat("valor_pago"));
+					aluguel.setData_final(HUtil.dateToUtil(rs.getDate("data_final")));
 					alugueis.add(aluguel);
 				}
 

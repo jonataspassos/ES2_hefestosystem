@@ -1,0 +1,235 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:define name="titulo">Aluguel</ui:define>
+	<ui:define name="cabecalho">Registrar retorno</ui:define>
+	<ui:define name="corpo">
+		<script type="text/javascript">
+    //<![CDATA[
+    function dateTemplateFunc(date) {
+    	var d = new Date(date.year,date.month, date.day);
+        return '<span style="background-color:' + ((d.getTime() <= #{aluguelConsultMB.aluguelSel.data_final.getTime()} && d.getTime() >= #{aluguelConsultMB.aluguelSel.data_ini.getTime()}) ? '#81C784' : 'inherit') + ';'
+        		+'border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' 
+        		+ date.day + '</span>';
+    }
+    //]]>
+</script>
+		<p:steps id="stepsReturn" styleClass="p-grid"
+			activeIndex="#{aluguelConsultMB.step}">
+			<p:autoUpdate />
+			<p:menuitem value="Informando Dados" styleClass="p-col" />
+			<p:menuitem value="Confirmação" styleClass="p-col" />
+		</p:steps>
+		<h:form id="form">
+			<p:autoUpdate />
+			<div style="display: #{aluguelConsultMB.getForms(0)}">
+				<h1>Informando Dados</h1>
+				<div class="p-grid">
+					<div class="p-col-4">
+						<h4>Data de Retorno:</h4>
+						<p:datePicker value="#{aluguelConsultMB.retorno}"
+							dateTemplate="dateTemplateFunc" pattern="dd/MM/yyyy"
+							inline="true">
+							<p:ajax listener="#{aluguelConsultMB.updateMulta()}" />
+						</p:datePicker>
+					</div>
+					<div class="p-col-8">
+						<div class="p-grid">
+							<div class="p-col-4">
+								<h4>Horímetro de Saída:</h4>
+								<p:outputLabel value="#{aluguelConsultMB.aluguelSel.hori_saida}" />
+							</div>
+							<div class="p-col-4">
+								<h4>Horímetro Previsto:</h4>
+								<p:outputLabel value="#{aluguelConsultMB.horiPrevis}" />
+							</div>
+							<div class="p-col-4">
+								<h4>Horímetro de Retorno:</h4>
+								<p:inputNumber minValue="0"
+									value="#{aluguelConsultMB.horiRetorno}">
+									<p:ajax listener="#{aluguelConsultMB.updateMulta()}" />
+								</p:inputNumber>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div style="display: #{aluguelConsultMB.getForms(1)}">
+				<h1>Confirmação</h1>
+				<h3>Multas e Descontos</h3>
+
+				<div class="ui-g">
+					<!-- Máquina -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Máquina" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Diária" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Nº Dias" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Valor" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Máquina descrição -->
+					<div class="ui-g-6">
+						<p:outputLabel value="#{aluguelConsultMB.maquinaSel}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel
+							value="R$#{aluguelConsultMB.maquinaSel.valor_diaria}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.ndiasPrev}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$#{aluguelConsultMB.valor}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Desconto -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Multa" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="%" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="+R$" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Atraso na devolução -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Atraso na devolução" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.descAbDias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.delAbDias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.valAbDias}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Abuso de horas -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Abuso de horas" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.descAbHoras}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.delAbHoras}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.valAbHoras}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Desconto -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Descontos" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="%" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="-R$" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Desconto Nº de Dias -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Nº de Dias" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.descNdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.delNdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.valNdias}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Desconto Horas/dia -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Horas/Dia" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.descHdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.delHdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.valHdias}" />
+					</div>
+				</div>
+
+				<div class="ui-g">
+					<!-- Desconto personalizado -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Personalizado" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.descPers}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.delPers}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelConsultMB.valPers}" />
+					</div>
+				</div>
+				<div class="ui-g">
+					<!-- Total -->
+					<div class="ui-g-6"></div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Total" />
+					</div>
+					<div class="ui-g-4">
+						<p:inputText value="#{aluguelConsultMB.total}" />
+					</div>
+				</div>
+			</div>
+			<p:spacer></p:spacer>
+			<div class="p-grid p-justify-between">
+				<div class="p-col-2">
+					<p:linkButton outcome="consultar" class="btn btn-warning btn-text"
+						value="Cancelar" id="cancel" icon="fa fa-times">
+						<f:param name="aluguel_id"
+							value="#{aluguelConsultMB.aluguelSel.n_aluguel}" />
+					</p:linkButton>
+				</div>
+				<div class="p-col-4">
+					<p:commandButton value="Anterior"
+						disabled="#{aluguelConsultMB.disabledAnterior}"
+						actionListener="#{aluguelConsultMB.backStep()}" />
+					<p:commandButton value="#{aluguelConsultMB.valueProximo}"
+						actionListener="#{aluguelConsultMB.nextStep()}" />
+				</div>
+			</div>
+		</h:form>
+
+	</ui:define>
+
+</ui:composition>

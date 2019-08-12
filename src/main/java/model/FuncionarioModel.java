@@ -155,4 +155,37 @@ public class FuncionarioModel
 		
 	}
 
+	public FuncionarioLookUp read(int n_funcionario) {
+		FuncionarioLookUp funcionario;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM FUNCIONARIO_LIST WHERE N_FUNCIONARIO = ?");
+				
+				st.setInt(1, n_funcionario);
+
+				ResultSet rs = st.executeQuery();
+
+				while (rs.next()) {
+					funcionario = new FuncionarioLookUp();
+					funcionario.setN_funcionario(rs.getInt("n_funcionario"));
+					funcionario.setCpf(rs.getNString("cpf"));
+					funcionario.setNome(rs.getString("nome"));
+					funcionario.setTelefone(rs.getString("telefone"));
+					return funcionario;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
 }
