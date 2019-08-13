@@ -1,0 +1,351 @@
+<ui:composition template="/WEB-INF/templates/LayoutPadrao.xhtml"
+	xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:fn="http://xmlns.jcp.org/jsp/jstl/functions">
+
+	<ui:define name="titulo">Funcionarios</ui:define>
+	<ui:define name="cabecalho">Consultar Funcionario</ui:define>
+	<ui:define name="corpo">
+		<p:spacer></p:spacer>
+		<div class="p-grid">
+
+			<div class="p-col-10">
+				<h:form id="form1">
+					<p:autoUpdate></p:autoUpdate>
+					<div class="p-grid p-justify-start">
+						<div class="p-col-2">
+							<p:linkButton outcome="listar" class="btn btn-warning btn-text"
+								value="Cancelar" id="cancel" icon="fa fa-times" />
+						</div>
+						<div class="p-col-2">
+							<p:commandButton class="btn btn-primary btn-text" value="Editar"
+								id="btnEdita" action="#{funcionarioMB.setFuncionarioEdicao(true)}"
+								icon="fa fa-pencil-square-o"
+								disabled="#{funcionarioMB.funcionarioEdicao}" />
+						</div>
+						<div class="p-col-2">
+							<p:commandButton class="btn btn-success btn-text" value="Salvar"
+								id="btnSalvar" action="#{funcionarioMB.salvarFuncionario}"
+								icon="fa fa-save" disabled="#{!funcionarioMB.funcionarioEdicao}" />
+						</div>
+					</div>
+
+					<div class="p-grid">
+						<div class="p-col-3">
+							<div class="box">
+								<h5>Nome</h5>
+								<p:inputText id="nome" class="full-width"
+									value="#{funcionarioMB.funcionario.nome}" required="true"
+									disabled="#{!funcionarioMB.funcionarioEdicao}">
+									<f:validateLength minimum="1" maximum="30" />
+								</p:inputText>
+							</div>
+						</div>
+
+						<div class="p-col-3">
+							<div class="box">
+								<h5>CPF</h5>
+								<p:inputMask id="cpf" value="#{funcionarioMB.funcCpf}"
+									mask="999.999.999-99" required="true"
+									disabled="#{!funcionarioMB.funcionarioEdicao}" />
+							</div>
+						</div>
+					</div>
+				</h:form>
+
+				<p:dialog header="Inserir Telefone" widgetVar="dlg1" minHeight="40"
+					width="35%">
+					<h:form id="formTel">
+						<div class="p-grid">
+							<div class="p-col">
+								<div class="box">
+									<h5>DDD</h5>
+									<p:inputMask id="ddd" value="#{funcionarioMB.funcionario_tel.ddd}"
+										mask="99" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}" />
+								</div>
+							</div>
+							<div class="p-col">
+								<div class="box">
+									<h5>Número</h5>
+									<p:inputMask id="numero_tel" value="#{funcionarioMB.funcPhone}"
+										mask="99999-9999" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}" />
+								</div>
+							</div>
+						</div>
+
+						<div class="p-grid">
+							<div class="p-col pr-0">
+								<p:commandButton id="btnAddTel" value="Adicionar"
+									class="btn btn-success btn-text"
+									update=":form2:tels :formTel" icon="fa fa-plus"
+									action="#{funcionarioMB.onTelAddNew}" />
+
+							</div>
+						</div>
+					</h:form>
+				</p:dialog>
+
+				<h:form id="form2">
+					<h3 class="titulo">Telefones</h3>
+					<hr></hr>
+
+					<div class="p-col text-right pr-0">
+						<p:commandButton id="btnAddReg" value="Adicionar novo número"
+							class="btn btn-success btn-text" icon="fa fa-plus"
+							onclick="PF('dlg1').show();" />
+
+					</div>
+
+					<div class="p-grid p-col">
+						<p:dataTable id="tels" var="tel" value="#{funcionarioMB.tels}"
+							style="margin-bottom:20px" editable="true">
+
+							<f:facet name="header">Números</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{funcionarioMB.onTelRowEdit}" />
+							<p:ajax event="rowEditCancel"
+								listener="#{funcionarioMB.onTelRowCancel}" />
+
+							<p:column headerText="DDD">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tel.ddd}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{tel.ddd}" mask="99" required="true"
+											label="DDD" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Número">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{tel.numero_tel}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputNumber value="#{tel.numero_tel}" style="width:100%"
+											label="Número" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="width:32px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+
+				</h:form>
+
+				<p:dialog header="Inserir Endereço" widgetVar="dlg2" minHeight="40"
+					minwidth="35%">
+					<h:form id="endForm">
+						<div class="p-grid">
+							<div class="p-col-3">
+								<div class="box">
+									<h5>UF</h5>
+									<p:inputMask id="uf" value="#{funcionarioMB.funcionario_end.uf}"
+										mask="a*" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}" />
+								</div>
+							</div>
+							<div class="p-col-3">
+								<div class="box">
+									<h5>Cidade</h5>
+									<p:inputText id="cidade"
+										value="#{funcionarioMB.funcionario_end.cidade}" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}">
+										<f:validateLength minimum="1" maximum="20" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="p-col-3">
+								<div class="box">
+									<h5>Bairro</h5>
+									<p:inputText id="bairro"
+										value="#{funcionarioMB.funcionario_end.bairro}" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}">
+										<f:validateLength minimum="1" maximum="20" />
+									</p:inputText>
+								</div>
+							</div>
+							<div class="p-col-3">
+								<div class="box">
+									<h5>Rua</h5>
+									<p:inputText id="rua" value="#{funcionarioMB.funcionario_end.rua}"
+										required="true" disabled="#{!funcionarioMB.funcionarioEdicao}">
+										<f:validateLength minimum="1" maximum="30" />
+									</p:inputText>
+								</div>
+							</div>
+						</div>
+
+						<div class="p-grid">
+							<div class="p-col-3">
+								<div class="box">
+									<h5>Número</h5>
+									<p:inputNumber id="numero"
+										value="#{funcionarioMB.funcionario_end.numero}" required="true"
+										minValue="0" maxValue="9999999999"
+										disabled="#{!funcionarioMB.funcionarioEdicao}" />
+								</div>
+							</div>
+							<div class="p-col-3">
+								<div class="box">
+									<h5>CEP</h5>
+									<p:inputMask id="cep" value="#{funcionarioMB.funcionario_end.cep}"
+										mask="99999-999" required="true"
+										disabled="#{!funcionarioMB.funcionarioEdicao}" />
+								</div>
+							</div>
+
+						</div>
+
+						<div class="p-col text-right pr-0">
+							<p:commandButton id="btnAddEndereco" value="Adicionar"
+								class="btn btn-success btn-text" icon="fa fa-plus"
+								action="#{funcionarioMB.onEnderecoAddNew}"
+								update=":form3:enderecos :endForm" />
+
+						</div>
+					</h:form>
+				</p:dialog>
+
+				<h:form id="form3">
+					<h3 class="titulo">Endereços</h3>
+					<hr></hr>
+
+					<div class="p-col text-right pr-0">
+						<p:commandButton id="btnAddReg" value="Adicionar novo endereço"
+							class="btn btn-success btn-text" icon="fa fa-plus"
+							onclick="PF('dlg2').show();" />
+					</div>
+
+					<div class="p-grid p-col">
+						<p:dataTable id="enderecos" widgetVar="end" var="endereco"
+							value="#{funcionarioMB.enderecos}" style="margin-bottom:20px"
+							editable="true">
+
+							<f:facet name="header">Endereços</f:facet>
+
+							<p:ajax event="rowEdit" listener="#{funcionarioMB.onEnderecoRowEdit}" />
+							<p:ajax event="rowEditCancel"
+								listener="#{funcionarioMB.onEnderecoRowCancel}" />
+
+							<p:column headerText="UF">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.uf}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{endereco.uf}" mask="a*" required="true" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Cidade">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.cidade}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.cidade}" style="width:100%"
+											label="Cidade">
+											<f:validateLength minimum="1" maximum="20" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Bairro">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.bairro}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.bairro}" style="width:100%"
+											label="Bairro">
+											<f:validateLength minimum="1" maximum="20" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Rua">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.rua}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.rua}" style="width:100%"
+											label="Rua">
+											<f:validateLength minimum="1" maximum="30" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="Número">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.numero}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputText value="#{endereco.numero}" style="width:100%"
+											label="Número">
+											<f:validateLength minimum="1" maximum="10" />
+										</p:inputText>
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column headerText="CEP">
+								<p:cellEditor>
+									<f:facet name="output">
+										<h:outputText value="#{endereco.cep}" />
+									</f:facet>
+									<f:facet name="input">
+										<p:inputMask value="#{endereco.cep}" mask="99999-999"
+											required="true" label="CEP" />
+									</f:facet>
+								</p:cellEditor>
+							</p:column>
+
+							<p:column style="width:32px">
+								<p:rowEditor />
+							</p:column>
+
+						</p:dataTable>
+					</div>
+				</h:form>
+			</div>
+			<div class="p-col-2 p-dir-col">
+				<div class="p-col">
+					<div class="p-grid p-justify-end">
+						<p:commandButton class="btn btn-error btn-text" value="Excluir"
+							id="btnExcluir" action="#{funcionarioMB.excluirFuncionario}"
+							icon="fa fa-trash">
+							<p:confirm header="Confirmação"
+								message="Tem certeza de que deseja excluir o funcionario?"
+								icon="pi pi-exclamation-triangle" />
+						</p:commandButton>
+
+						<p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+							<p:commandButton value="Sim" type="button"
+								styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+							<p:commandButton value="Não" type="button"
+								styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+						</p:confirmDialog>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ui:define>
+</ui:composition>
