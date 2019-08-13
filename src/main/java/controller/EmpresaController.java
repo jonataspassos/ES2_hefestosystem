@@ -84,6 +84,62 @@ public class EmpresaController implements Serializable {
 		this.empresaService = empresaService;
 	}
 	
+	public EmpresaBean getEmpresa() {
+		return empresa;
+	}
+
+	public void setEmpresa(EmpresaBean empresa) {
+		this.empresa = empresa;
+	}
+
+	public TelEmpresaBean getEmpresa_tel() {
+		return empresa_tel;
+	}
+
+	public void setEmpresa_tel(TelEmpresaBean empresa_tel) {
+		this.empresa_tel = empresa_tel;
+	}
+
+	public EndEmpresaBean getEmpresa_end() {
+		return empresa_end;
+	}
+
+	public void setEmpresa_end(EndEmpresaBean empresa_end) {
+		this.empresa_end = empresa_end;
+	}
+
+	public Boolean getEmpresaEdicao() {
+		return empresaEdicao;
+	}
+
+	public void setEmpresaEdicao(Boolean empresaEdicao) {
+		this.empresaEdicao = empresaEdicao;
+	}
+
+	public EndEmpresaModel getEndEmpresaService() {
+		return endEmpresaService;
+	}
+
+	public void setEndEmpresaService(EndEmpresaModel endEmpresaService) {
+		this.endEmpresaService = endEmpresaService;
+	}
+
+	public TelEmpresaModel getTelEmpresaService() {
+		return telEmpresaService;
+	}
+
+	public void setTelEmpresaService(TelEmpresaModel telEmpresaService) {
+		this.telEmpresaService = telEmpresaService;
+	}
+
+	public EmpresaModel getEmpresaService() {
+		return empresaService;
+	}
+
+	public void setEmpresas(List<EmpresaLookUpList> empresas) {
+		this.empresas = empresas;
+	}
+
 	public String getEmpresa_id_param() {
 		if (empresa_id_param == null) {
 			FacesContext context = FacesContext.getCurrentInstance();
