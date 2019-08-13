@@ -11,7 +11,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import bean.FuncionarioBean;
@@ -42,8 +41,6 @@ public class FuncionarioController {
 	private EndFuncionarioModel endFuncionarioService;
 	@ManagedProperty("#{telFuncionarioModel}")
 	private TelFuncionarioModel telFuncionarioService;
-	@ManagedProperty("#{message}")
-	private MessagesMB messagesService;
 
 	@PostConstruct
 	public void init() {
@@ -83,14 +80,6 @@ public class FuncionarioController {
 
 	public void setFilteredFuncionarios(List<FuncionarioLookUp> filteredFuncionarios) {
 		this.filteredFuncionarios = filteredFuncionarios;
-	}
-
-	public MessagesMB getMessagesService() {
-		return messagesService;
-	}
-
-	public void setMessagesService(MessagesMB messagesService) {
-		this.messagesService = messagesService;
 	}
 
 	public Boolean getFuncionarioEdicao() {
@@ -243,13 +232,13 @@ public class FuncionarioController {
 				funcionario_end.setN_funcionario_fk(funcionario.getN_funcionario());
 				funcionario_tel.setN_funcionario_fk(funcionario.getN_funcionario());
 				if (endFuncionarioService.create(funcionario_end) && telFuncionarioService.create(funcionario_tel)) {
-					messagesService.info("Funcionario cadastrado com sucesso.");
+					System.out.println("Funcionario cadastrado com sucesso.");
 					Thread.sleep(5000);
 					SystemMB.getSystem().redirect("/p/funcionario/listar.xhtml");
 					return;
 				}
 			}
-			messagesService.error("Error ao tentar cadastrar funcionario.");
+			System.out.println("Error ao tentar cadastrar funcionario.");
 		}
 	}
 

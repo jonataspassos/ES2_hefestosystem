@@ -12,22 +12,23 @@ import lookUp.AluguelLookUpList;
 import model.AluguelModel;
 
 @ViewScoped
-@ManagedBean(name="aluguelListMB")
-public class AluguelListController implements Serializable{
+@ManagedBean(name = "aluguelListMB")
+public class AluguelListController implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private List<AluguelLookUpList> alugueis;
 	private List<AluguelLookUpList> filteredAlugueis;
-	
+
 	@ManagedProperty("#{aluguelModel}")
 	private AluguelModel aluguelService;
-	
-	@ManagedProperty("#{message}")
-	private MessagesMB messageService;
-	
+
 	@PostConstruct
 	public void init() {
 		alugueis = aluguelService.list();
 	}
-	
+
 	public List<AluguelLookUpList> getAlugueis() {
 		return alugueis;
 	}
@@ -48,10 +49,4 @@ public class AluguelListController implements Serializable{
 		this.aluguelService = aluguelService;
 	}
 
-	public void setMessageService(MessagesMB messageService) {
-		this.messageService = messageService;
-	}
-	
-	
-	
 }

@@ -14,7 +14,6 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
-import bean.ClienteBean;
 import bean.EmpresaBean;
 import bean.EndEmpresaBean;
 import bean.TelEmpresaBean;

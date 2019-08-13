@@ -1,7 +1,6 @@
 package controller;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.Map;
 
@@ -11,10 +10,7 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
-import org.primefaces.PrimeFaces;
-
 import bean.AluguelBean;
-import bean.FuncionarioBean;
 import lookUp.ClienteLookUpList;
 import lookUp.EmpresaLookUpList;
 import lookUp.FuncionarioLookUp;
@@ -29,6 +25,11 @@ import resources.HUtil;
 @ViewScoped
 @ManagedBean(name = "aluguelConsultMB")
 public class AluguelConsultController implements Serializable {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	// ------------------Select Beans------------------------------//
 	private AluguelBean aluguelSel;
@@ -61,9 +62,6 @@ public class AluguelConsultController implements Serializable {
 	
 	@ManagedProperty("#{funcionarioModel}")
 	private FuncionarioModel funcionarioService;
-
-	@ManagedProperty("#{message}")
-	private MessagesMB messageService;
 
 	@PostConstruct
 	public void init() {
@@ -104,9 +102,6 @@ public class AluguelConsultController implements Serializable {
 		this.funcionarioService = funcionarioService;
 	}
 
-	public void setMessageService(MessagesMB messageService) {
-		this.messageService = messageService;
-	}
 	// -----------------------Beans get Sets ----------------------//
 
 	public AluguelBean getAluguelSel() {

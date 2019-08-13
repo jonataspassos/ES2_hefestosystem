@@ -12,7 +12,6 @@ import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
 
-import controller.MessagesMB;
 import bean.AluguelBean;
 import bean.RevisaoBean;
 import model.MaquinaModel;
@@ -24,10 +23,12 @@ import java.time.LocalDate;
 @ManagedBean(name = "maquina")
 @ViewScoped
 public class MaquinaController implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	@ManagedProperty("#{maquinaModel}")
 	private MaquinaModel maqm;
-	@ManagedProperty("#{message}")
-	private MessagesMB messagesService;
 	private MaquinaLookUp maquina;
 	private List<MaquinaLookUp> maquinas;
 	private String maquina_id_param;
@@ -41,21 +42,12 @@ public class MaquinaController implements Serializable{
 	@PostConstruct
 	public void init() {
 		maquina = null;
-		messagesService = new MessagesMB();
 		revisao = null;
 		alugueis = null;
 		revisoes = null;
 		maquina_id_param = null;
 		maquinaEdicao = false;
 		maquinas = null;
-	}
-
-	public MessagesMB getMessagesService() {
-		return messagesService;
-	}
-
-	public void setMessagesService(MessagesMB messagesService) {
-		this.messagesService = messagesService;
 	}
 
 	public MaquinaModel getMaqm() {
@@ -172,13 +164,13 @@ public class MaquinaController implements Serializable{
 
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
-			messagesService.info("Máquina cadastrada com sucesso.");
+			System.out.println("Máquina cadastrada com sucesso.");
 			maquina = new MaquinaLookUp();
 			Thread.sleep(5000);
 			SystemMB.getSystem().redirect("/p/maquina/listar.xhtml");
 			return;
 		}
-		messagesService.error("Error ao tentar cadastrar máquina.");
+		System.out.println("Error ao tentar cadastrar máquina.");
 	}
 
 	public void putRevisao() {

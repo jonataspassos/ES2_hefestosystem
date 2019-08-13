@@ -57,9 +57,6 @@ public class AluguelController implements Serializable {
 	@ManagedProperty("#{maquinaModel}")
 	private MaquinaModel maquinaService;
 
-	@ManagedProperty("#{message}")
-	private MessagesMB messageService;
-
 	@PostConstruct
 	public void init() {
 		aluguelSel = new AluguelBean();
@@ -73,7 +70,7 @@ public class AluguelController implements Serializable {
 		}
 		maquinas = maquinaService.list(0);
 		if(maquinas.size()==0) {
-			messageService.warn("Não há máquinas para alugar");
+			System.out.println("NÃ£o hÃ¡ mÃ¡quinas para alugar.");
 		}
 		
 		period = new ArrayList<Date>();
@@ -98,9 +95,6 @@ public class AluguelController implements Serializable {
 		this.maquinaService = maquinaService;
 	}
 	
-	public void setMessageService(MessagesMB messageService) {
-		this.messageService = messageService;
-	}
 //-------------------- Beans Get and Set ------------------------//	
 	
 	public AluguelBean getAluguelSel() {
@@ -179,7 +173,7 @@ public class AluguelController implements Serializable {
 		if (2 == step)
 			return "Concluir";
 		else
-			return "Próximo";
+			return "Prï¿½ximo";
 	}
 	
 	public String showEmpresa() {
@@ -394,8 +388,7 @@ public class AluguelController implements Serializable {
 			aluguelService.setEmpresa(aluguelSel);
 		}
 
-		System.out.println("Máquina Alugada");
-		messageService.info("Máquina Alugada");
+		System.out.println("MÃ¡quina Alugada");
 		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml?aluguel_id=" + id);
 	}
 
@@ -413,9 +406,9 @@ public class AluguelController implements Serializable {
 		if (this.clienteSel == null){
 			clienteSel = new ClienteLookUpList();
 			this.clienteSel.setCpf(cpf);
-			System.out.println("Esse Cliente não Existe!");
+			System.out.println("Esse Cliente nï¿½o Existe!");
 			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente não Existe!"));
+					new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente nï¿½o Existe!"));
 		}
 	}
 
