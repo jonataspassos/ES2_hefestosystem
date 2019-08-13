@@ -9,17 +9,13 @@
 	<ui:define name="titulo">Empresas</ui:define>
 	<ui:define name="cabecalho">Listagem de Empresas</ui:define>
 	<ui:define name="corpo">
-		<style type="text/css">
-.ui-filter-column .ui-column-customfilter .custom-filter {
-	width: 100%;
-	box-sizing: border-box;
-}
+		<div class="conteudo">
 
-.year-spinner input {
-	width: 100%;
-	box-sizing: border-box;
-}
-</style>
+			<div class="listar-acoes">
+				<p:linkButton class="btn-primary btn-text" outcome="criar"
+					value="Cadastrar Empresa" icon="fa fa-plus" />
+			</div>
+
 		<h:form id="form">
 			<p:dataTable id="tableStateDT" var="emp"
 				value="#{empresaMB.empresas}" widgetVar="empresasTable"
@@ -30,13 +26,12 @@
 				emptyMessage="Nenhuma Empresa encontrada com esses critérios"
 				filteredValue="#{empresaMB.filteredEmpresas}" sortMode="multiple">
 				<f:facet name="header">
-					<p:outputPanel style="text-align:end">
-						<h:outputText value="Procure por todos os campos:" />
-						<p:inputText id="globalFilter"
-							onkeyup="PF('empresasTable').filter()" style="width:150px"
-							placeholder="pesquisar..." />
-					</p:outputPanel>
-				</f:facet>
+						<p:outputPanel style="text-align:end">
+							<p:inputText id="globalFilter"
+								onkeyup="PF('empresasTable').filter()"
+								placeholder="Pesquisar por..." />
+						</p:outputPanel>
+					</f:facet>
 
 				<p:column headerText="CNPJ" filterBy="#{emp.cnpj}" sortBy="#{emp.cnpj}"
 					filterMatchMode="contains">
@@ -60,11 +55,17 @@
 					</f:facet>
 					<h:outputText value="#{emp.n_alugueis}" />
 				</p:column>
-				<p:column headerText="Ações" style="width:40px;text-align:center">
-					<h:outputText value="#{emp.n_alugueis}" />
-				</p:column>
+				<p:column headerText="Ações" class="text-center"
+						style="width:40px;text-align:center">
+						<p:linkButton class="btn-primary" outcome="consultar"
+							icon="fa fa-eye" title="Consultar Empresa">
+							<f:param name="empresa_id" value="#{cli.n_empresa}" />
+						</p:linkButton>
+					</p:column>
+
 			</p:dataTable>
 		</h:form>
+		</div>
 	</ui:define>
 
 </ui:composition>

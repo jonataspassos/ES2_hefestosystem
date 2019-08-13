@@ -1,7 +1,5 @@
 package bean;
 
-import javax.faces.bean.ApplicationScoped;
-
 public class EndClienteBean {
 	private int n_end = -1;
 	private int n_cliente_fk;

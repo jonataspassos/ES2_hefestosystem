@@ -9,6 +9,13 @@
 	<ui:define name="titulo">Funcionários</ui:define>
 	<ui:define name="cabecalho">Listagem de Funcionários</ui:define>
 	<ui:define name="corpo">
+			<div class="conteudo">
+
+					<div class="listar-acoes">
+						<p:linkButton class="btn-primary btn-text" outcome="criar"
+							value="Cadastrar Empresa" icon="fa fa-plus" />
+					</div>
+
 		<h:form id="form">
 			<p:dataTable id="tableStateDT" var="fun"
 				value="#{funcionarioMB.funcionarios}" widgetVar="funcionariosTable"
@@ -19,13 +26,12 @@
 				emptyMessage="Nenhum Cliente encontrado com esses critérios"
 				filteredValue="#{funcionarioMB.filteredFuncionarios}" sortMode="multiple" >
 				<f:facet name="header">
-					<p:outputPanel style="text-align:end">
-						<h:outputText value="Procure por todos os campos:" />
-						<p:inputText id="globalFilter"
-							onkeyup="PF('funcionariosTable').filter()" style="width:150px"
-							placeholder="pesquisar..." />
-					</p:outputPanel>
-				</f:facet>
+						<p:outputPanel style="text-align:end">
+							<p:inputText id="globalFilter"
+								onkeyup="PF('funcionariosTable').filter()"
+								placeholder="Pesquisar por..." />
+						</p:outputPanel>
+					</f:facet>
 
 				<p:column headerText="CPF" filterBy="#{fun.cpf}" sortBy="#{fun.cpf}"
 					filterMatchMode="contains">
@@ -39,11 +45,17 @@
 					sortBy="#{fun.telefone}" filterMatchMode="contains">
 					<h:outputText value="#{fun.telefone}" />
 				</p:column>
-				<p:column headerText="Ações" style="width:40px;text-align:center">
-					<h:outputText value="#{fun}" />
-				</p:column>
+				<p:column headerText="Ações" class="text-center"
+						style="width:40px;text-align:center">
+						<p:linkButton class="btn-primary" outcome="consultar"
+							icon="fa fa-eye" title="Consultar Funcionario">
+							<f:param name="funcionario_id" value="#{fun.n_funcionario}" />
+						</p:linkButton>
+					</p:column>
+
 			</p:dataTable>
 		</h:form>
+	</div>
 	</ui:define>
 
 </ui:composition>

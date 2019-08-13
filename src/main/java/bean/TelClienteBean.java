@@ -1,7 +1,5 @@
 package bean;
 
-import javax.faces.bean.ApplicationScoped;
-
 public class TelClienteBean {
 	private int n_telefone = -1;
 	private int n_cliente_fk;
