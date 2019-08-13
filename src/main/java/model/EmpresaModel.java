@@ -10,6 +10,7 @@ import java.util.List;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
+import bean.ClienteBean;
 import bean.EmpresaBean;
 import lookUp.ClienteLookUpList;
 import lookUp.EmpresaLookUpList;
@@ -18,7 +19,7 @@ import resources.Database;
 @ManagedBean
 @ApplicationScoped
 public class EmpresaModel implements Serializable {
-	public void create(EmpresaBean empresa) {
+	public boolean create(EmpresaBean empresa) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -36,10 +37,13 @@ public class EmpresaModel implements Serializable {
 
 				st.close();
 				conn.close();
+				return true;
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
+			return false;
 		}
+		return false;
 	}
 	
 	public List<EmpresaLookUpList> list(){
@@ -144,6 +148,52 @@ public class EmpresaModel implements Serializable {
 			e.printStackTrace();
 		}
 		return null;
+	}
+	
+	public void update(EmpresaBean empresa) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+			conn = db.getConnection();
+
+			if (conn != null) {
+
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE EMPRESA_UPDATE(?,?,?)");
+
+				st.setInt(1, empresa.getN_empresa());
+				st.setString(2, (empresa.getCnpj()).replaceAll("[^0-9]", ""));
+				st.setString(3, empresa.getRaz_social());
+
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void delete(int empresa_id) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+
+			conn = db.getConnection();
+			if (conn != null) {
+
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE EMPRESA_DELETE(?)");
+				st.setInt(1, empresa_id);
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
+import bean.EmpresaBean;
 import bean.EndEmpresaBean;
 import bean.TelEmpresaBean;
 import lookUp.EmpresaLookUpList;
@@ -34,7 +35,7 @@ public class EmpresaController implements Serializable {
 	private EmpresaLookUpList selectedEmpresa;
 	private List<EndEmpresaBean> enderecos;
 	private List<TelEmpresaBean> tels;
-	private EmpresaModel empresa;
+	private EmpresaBean empresa;
 	private TelEmpresaBean empresa_tel;
 	private EndEmpresaBean empresa_end;
 	private String empresa_id_param;
