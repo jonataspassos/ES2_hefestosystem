@@ -39,7 +39,7 @@
 							<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
 						</p:panelGrid>
 						<p:linkButton style="display:#{aluguelMB.showPlusCliente()}"
-							href="#{system.path()}/p/cliente/listar.xhtml"
+							href="#{system.path()}/p/cliente/criar.xhtml"
 							class="btn btn-primary btn-text" value="Cadastrar Cliente"
 							id="btnCliente" icon="fa fa-plus">
 							<f:param name="cpf" value="#{aluguelMB.clienteSel.cpf}" />
@@ -68,7 +68,7 @@
 							<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
 						</p:panelGrid>
 						<p:linkButton style="display:#{aluguelMB.showPlusEmpresa()}"
-							href="#{system.path()}/p/empresa/listar.xhtml"
+							href="#{system.path()}/p/empresa/criar.xhtml"
 							class="btn btn-primary btn-text" value="Cadastrar Empresa"
 							id="btnEmpresa" icon="fa fa-plus">
 							<f:param name="cnpj" value="#{aluguelMB.empresaSel.cnpj}" />
