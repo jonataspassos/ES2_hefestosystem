@@ -35,6 +35,14 @@ public class FuncionarioModel
 				st.setString(2, funcionario.getNome());
 
 				st.execute();
+				
+				st = conn.prepareStatement("SELECT * FROM FUNCIONARIO_ID");
+
+				ResultSet rs = st.executeQuery();
+
+				if(rs.next()) {
+					funcionario.setN_funcionario(rs.getInt("id"));
+				}
 
 				st.close();
 				conn.close();

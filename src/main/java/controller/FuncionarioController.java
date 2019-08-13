@@ -242,12 +242,14 @@ public class FuncionarioController {
 			if (funcionarioService.create(funcionario)) {
 				funcionario_end.setN_funcionario_fk(funcionario.getN_funcionario());
 				funcionario_tel.setN_funcionario_fk(funcionario.getN_funcionario());
-				if (endFuncionarioService.create(funcionario_end) && telFuncionarioService.create(funcionario_tel)) {
-					messagesService.info("Funcionario cadastrado com sucesso.");
-					Thread.sleep(5000);
-					SystemMB.getSystem().redirect("/p/funcionario/listar.xhtml");
-					return;
-				}
+				System.out.println(funcionario.getN_funcionario());
+				if (telFuncionarioService.create(funcionario_tel))
+					if (endFuncionarioService.create(funcionario_end)) {
+						messagesService.info("Funcionario cadastrado com sucesso.");
+						Thread.sleep(5000);
+						SystemMB.getSystem().redirect("/p/funcionario/listar.xhtml");
+						return;
+					}
 			}
 			messagesService.error("Error ao tentar cadastrar funcionario.");
 		}
@@ -279,14 +281,14 @@ public class FuncionarioController {
 
 	public void excluirTel() {
 		for (TelFuncionarioBean tel : tels) {
-			if (tel.getN_telefone() != -1) 
+			if (tel.getN_telefone() != -1)
 				telFuncionarioService.delete(tel.getN_telefone());
 		}
 	}
 
 	public void excluirEndereco() {
 		for (EndFuncionarioBean end : enderecos) {
-			if (end.getN_end() != -1) 
+			if (end.getN_end() != -1)
 				endFuncionarioService.delete(end.getN_end());
 		}
 	}

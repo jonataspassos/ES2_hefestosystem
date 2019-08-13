@@ -34,6 +34,14 @@ public class EmpresaModel implements Serializable {
 				st.setString(2, empresa.getRaz_social());
 
 				st.execute();
+				
+				st = conn.prepareStatement("SELECT * FROM EMPRESA_ID");
+
+				ResultSet rs = st.executeQuery();
+
+				if(rs.next()) {
+					empresa.setN_empresa(rs.getInt("id"));
+				}
 
 				st.close();
 				conn.close();
@@ -64,6 +72,9 @@ public class EmpresaModel implements Serializable {
 				while (rs.next()) {
 					empresa = new EmpresaLookUpList();
 					empresa.setN_empresa(rs.getInt("n_empresa"));
+					if(empresa.getN_empresa()==-1) {
+						continue;
+					}
 					empresa.setCnpj(rs.getNString("cnpj"));
 					empresa.setRaz_social(rs.getString("raz_social"));
 					empresa.setTelefone(rs.getString("telefone"));
