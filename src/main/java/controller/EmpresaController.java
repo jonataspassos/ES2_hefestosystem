@@ -91,7 +91,7 @@ public class EmpresaController implements Serializable {
 				empresa = new EmpresaBean();
 				return empresa;
 			}
-			empresa = empresaService.read(Integer.parseInt(getEmpresa_id_param()));
+			empresa = empresaService.readBean(Integer.parseInt(getEmpresa_id_param()));
 		}
 		return empresa;
 	}

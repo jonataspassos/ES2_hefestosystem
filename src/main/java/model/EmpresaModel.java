@@ -92,7 +92,7 @@ public class EmpresaModel implements Serializable {
 		return empresas;
 	}
 	
-	public EmpresaLookUpList read(String empresa_id) {
+	public EmpresaLookUpList read(int empresa_id) {
 		EmpresaLookUpList empresa;
 		Database bd = new Database();
 		Connection conn = null;
@@ -103,7 +103,7 @@ public class EmpresaModel implements Serializable {
 			if (conn != null) {
 				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE N_EMPRESA = ?");
 				
-				st.setString(1, empresa_id);
+				st.setInt(1, empresa_id);
 
 				ResultSet rs = st.executeQuery();
 
@@ -127,8 +127,8 @@ public class EmpresaModel implements Serializable {
 		return null;
 	}
 
-	public EmpresaBean read(int n_empresa_fk) {
-		EmpresaBean empresa;
+	public EmpresaLookUpList read(String cnpj) {
+		EmpresaLookUpList empresa;
 		Database bd = new Database();
 		Connection conn = null;
 
@@ -136,17 +136,19 @@ public class EmpresaModel implements Serializable {
 			conn = bd.getConnection();
 
 			if (conn != null) {
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE N_EMPRESA = ?");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE CNPJ = ?");
 				
-				st.setInt(1, n_empresa_fk);
+				st.setString(1, cnpj.replaceAll("[^0-9]", ""));
 
 				ResultSet rs = st.executeQuery();
 
 				if (rs.next()) {
-					empresa = new EmpresaBean();
+					empresa = new EmpresaLookUpList();
 					empresa.setN_empresa(rs.getInt("n_empresa"));
 					empresa.setCnpj(rs.getNString("cnpj"));
 					empresa.setRaz_social(rs.getString("raz_social"));
+					empresa.setTelefone(rs.getString("telefone"));
+					empresa.setN_alugueis(rs.getInt("n_alugueis"));
 					return empresa;
 				}
 
@@ -156,9 +158,9 @@ public class EmpresaModel implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
 		return null;
 	}
-	
 	public void update(EmpresaBean empresa) {
 		Database db = new Database();
 		Connection conn = null;
@@ -203,6 +205,39 @@ public class EmpresaModel implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	public EmpresaBean readBean(int empresa_id) {
+		EmpresaBean empresa;
+		Database bd = new Database();
+		Connection conn = null;
+
+		try {
+			conn = bd.getConnection();
+
+			if (conn != null) {
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE N_EMPRESA = ?");
+				
+				st.setInt(1, empresa_id);
+
+				ResultSet rs = st.executeQuery();
+
+				if (rs.next()) {
+					empresa = new EmpresaBean();
+					empresa.setN_empresa(rs.getInt("n_empresa"));
+					empresa.setCnpj(rs.getNString("cnpj"));
+					empresa.setRaz_social(rs.getString("raz_social"));
+					return empresa;
+				}
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 	}
 
 }

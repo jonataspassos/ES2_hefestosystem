@@ -118,6 +118,7 @@ div.ui-datepicker th, div.ui-datepicker td {
 	justify-content: inherit;
 	line-height: normal;
 	position: relative;
+	width: fit-content;
 }
 
 .btn-success {
@@ -188,4 +189,18 @@ th input.ui-inputfield.ui-inputtext, .ui-column-customfilter {
 	min-width: 0px !important;
 	width: 100% !important;
 }
+
+.step1, .step2 {
+	display: none;
+}
+
+tr.ui-widget-content span.p-datepicker {
+	width: 100% !important;
+	min-width: auto !important;
+}
+
+tr.ui-widget-content span.p-datepicker input {
+	width: inherit;
+	border: 0px;
+	background-color: unset;
 }

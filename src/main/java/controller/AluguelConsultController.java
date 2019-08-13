@@ -73,7 +73,7 @@ public class AluguelConsultController implements Serializable {
 				maquinaSel = maquinaService.read("" + aluguelSel.getN_maquina_fk());
 				funcionarioSel = funcionarioService.read(aluguelSel.getN_funcionario_fk());
 				if (aluguelSel.getN_empresa_fk() != -1) {
-					empresaSel = empresaService.read("" + aluguelSel.getN_empresa_fk());
+					empresaSel = empresaService.read(aluguelSel.getN_empresa_fk());
 				}
 				return;
 			}

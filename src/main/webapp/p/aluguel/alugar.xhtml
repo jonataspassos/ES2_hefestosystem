@@ -18,159 +18,261 @@
 		</p:steps>
 		<h:form id="form">
 			<p:autoUpdate />
-			<div style="display: #{aluguelMB.getForms(0)}">
+			<!-- 						<div style="display: #{aluguelMB.getForms(0)"> -->
+			<div class="step0">
 				<h1>Dados Cadastrais</h1>
 				<div class="p-grid p-justify-between">
-					<div class="p-col-6">
+					<div class="p-col-4 text-left">
 						<!-- Cliente Form -->
-						<h3>Cliente</h3>
-						<p:panelGrid columns="2" id="dadosCLiente">
-							<p:outputLabel value="Informe o CPF*: " />
-							<p:inputText value="#{aluguelMB.clienteSel.cpf}"
-								 update="dadosCLiente">
-								<p:ajax listener="#{aluguelMB.searchCliente()}"></p:ajax>
+						<div class="p-grid p-align-center vertical-container">
+							<div class="p-col">
+								<h3>Cliente</h3>
+							</div>
+						</div>
+						<div class="p-col">
+							<p:panelGrid columns="2" id="dadosCLiente">
+								<p:outputLabel value="Informe o CPF*: " />
+								<p:inputText value="#{aluguelMB.clienteSel.cpf}"
+									update="dadosCLiente">
+									<p:ajax listener="#{aluguelMB.searchCliente()}"></p:ajax>
 								</p:inputText>
 
-							<p:outputLabel value="CPF: " />
-							<p:outputLabel value="#{aluguelMB.clienteSel.cpf}" />
-							<p:outputLabel value="Nome: " />
-							<p:outputLabel value="#{aluguelMB.clienteSel.nome	}" />
-							<p:outputLabel value="Telefone: " />
-							<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
-						</p:panelGrid>
-						<p:linkButton style="display:#{aluguelMB.showPlusCliente()}"
-							href="#{system.path()}/p/cliente/criar.xhtml"
-							class="btn btn-primary btn-text" value="Cadastrar Cliente"
-							id="btnCliente" icon="fa fa-plus">
-							<f:param name="cpf" value="#{aluguelMB.clienteSel.cpf}" />
-						</p:linkButton>
+								<p:outputLabel value="CPF: " />
+								<p:outputLabel value="#{aluguelMB.clienteSel.cpf}" />
+								<p:outputLabel value="Nome: " />
+								<p:outputLabel value="#{aluguelMB.clienteSel.nome	}" />
+								<p:outputLabel value="Telefone: " />
+								<p:outputLabel value="#{aluguelMB.clienteSel.telefone	}" />
+							</p:panelGrid>
+						</div>
+						<div class="p-col">
+							<p:linkButton style="display:#{aluguelMB.showPlusCliente()}"
+								href="#{system.path()}/p/cliente/criar.xhtml"
+								class="btn btn-primary btn-text" value="Cadastrar Cliente"
+								id="btnCliente" icon="fa fa-plus">
+								<f:param name="cpf" value="#{aluguelMB.clienteSel.cpf}" />
+							</p:linkButton>
+						</div>
 					</div>
 					<!-- Cliente Form -->
-					<div class="p-col-6">
+					<div class="p-col-4">
 						<!-- Empresa Form -->
-						<h3>Empresa</h3>
-						<p:selectBooleanCheckbox value="#{aluguelMB.empresa}"
-							itemLabel="Representa Empresa">
-							<p:ajax update="dadosEmpresa" />
-						</p:selectBooleanCheckbox>
-						<p:panelGrid columns="2" id="dadosEmpresa"
-							style="display:#{aluguelMB.showEmpresa()}">
-							<p:outputLabel value="Informe o CNPJ: " />
-							<p:inputText value="#{aluguelMB.empresaSel.cnpj}"
-								update="dadosEmpresa">
-								<p:ajax listener="#{aluguelMB.searchEmpresa()}"/>
-								</p:inputText>
-							<p:outputLabel value="CPF: " />
-							<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
-							<p:outputLabel value="Nome: " />
-							<p:outputLabel value="#{aluguelMB.empresaSel.raz_social	}" />
-							<p:outputLabel value="Telefone: " />
-							<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
-						</p:panelGrid>
-						<p:linkButton style="display:#{aluguelMB.showPlusEmpresa()}"
-							href="#{system.path()}/p/empresa/criar.xhtml"
-							class="btn btn-primary btn-text" value="Cadastrar Empresa"
-							id="btnEmpresa" icon="fa fa-plus">
-							<f:param name="cnpj" value="#{aluguelMB.empresaSel.cnpj}" />
-						</p:linkButton>
+						<div class="p-grid p-align-center vertical-container">
+							<div class="p-col">
+								<h3>Empresa</h3>
+							</div>
+							<div class="p-col">
+								<p:selectBooleanCheckbox value="#{aluguelMB.empresa}"
+									itemLabel="Representa Empresa">
+									<p:ajax update="dadosEmpresa" />
+								</p:selectBooleanCheckbox>
+							</div>
+						</div>
+						<div class="p-col">
+							<p:panelGrid columns="2" id="dadosEmpresa"
+								style="display:#{aluguelMB.showEmpresa()}">
+								<p:outputLabel value="Informe o CNPJ: " />
+								<p:inputMask id="cnpj" value="#{aluguelMB.empresaSel.cnpj}"
+									mask="99.999.999/9999-99" update="dadosEmpresa">
+									<p:ajax listener="#{aluguelMB.searchEmpresa()}" />
+								</p:inputMask>
+								<!-- <p:inputText value="#{aluguelMB.empresaSel.cnpj}"
+									update="dadosEmpresa">
+									<p:ajax listener="#{aluguelMB.searchEmpresa()}" />
+								</p:inputText> -->
+								<p:outputLabel value="CPF: " />
+								<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
+								<p:outputLabel value="Nome: " />
+								<p:outputLabel value="#{aluguelMB.empresaSel.raz_social	}" />
+								<p:outputLabel value="Telefone: " />
+								<p:outputLabel value="#{aluguelMB.empresaSel.telefone	}" />
+							</p:panelGrid>
+						</div>
+						<div class="p-col">
+							<p:linkButton style="display:#{aluguelMB.showPlusEmpresa()}"
+								href="#{system.path()}/p/empresa/criar.xhtml"
+								class="btn btn-primary btn-text" value="Cadastrar Empresa"
+								id="btnEmpresa" icon="fa fa-plus"
+								disabled="#{aluguelMB.empresaSel.cnpj == null || aluguelMB.empresaSel.raz_social}">
+								<f:param name="cnpj" value="#{aluguelMB.empresaSel.cnpj}" />
+							</p:linkButton>
+						</div>
 					</div>
 					<!-- Empresa Form -->
 				</div>
 				<!-- Forms -->
 			</div>
 			<!-- Dados Cadastrais -->
-			<div style="display: #{aluguelMB.getForms(1)}">
+			<!-- 			<div style="display: #{aluguelMB.getForms(1)"> -->
+			<div class="step1">
 				<h1>Especificação do Aluguel</h1>
 				<p:panelGrid id="dadosAluguel">
-				
+
 					<p:outputLabel for="range" value="Período do aluguel: " />
-        			<p:datePicker id="range" pattern="dd/MM/yyyy" selectionMode="range" value="#{aluguelMB.period}" readonlyInput="true" >
-        				<p:ajax update="dadosAluguel"/>
-        			</p:datePicker>
-        			
-        			<p:outputLabel for="maq" value="Máquina: " />
-            		<p:selectOneMenu id="maq" value="#{aluguelMB.maquinaSel}" style="width:150px">
-                		<f:selectItem itemLabel="Selecione a máquina" itemValue="" noSelectionOption="true"/>
-		                <f:selectItems value="#{aluguelMB.maquinas}" />
-            		</p:selectOneMenu>
-            		
-            		<p:outputLabel value="Horímetro: "/>
-            		<p:inputText value="#{aluguelMB.aluguelSel.hori_saida}"/>
-            		
-            		<p:outputLabel value="Horas por dia: "/>
-        			<p:selectOneMenu id="hd" value="#{aluguelMB.horas}" style="width:150px">
-                		<f:selectItem itemLabel="quantas horas por dia" itemValue="" noSelectionOption="true"/>
-		                <f:selectItems value="#{aluguelMB.listHoras}" />
-            		</p:selectOneMenu>
-        		</p:panelGrid>
+					<p:datePicker id="range" pattern="dd/MM/yyyy" selectionMode="range"
+						value="#{aluguelMB.period}" readonlyInput="true">
+						<p:ajax update="dadosAluguel" />
+					</p:datePicker>
+
+					<p:outputLabel for="maq" value="Máquina: " />
+					<p:selectOneMenu id="maq" value="#{aluguelMB.maquinaSel}"
+						style="width:150px">
+						<f:selectItem itemLabel="Selecione a máquina" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{aluguelMB.maquinas}" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Horímetro: " />
+					<p:inputText value="#{aluguelMB.aluguelSel.hori_saida}" />
+
+					<p:outputLabel value="Horas por dia: " />
+					<p:selectOneMenu id="hd" value="#{aluguelMB.horas}"
+						style="width:150px">
+						<f:selectItem itemLabel="quantas horas por dia" itemValue=""
+							noSelectionOption="true" />
+						<f:selectItems value="#{aluguelMB.listHoras}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
 			</div>
-			<div style="display: #{aluguelMB.getForms(2)}">
+			<!-- 			<div style="display: #{aluguelMB.getForms(2)"> -->
+			<div class="step2">
 				<h1>Confirmação e Pagamento</h1>
-				<div class="ui-g"><!-- Máquina -->
-    				<div class="ui-g-6"><p:outputLabel value="Máquina"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="Diária"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="Nº Dias"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="Valor"/></div>
+				<div class="ui-g">
+					<!-- Máquina -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Máquina" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Diária" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Nº Dias" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Valor" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Máquina descrição -->
-    				<div class="ui-g-6"><p:outputLabel value="#{aluguelMB.maquinaSel}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="R$#{aluguelMB.maquinaSel2.valor_diaria}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.ndias}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="R$#{aluguelMB.valor}"/></div>
+				<div class="ui-g">
+					<!-- Máquina descrição -->
+					<div class="ui-g-6">
+						<p:outputLabel value="#{aluguelMB.maquinaSel}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$#{aluguelMB.maquinaSel2.valor_diaria}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.ndias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$#{aluguelMB.valor}" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Desconto -->
-    				<div class="ui-g-6"><p:outputLabel value="Descontos"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="%"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="-R$"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="R$"/></div>
+				<div class="ui-g">
+					<!-- Desconto -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Descontos" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="%" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="-R$" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="R$" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Desconto Nº de Dias -->
-    				<div class="ui-g-6"><p:outputLabel value="Nº de Dias"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.descNdias}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.delNdias}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.valNdias}"/></div>
+				<div class="ui-g">
+					<!-- Desconto Nº de Dias -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Nº de Dias" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.descNdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.delNdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.valNdias}" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Desconto Horas/dia -->
-    				<div class="ui-g-6"><p:outputLabel value="Horas/Dia"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.descHdias}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.delHdias}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.valHdias}"/></div>
+				<div class="ui-g">
+					<!-- Desconto Horas/dia -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Horas/Dia" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.descHdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.delHdias}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.valHdias}" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Desconto Fidelização -->
-    				<div class="ui-g-6"><p:outputLabel value="Fidelização"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.descFidel}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.delFidel}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.valFidel}"/></div>
+				<div class="ui-g">
+					<!-- Desconto Fidelização -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Fidelização" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.descFidel}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.delFidel}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.valFidel}" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Desconto personalizado -->
-    				<div class="ui-g-6"><p:outputLabel value="Personalizado"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.descPers}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.delPers}"/></div>
-				    <div class="ui-g-2"><p:outputLabel value="#{aluguelMB.valPers}"/></div>
+				<div class="ui-g">
+					<!-- Desconto personalizado -->
+					<div class="ui-g-6">
+						<p:outputLabel value="Personalizado" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.descPers}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.delPers}" />
+					</div>
+					<div class="ui-g-2">
+						<p:outputLabel value="#{aluguelMB.valPers}" />
+					</div>
 				</div>
-				<div class="ui-g"><!-- Total -->
-				    <div class="ui-g-8"></div>
-				    <div class="ui-g-2"><p:outputLabel value="Total"/></div>
-				    <div class="ui-g-2"><p:inputText value = "#{aluguelMB.total}"><p:ajax listener="#{aluguelMB.updateDescontos()}"/></p:inputText> </div>
+				<div class="ui-g">
+					<!-- Total -->
+					<div class="ui-g-8"></div>
+					<div class="ui-g-2">
+						<p:outputLabel value="Total" />
+					</div>
+					<div class="ui-g-2">
+						<p:inputText value="#{aluguelMB.total}">
+							<p:ajax listener="#{aluguelMB.updateDescontos()}" />
+						</p:inputText>
+					</div>
 				</div>
 			</div>
+
+			<p:spacer></p:spacer>
 
 			<div class="p-grid p-justify-between">
 				<div class="p-col-2">
 					<p:linkButton outcome="listar" class="btn btn-warning btn-text"
 						value="Cancelar" id="cancel" icon="fa fa-times" />
 				</div>
-				<div class="p-col-4">
-					<p:commandButton value="anterior" disabled="#{aluguelMB.disabledAnterior}"
-						actionListener="#{aluguelMB.backStep()}" />
+				<div class="p-col-4 text-right">
+					<p:commandButton value="anterior"
+						disabled="#{aluguelMB.disabledAnterior}"
+						actionListener="#{aluguelMB.backStep()}" icon="fa fa-angle-left" />
 					<p:commandButton value="#{aluguelMB.valueProximo}"
-						actionListener="#{aluguelMB.nextStep()}"/>
+						actionListener="#{aluguelMB.nextStep()}" icon="fa fa-angle-right" />
 				</div>
 			</div>
 
 
 		</h:form>
 	</ui:define>
-
-
 </ui:composition>

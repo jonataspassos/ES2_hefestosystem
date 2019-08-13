@@ -9,11 +9,11 @@
 	<ui:define name="titulo">Aluguéis</ui:define>
 	<ui:define name="cabecalho">Listagem de Aluguéis</ui:define>
 	<ui:define name="corpo">
-	<div class="listar-acoes">
-				<p:linkButton outcome="alugar" value="Alugar Máquina"
-					icon="fa fa-plus" />
-			</div>
-		
+		<div class="listar-acoes">
+			<p:linkButton class="btn btn-primary btn-text" outcome="alugar"
+				value="Alugar Máquina" icon="fa fa-plus" />
+		</div>
+
 		<h:form id="form">
 			<p:dataTable id="tableStateDT" var="alu"
 				value="#{aluguelListMB.alugueis}" widgetVar="alugueisTable"
@@ -21,64 +21,61 @@
 				paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
 				rowsPerPageTemplate="5,10,15" rowKey="#{alu.n_aluguel}"
 				emptyMessage="Nenhum Aluguel encontrado com esses critérios"
-				filteredValue="#{aluguelListMB.filteredAlugueis}" sortMode="multiple">
+				filteredValue="#{aluguelListMB.filteredAlugueis}"
+				sortMode="multiple">
 				<f:facet name="header">
 					<p:outputPanel style="text-align:end">
-						<h:outputText value="Procure por todos os campos:" />
 						<p:inputText id="globalFilter"
-							onkeyup="PF('alugueisTable').filter()" style="width:150px"
-							placeholder="pesquisar..." />
+							onkeyup="PF('alugueisTable').filter()" placeholder="pesquisar..." />
 					</p:outputPanel>
 				</f:facet>
 
-				<p:column headerText="Data de Saída"
-					sortBy="#{alu.data_ini}">
-					<p:datePicker pattern="dd/MM/yyyy"
-						value="#{alu.data_ini}" readonly="#{facesContext.renderResponse}" />
+				<p:column headerText="Data de Saída" sortBy="#{alu.data_ini}">
+					<p:datePicker pattern="dd/MM/yyyy" value="#{alu.data_ini}"
+						readonly="#{facesContext.renderResponse}" />
 				</p:column>
-				<p:column headerText="Data de Retorno"
-					sortBy="#{alu.data_entregue}">
+				<p:column headerText="Data de Retorno" sortBy="#{alu.data_entregue}">
 					<script type="text/javascript">
-    //<![CDATA[
-    function dateTemplateFunc_#{alu.n_aluguel}(date) {
-    	var d = new Date(date.year,date.month, date.day);
-        return '<span style="background-color:' + ((d.getTime() <= #{alu.data_final.getTime()} && d.getTime() >= #{alu.data_ini.getTime()}) ? '#81C784' : 'inherit') + ';'
-        		+'border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' 
-        		+ date.day + '</span>';
-    }
-    //]]>
-</script>
-					<p:datePicker pattern="dd/MM/yyyy" dateTemplate="dateTemplateFunc_#{alu.n_aluguel}"
-						value="#{alu.data_entregue}" readonly="#{facesContext.renderResponse}" />
+					    //<![CDATA[
+					    function dateTemplateFunc_#{alu.n_aluguel}(date) {
+					    	var d = new Date(date.year,date.month, date.day);
+					        return '<span style="background-color:' + ((d.getTime() <= #{alu.data_final.getTime()} && d.getTime() >= #{alu.data_ini.getTime()}) ? '#81C784' : 'block') + ';'
+					        		+'border-radius:50%;padding: .25em;width: 1.75em; height:1.75em; display:block;">' 
+					        		+ date.day + '</span>';
+					    }
+					    //]]>
+					</script>
+					<p:datePicker pattern="dd/MM/yyyy"
+						dateTemplate="dateTemplateFunc_#{alu.n_aluguel}"
+						value="#{alu.data_entregue}"
+						readonly="#{facesContext.renderResponse}" />
 				</p:column>
 				<p:column headerText="Registro de Máquina"
 					filterBy="#{alu.n_registro}" sortBy="#{alu.n_registro}"
 					filterMatchMode="contains">
 					<h:outputText value="#{alu.n_registro}" />
 				</p:column>
-				<p:column headerText="Potência da Máquina"
-					sortBy="#{alu.potencia}">
+				<p:column headerText="Potência da Máquina" sortBy="#{alu.potencia}">
 					<h:outputText value="#{alu.potencia}" />
 				</p:column>
 				<p:column headerText="Valor do Contrato"
 					sortBy="#{alu.val_contratado}">
 					<h:outputText value="#{alu.val_contratado}" />
 				</p:column>
-				<p:column headerText="Valor Pago"
-					sortBy="#{alu.valor_pago}">
+				<p:column headerText="Valor Pago" sortBy="#{alu.valor_pago}">
 					<h:outputText value="#{alu.valor_pago}" />
 				</p:column>
 				<p:column headerText="Ações" class="text-center"
-						style="width:40px;text-align:center">
-						<p:linkButton class="btn-primary" outcome="consultar"
-							icon="fa fa-eye" title="Consultar Aluguel">
-							<f:param name="aluguel_id" value="#{alu.n_aluguel}" />
-						</p:linkButton>
-					</p:column>
-<!-- 				<p:column> -->
-<!-- 					<p:commandButton value="Reset" -->
-<!-- 						onclick="PF('calendarWidget').setDate(null);PF('alugueisTable').clearFilters()" /> -->
-<!-- 				</p:column> -->
+					style="width:40px;text-align:center">
+					<p:linkButton class="btn-primary" outcome="consultar"
+						icon="fa fa-eye" title="Consultar Aluguel">
+						<f:param name="aluguel_id" value="#{alu.n_aluguel}" />
+					</p:linkButton>
+				</p:column>
+				<!-- 				<p:column> -->
+				<!-- 					<p:commandButton value="Reset" -->
+				<!-- 						onclick="PF('calendarWidget').setDate(null);PF('alugueisTable').clearFilters()" /> -->
+				<!-- 				</p:column> -->
 
 			</p:dataTable>
 		</h:form>

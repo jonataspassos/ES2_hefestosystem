@@ -13,6 +13,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+
 import bean.AluguelBean;
 import lookUp.ClienteLookUpList;
 import lookUp.EmpresaLookUpList;
@@ -63,40 +65,40 @@ public class AluguelController implements Serializable {
 		clienteSel = new ClienteLookUpList();
 		empresaSel = new EmpresaLookUpList();
 		String param = getMaquina_id_param();
-		if(param !=null) {
+		if (param != null) {
 			maquinaSel2 = maquinaService.read(param);
-		}else {
+		} else {
 			maquinaSel2 = new MaquinaLookUp();
 		}
 		maquinas = maquinaService.list(0);
-		if(maquinas.size()==0) {
+		if (maquinas.size() == 0) {
 			System.out.println("Não há máquinas para alugar.");
 		}
-		
+
 		period = new ArrayList<Date>();
 		period.add(new Date());
 		period.add(period.get(0));
-		
+
 	}
-	
+
 	public void setAluguelService(AluguelModel aluguelService) {
 		this.aluguelService = aluguelService;
 	}
-	
+
 	public void setClienteService(ClienteModel clienteService) {
 		this.clienteService = clienteService;
 	}
-	
+
 	public void setEmpresaService(EmpresaModel empresaService) {
 		this.empresaService = empresaService;
 	}
-	
+
 	public void setMaquinaService(MaquinaModel maquinaService) {
 		this.maquinaService = maquinaService;
 	}
-	
+
 //-------------------- Beans Get and Set ------------------------//	
-	
+
 	public AluguelBean getAluguelSel() {
 		return aluguelSel;
 	}
@@ -105,8 +107,6 @@ public class AluguelController implements Serializable {
 		this.aluguelSel = aluguelSel;
 	}
 
-
-	
 	public ClienteLookUpList getClienteSel() {
 		return clienteSel;
 	}
@@ -122,18 +122,18 @@ public class AluguelController implements Serializable {
 	public void setEmpresaSel(EmpresaLookUpList empresaSel) {
 		this.empresaSel = empresaSel;
 	}
-	
+
 	public List<MaquinaLookUp> getMaquinas() {
 		return maquinas;
 	}
-	
+
 	public MaquinaLookUp getMaquinaSel2() {
 		return maquinaSel2;
 	}
+
 	public void setMaquinaSel2(MaquinaLookUp maquinaSel2) {
 		this.maquinaSel2 = maquinaSel2;
 	}
-
 
 //--------------------- Get And Set -----------------------------//
 	public int getStep() {
@@ -143,7 +143,7 @@ public class AluguelController implements Serializable {
 	public void setStep(int step) {
 		this.step = step;
 	}
-	
+
 	public boolean isEmpresa() {
 		return empresa;
 	}
@@ -151,16 +151,17 @@ public class AluguelController implements Serializable {
 	public void setEmpresa(boolean empresa) {
 		this.empresa = empresa;
 	}
-	
+
 	public List<Date> getPeriod() {
 		return period;
 	}
 
 	public void setPeriod(List<Date> period) {
-		if(period.size()<2)
+		if (period.size() < 2)
 			period.add(period.get(0));
 		this.period = period;
 	}
+
 //------------------- Unreal Get and Set --------------//
 	public String getDisabledAnterior() {
 		if (0 != step)
@@ -173,16 +174,16 @@ public class AluguelController implements Serializable {
 		if (2 == step)
 			return "Concluir";
 		else
-			return "Pr�ximo";
+			return "Próximo";
 	}
-	
+
 	public String showEmpresa() {
 		if (empresa)
 			return "inherit";
 		else
 			return "none";
 	}
-	
+
 	public String showPlusCliente() {
 		if (clienteSel.getNome() == null)
 			return "inherit";
@@ -191,13 +192,12 @@ public class AluguelController implements Serializable {
 	}
 
 	public String showPlusEmpresa() {
-		if (empresaSel.getRaz_social() == null)
+		if (empresa && empresaSel.getRaz_social() == null)
 			return "inherit";
 		else
 			return "none";
 	}
 
-	
 	public String getMaquina_id_param() {
 		FacesContext context = FacesContext.getCurrentInstance();
 		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
@@ -205,7 +205,7 @@ public class AluguelController implements Serializable {
 
 		return maquina_id;
 	}
-	
+
 	public String getMaquinaSel() {
 		return getMaquinaSel2().toString();
 	}
@@ -321,12 +321,12 @@ public class AluguelController implements Serializable {
 		float convert;
 		try {
 			convert = Float.parseFloat(total);
-		}catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			total = total.replaceAll("[^0-9,]", "");
 			total = total.replaceAll(",", ".");
 			convert = Float.parseFloat(total);
 		}
-		
+
 		getAluguelSel().setVal_contratado(convert);
 	}
 
@@ -334,22 +334,28 @@ public class AluguelController implements Serializable {
 		return String.format("R$%.2f", getAluguelSel().getVal_contratado());
 	}
 
-	
 //----------------- Methods ---------------------------//	
 	public void updateDescontos() {
 		descontos[3] = getAluguelSel().getVal_contratado() / valFidelf();
 	}
+
 	public void nextStep() {
 		switch (step) {
 		case 0:
 			if (clienteSel.getNome() != null && (!empresa || empresaSel.getRaz_social() != null)) {
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
 				this.step++;
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'block');");
 			} else {
-				System.out.println("Preencha todos os campos!!");
+				PrimeFaces.current().executeScript(
+						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha todos os campos.'})");
 			}
 			break;
 		case 1:
 			if (maquinaSel2.getMarca() != null && getHoras() != null) {
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
 
 				descontos[0] = HUtil.descNdias(getNdias());
 				descontos[1] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
@@ -358,8 +364,10 @@ public class AluguelController implements Serializable {
 				setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2]);
 
 				this.step++;
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'block');");
 			} else {
-				System.out.println("Preencha todos os campos!!");
+				PrimeFaces.current().executeScript(
+						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha todos os campos.'})");
 			}
 			break;
 		case 2:
@@ -369,8 +377,21 @@ public class AluguelController implements Serializable {
 	}
 
 	public void backStep() {
-		if (this.step > 0)
+		if (this.step > 0) {
+			switch (step) {
+			case 1:
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
+				break;
+			case 2:
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
+				break;
+			}
 			this.step--;
+			PrimeFaces.current().executeScript("$('.step" + this.step + "').css('display', 'block');");
+		}
+
 	}
 
 	public void save() {
@@ -399,11 +420,10 @@ public class AluguelController implements Serializable {
 			return "none";
 	}
 
-	
 	public void searchCliente() {
 		String cpf = this.getClienteSel().getCpf();
 		this.clienteSel = clienteService.readLookUp(cpf);
-		if (this.clienteSel == null){
+		if (this.clienteSel == null) {
 			clienteSel = new ClienteLookUpList();
 			this.clienteSel.setCpf(cpf);
 			System.out.println("Esse Cliente n�o Existe!");
@@ -415,7 +435,7 @@ public class AluguelController implements Serializable {
 	public void searchEmpresa() {
 		String cnpj = this.getEmpresaSel().getCnpj();
 		this.empresaSel = empresaService.read(this.empresaSel.getCnpj());
-		if (this.empresaSel == null){
+		if (this.empresaSel == null) {
 			empresaSel = new EmpresaLookUpList();
 			this.empresaSel.setCnpj(cnpj);
 		}
