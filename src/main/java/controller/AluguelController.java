@@ -371,7 +371,12 @@ public class AluguelController implements Serializable {
 			}
 			break;
 		case 2:
-			save();
+			try {
+				save();
+			} catch (Exception e) {
+				PrimeFaces.current().executeScript(
+						"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Impossível realizar aluguel.'})");
+			}
 			break;
 		}
 	}
@@ -394,7 +399,7 @@ public class AluguelController implements Serializable {
 
 	}
 
-	public void save() {
+	public void save() throws Exception {
 		getAluguelSel().setN_funcionario_fk(AutenticationMB.getFuncionarioDaSessao().getN_funcionario());
 		aluguelSel.setN_cliente_fk(getClienteSel().getN_cliente());
 		aluguelSel.setN_maquina_fk(getMaquinaSel2().getN_maquina());
@@ -410,7 +415,12 @@ public class AluguelController implements Serializable {
 		}
 
 		System.out.println("Máquina Alugada");
-		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml?aluguel_id=" + id);
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Máquina Alugada.', timer: 3000,"
+						+ "showConfirmButton: false})");
+
+		Thread.sleep(3000);
+		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml");
 	}
 
 	public String getForms(int i) {
@@ -426,9 +436,9 @@ public class AluguelController implements Serializable {
 		if (this.clienteSel == null) {
 			clienteSel = new ClienteLookUpList();
 			this.clienteSel.setCpf(cpf);
-			System.out.println("Esse Cliente n�o Existe!");
-			FacesContext.getCurrentInstance().addMessage(null,
-					new FacesMessage(FacesMessage.SEVERITY_WARN, "Aviso", "Esse Cliente n�o Existe!"));
+			System.out.println("Esse Cliente não Existe!");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Esse Cliente não Existe!'})");
 		}
 	}
 

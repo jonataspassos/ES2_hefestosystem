@@ -207,8 +207,7 @@ public class EmpresaController implements Serializable {
 		empresa_end = new EndEmpresaBean();
 		PrimeFaces.current().executeScript("PF('dlg2').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Endereço Adicionado.");
 	}
 
 	public void onTelRowEdit(RowEditEvent event) {
@@ -232,8 +231,7 @@ public class EmpresaController implements Serializable {
 		empresa_tel = new TelEmpresaBean();
 		PrimeFaces.current().executeScript("PF('dlg1').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Número Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Número Adicionado.");
 	}
 
 	public void createEmpresa() throws Exception {
@@ -243,12 +241,17 @@ public class EmpresaController implements Serializable {
 				empresa_tel.setN_empresa_fk(empresa.getN_empresa());
 				if (endEmpresaService.create(empresa_end) && telEmpresaService.create(empresa_tel)) {
 					System.out.println("Empresa cadastrada com sucesso.");
+					PrimeFaces.current().executeScript(
+							"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Empresa cadastrada com sucesso.', timer: 4000,"
+									+ "showConfirmButton: false})");
 					Thread.sleep(5000);
 					SystemMB.getSystem().redirect("/p/empresa/listar.xhtml");
 					return;
 				}
 			}
 			System.out.println("Error ao tentar cadastrar empresa.");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Impossível cadastrar empresa.'})");
 		}
 	}
 
@@ -274,6 +277,8 @@ public class EmpresaController implements Serializable {
 		}
 
 		empresaService.update(empresa);
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Empresa atualizada.', timer: 4000})");
 	}
 
 	public void excluirTel() {
@@ -298,6 +303,8 @@ public class EmpresaController implements Serializable {
 				excluirTel();
 
 			empresaService.delete(empresa.getN_empresa());
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Empresa excluída.', timer: 4000})");
 			return;
 		}
 		System.out.println("Error: Empresa não foi instanciada.");

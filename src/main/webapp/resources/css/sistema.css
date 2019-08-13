@@ -178,7 +178,7 @@ th input.ui-inputfield.ui-inputtext, .ui-column-customfilter {
 	width: 100%;
 }
 
-.input-style-1 {
+.input-style-1, input {
 	border-top: 0px !important;
 	border-left: 0px !important;
 	border-right: 0px !important;

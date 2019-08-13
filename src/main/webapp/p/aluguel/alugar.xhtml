@@ -76,10 +76,6 @@
 									mask="99.999.999/9999-99" update="dadosEmpresa">
 									<p:ajax listener="#{aluguelMB.searchEmpresa()}" />
 								</p:inputMask>
-								<!-- <p:inputText value="#{aluguelMB.empresaSel.cnpj}"
-									update="dadosEmpresa">
-									<p:ajax listener="#{aluguelMB.searchEmpresa()}" />
-								</p:inputText> -->
 								<p:outputLabel value="CPF: " />
 								<p:outputLabel value="#{aluguelMB.empresaSel.cnpj}" />
 								<p:outputLabel value="Nome: " />
@@ -108,30 +104,38 @@
 				<h1>Especificação do Aluguel</h1>
 				<p:panelGrid id="dadosAluguel">
 
-					<p:outputLabel for="range" value="Período do aluguel: " />
-					<p:datePicker id="range" pattern="dd/MM/yyyy" selectionMode="range"
-						value="#{aluguelMB.period}" readonlyInput="true">
-						<p:ajax update="dadosAluguel" />
-					</p:datePicker>
+					<div class="p-col">
+						<p:outputLabel for="range" value="Período do aluguel: " />
+						<p:datePicker id="range" class="input-style-1" pattern="dd/MM/yyyy"
+							selectionMode="range" value="#{aluguelMB.period}"
+							readonlyInput="true">
+							<p:ajax update="dadosAluguel" />
+						</p:datePicker>
+					</div>
 
-					<p:outputLabel for="maq" value="Máquina: " />
-					<p:selectOneMenu id="maq" value="#{aluguelMB.maquinaSel}"
-						style="width:150px">
-						<f:selectItem itemLabel="Selecione a máquina" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{aluguelMB.maquinas}" />
-					</p:selectOneMenu>
+					<div class="p-col">
+						<p:outputLabel for="maq" value="Máquina: " />
+						<p:selectOneMenu id="maq" value="#{aluguelMB.maquinaSel}"
+							style="width:150px" class="input-style-1">
+							<f:selectItem itemLabel="Selecione a máquina" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{aluguelMB.maquinas}" />
+						</p:selectOneMenu>
+					</div>
+					<div class="p-col">
+						<p:outputLabel value="Horímetro: " />
+						<p:inputText class="input-style-1" value="#{aluguelMB.aluguelSel.hori_saida}" />
+					</div>
 
-					<p:outputLabel value="Horímetro: " />
-					<p:inputText value="#{aluguelMB.aluguelSel.hori_saida}" />
-
-					<p:outputLabel value="Horas por dia: " />
-					<p:selectOneMenu id="hd" value="#{aluguelMB.horas}"
-						style="width:150px">
-						<f:selectItem itemLabel="quantas horas por dia" itemValue=""
-							noSelectionOption="true" />
-						<f:selectItems value="#{aluguelMB.listHoras}" />
-					</p:selectOneMenu>
+					<div class="p-col">
+						<p:outputLabel value="Horas por dia: " />
+						<p:selectOneMenu id="hd" value="#{aluguelMB.horas}"
+							style="width:150px" class="input-style-1">
+							<f:selectItem itemLabel="quantas horas por dia" itemValue=""
+								noSelectionOption="true" />
+							<f:selectItems value="#{aluguelMB.listHoras}" />
+						</p:selectOneMenu>
+					</div>
 				</p:panelGrid>
 			</div>
 			<!-- 			<div style="display: #{aluguelMB.getForms(2)"> -->

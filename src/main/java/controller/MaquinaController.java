@@ -164,6 +164,9 @@ public class MaquinaController implements Serializable{
 
 	public void createMaquina() throws Exception {
 		if (maqm.create(maquina)) {
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Máquina cadastrada.', timer: 4000,"
+							+ "showConfirmButton: false})");
 			System.out.println("Máquina cadastrada com sucesso.");
 			maquina = new MaquinaLookUp();
 			Thread.sleep(5000);
@@ -171,6 +174,8 @@ public class MaquinaController implements Serializable{
 			return;
 		}
 		System.out.println("Error ao tentar cadastrar máquina.");
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Error ao tentar cadastrar máquina.'})");
 	}
 
 	public void putRevisao() {
@@ -183,6 +188,8 @@ public class MaquinaController implements Serializable{
 		}
 
 		System.out.println("Error: Revisão não foi instanciada.");
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Erro de instância.'})");
 	}
 
 	public void cancelRevisao() {
@@ -198,18 +205,27 @@ public class MaquinaController implements Serializable{
 		if (maquina != null) {
 			maqm.update(maquina);
 			maquinaEdicao = false;
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Máquina atualizada.', timer: 4000})");
 			return;
 		}
 
 		System.out.println("Error: Máquina não foi instanciada.");
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Erro de instância.'})");
 	}
 
 	public void excluirMaquina() {
 		if (maquina != null) {
 			maqm.delete(getMaquina_id_param());
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Máquina excluída.', timer: 4000})");
 			return;
 		}
 		System.out.println("Error: Máquina não foi instanciada.");
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Erro de instância.'})");
+		
 	}
 	
 	public void setMaqPotencia(Double potencia) {

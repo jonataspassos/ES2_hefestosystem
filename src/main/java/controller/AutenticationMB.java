@@ -7,6 +7,8 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpSession;
 
+import org.primefaces.PrimeFaces;
+
 import bean.FuncionarioBean;
 import model.FuncionarioModel;
 
@@ -17,20 +19,9 @@ public class AutenticationMB {
 	private String senha1;
 	private String senha2;
 	
-	@ManagedProperty("#{message}")
-	private MessagesMB messageService;
-
 	public AutenticationMB() {
 		super();
 		this.funcionario = new FuncionarioBean();
-	}
-
-	public MessagesMB getMessageService() {
-		return messageService;
-	}
-
-	public void setMessageService(MessagesMB messageService) {
-		this.messageService = messageService;
 	}
 
 	public void login() {
@@ -45,9 +36,8 @@ public class AutenticationMB {
 				else
 					SystemMB.getSystem().redirect("/");
 			}else {
-				//System.out.println("Usuario e/ou senha Incorretos!");
-				messageService.warn("Usuario e/ou senha Incorretos!");
-				//addMessage(, "Usuario e/ou senha Incorretos!");
+				PrimeFaces.current().executeScript(
+						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Usuario e/ou senha Incorretos.'})");
 			}
 		}
 	}

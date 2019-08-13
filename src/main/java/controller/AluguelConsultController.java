@@ -10,6 +10,8 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
+import org.primefaces.PrimeFaces;
+
 import bean.AluguelBean;
 import lookUp.ClienteLookUpList;
 import lookUp.EmpresaLookUpList;
@@ -59,7 +61,7 @@ public class AluguelConsultController implements Serializable {
 
 	@ManagedProperty("#{maquinaModel}")
 	private MaquinaModel maquinaService;
-	
+
 	@ManagedProperty("#{funcionarioModel}")
 	private FuncionarioModel funcionarioService;
 
@@ -291,15 +293,15 @@ public class AluguelConsultController implements Serializable {
 	public int getHoriRetorno() {
 		return aluguelSel.getHori_retorno();
 	}
-	
+
 	public boolean getDisabledReturn() {
-		return aluguelSel.getData_entregue()!=null;
+		return aluguelSel.getData_entregue() != null;
 	}
-	
+
 	public boolean getDisabledPayment() {
-		return aluguelSel.getValor_pago()>=aluguelSel.getVal_contratado();
+		return aluguelSel.getValor_pago() >= aluguelSel.getVal_contratado();
 	}
-	
+
 	public void setEntradaDinheiro(String total) {
 		float convert;
 		try {
@@ -316,11 +318,11 @@ public class AluguelConsultController implements Serializable {
 	public String getEntradaDinheiro() {
 		return String.format("R$%.2f", dinheiro);
 	}
-	
+
 	public String getTroco() {
 		float troco = dinheiro + aluguelSel.getValor_pago() - aluguelSel.getVal_contratado();
 		System.out.println(troco);
-		if(troco<0)
+		if (troco < 0)
 			troco = 0;
 		return String.format("R$%.2f", troco);
 	}
@@ -338,7 +340,8 @@ public class AluguelConsultController implements Serializable {
 		descontos[0] = getNdias() / (float) getNdiasPrev();
 		if (descontos[0] < 1)
 			descontos[0] = 1;
-		descontos[1] = (aluguelSel.getHori_retorno()-aluguelSel.getHori_saida()) /(Float.parseFloat(getHoriPrevis())- aluguelSel.getHori_saida());
+		descontos[1] = (aluguelSel.getHori_retorno() - aluguelSel.getHori_saida())
+				/ (Float.parseFloat(getHoriPrevis()) - aluguelSel.getHori_saida());
 		if (descontos[1] < 1)
 			descontos[1] = 1;
 		descontos[2] = HUtil.descNdias(getNdias());
@@ -362,10 +365,12 @@ public class AluguelConsultController implements Serializable {
 		switch (step) {
 		case 0:
 			updateMulta();
-			if(aluguelSel.getHori_retorno()>=aluguelSel.getHori_saida())
+			if (aluguelSel.getHori_retorno() >= aluguelSel.getHori_saida())
 				step++;
 			else {
-				System.out.println("Preencha o horimetro com um valor v�lido.");
+				PrimeFaces.current().executeScript(
+						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha o horimetro com um valor válido.'})");
+				System.out.println("Preencha o horimetro com um valor válido.");
 			}
 			break;
 		case 1:
@@ -378,21 +383,30 @@ public class AluguelConsultController implements Serializable {
 		if (step > 0)
 			step--;
 	}
-	
+
 	public void registrarRetorno() {
 		aluguelSel.setVal_contratado(totalTemp);
 		aluguelSel.setData_entregue(retorno);
 		aluguelService.retorno(aluguelSel);
 		System.out.println("Retorno registrado com sucesso!");
-		SystemMB.getSystem().redirect("/p/aluguel/consultar.xhtml?aluguel_id="+aluguelSel.getN_aluguel());
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Retorno registrado com sucesso.', timer: 4000,"
+						+ "showConfirmButton: false})");
+		SystemMB.getSystem().redirect("/p/aluguel/consultar.xhtml?aluguel_id=" + aluguelSel.getN_aluguel());
 	}
+
 	public void payment() {
-		if(dinheiro>0) {
+		if (dinheiro > 0) {
 			aluguelService.payment(aluguelSel, dinheiro);
 			System.out.println("Pagamento registrado com sucesso!");
-			SystemMB.getSystem().redirect("/p/aluguel/consultar.xhtml?aluguel_id="+aluguelSel.getN_aluguel());
-		}else {
-			System.out.println("Informe uma quantidade de dinheiro correta");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Pagamento registrado com sucesso.', timer: 4000,"
+							+ "showConfirmButton: false})");
+			SystemMB.getSystem().redirect("/p/aluguel/consultar.xhtml?aluguel_id=" + aluguelSel.getN_aluguel());
+		} else {
+			System.out.println("Informe uma quantidade de dinheiro correta.");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Informe uma quantidade de dinheiro correta.'})");
 		}
 	}
 

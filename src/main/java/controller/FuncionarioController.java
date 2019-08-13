@@ -197,8 +197,7 @@ public class FuncionarioController {
 		funcionario_end = new EndFuncionarioBean();
 		PrimeFaces.current().executeScript("PF('dlg2').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Endereço Adicionado.");
 	}
 
 	public void onTelRowEdit(RowEditEvent event) {
@@ -222,8 +221,7 @@ public class FuncionarioController {
 		funcionario_tel = new TelFuncionarioBean();
 		PrimeFaces.current().executeScript("PF('dlg1').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Número Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Número Adicionado.");
 	}
 
 	public void createFuncionario() throws Exception {
@@ -233,12 +231,17 @@ public class FuncionarioController {
 				funcionario_tel.setN_funcionario_fk(funcionario.getN_funcionario());
 				if (endFuncionarioService.create(funcionario_end) && telFuncionarioService.create(funcionario_tel)) {
 					System.out.println("Funcionario cadastrado com sucesso.");
+					PrimeFaces.current().executeScript(
+							"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Funcionário cadastrado com sucesso.', timer: 4000,"
+									+ "showConfirmButton: false})");
 					Thread.sleep(5000);
 					SystemMB.getSystem().redirect("/p/funcionario/listar.xhtml");
 					return;
 				}
 			}
 			System.out.println("Error ao tentar cadastrar funcionario.");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Error ao tentar cadastrar funcionário.'})");
 		}
 	}
 
@@ -264,6 +267,8 @@ public class FuncionarioController {
 		}
 
 		funcionarioService.update(funcionario);
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Funcionário atualizado.', timer: 4000})");
 	}
 
 	public void excluirTel() {
@@ -288,6 +293,8 @@ public class FuncionarioController {
 				excluirTel();
 
 			funcionarioService.delete(funcionario.getN_funcionario());
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Funcionário excluído.', timer: 4000})");
 			return;
 		}
 		System.out.println("Error: Funcionario não foi instanciado.");

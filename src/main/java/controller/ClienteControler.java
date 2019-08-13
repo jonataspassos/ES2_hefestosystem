@@ -197,8 +197,7 @@ public class ClienteControler {
 		cliente_end = new EndClienteBean();
 		PrimeFaces.current().executeScript("PF('dlg2').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Endereço Adicionado.");
 	}
 
 	public void onTelRowEdit(RowEditEvent event) {
@@ -222,8 +221,7 @@ public class ClienteControler {
 		cliente_tel = new TelClienteBean();
 		PrimeFaces.current().executeScript("PF('dlg1').hide()");
 
-		FacesMessage msg = new FacesMessage("Novo Número Adicionado.", "");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println("Novo Número Adicionado.");
 	}
 
 	public void createCliente() throws Exception {
@@ -233,12 +231,17 @@ public class ClienteControler {
 				cliente_tel.setN_cliente_fk(cliente.getN_cliente());
 				if (endClienteService.create(cliente_end) && telClienteService.create(cliente_tel)) {
 					System.out.println("Cliente cadastrado com sucesso.");
+					PrimeFaces.current().executeScript(
+							"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Cliente cadastrado com sucesso.', timer: 4000,"
+									+ "showConfirmButton: false})");
 					Thread.sleep(5000);
 					SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
 					return;
 				}
 			}
 			System.out.println("Error ao tentar cadastrar cliente.");
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'error', title: 'Oopss...', text: 'Impossível cadastrar cliente.'})");
 		}
 	}
 
@@ -264,18 +267,20 @@ public class ClienteControler {
 		}
 
 		clienteService.update(cliente);
+		PrimeFaces.current().executeScript(
+				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Cliente atualizado.', timer: 4000})");
 	}
 
 	public void excluirTel() {
 		for (TelClienteBean tel : tels) {
-			if (tel.getN_telefone() != -1) 
+			if (tel.getN_telefone() != -1)
 				telClienteService.delete(tel.getN_telefone());
 		}
 	}
 
 	public void excluirEndereco() {
 		for (EndClienteBean end : enderecos) {
-			if (end.getN_end() != -1) 
+			if (end.getN_end() != -1)
 				endClienteService.delete(end.getN_end());
 		}
 	}
@@ -288,6 +293,8 @@ public class ClienteControler {
 				excluirTel();
 
 			clienteService.delete(cliente.getN_cliente());
+			PrimeFaces.current().executeScript(
+					"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Cliente excluído.', timer: 4000})");
 			return;
 		}
 		System.out.println("Error: Cliente não foi instanciado.");
