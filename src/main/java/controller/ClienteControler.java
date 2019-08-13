@@ -188,54 +188,37 @@ public class ClienteControler {
 	}
 
 	public void onEnderecoRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Endereço Editado.", ((EndClienteBean) event.getObject()).getRua());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		EndClienteBean end_edited = (EndClienteBean) event.getObject();
+		end_edited.setEdited(true);
 	}
 
 	public void onEnderecoRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edição Cancelada.", ((EndClienteBean) event.getObject()).getRua());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println((EndClienteBean) event.getObject());
 	}
 
 	public void onEnderecoAddNew() {
-		System.out.println("TESTE");
-		System.out.println(cliente_end);
-		
 		enderecos.add(cliente_end);
-		
+		cliente_end = new EndClienteBean();
+		PrimeFaces.current().executeScript("PF('dlg2').hide()");
+
 		FacesMessage msg = new FacesMessage("Novo Endereço Adicionado.", "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
 
-	public void onEnderecoCellEdit(CellEditEvent event) {
-		Object oldValue = event.getOldValue();
-		Object newValue = event.getNewValue();
-
-		if (newValue != null && !newValue.equals(oldValue)) {
-			FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cédula modificada",
-					"Velha: " + oldValue + ", Nova:" + newValue);
-			FacesContext.getCurrentInstance().addMessage(null, msg);
-		}
-	}
-	
 	public void onTelRowEdit(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Telefone Editado.", "" + ((TelClienteBean) event.getObject()).getNumero_tel());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		TelClienteBean tel_edited = (TelClienteBean) event.getObject();
+		tel_edited.setEdited(true);
 	}
 
 	public void onTelRowCancel(RowEditEvent event) {
-		FacesMessage msg = new FacesMessage("Edição Cancelada.", "" + ((TelClienteBean) event.getObject()).getNumero_tel());
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		System.out.println((TelClienteBean) event.getObject());
 	}
 
 	public void onTelAddNew() {
-		System.out.println("TESTE");
-		System.out.println(cliente_tel);
-		
-		System.out.println(tels.size());
 		this.tels.add(cliente_tel);
-		System.out.println(tels.size());
-		
+		cliente_tel = new TelClienteBean();
+		PrimeFaces.current().executeScript("PF('dlg1').hide()");
+
 		FacesMessage msg = new FacesMessage("Novo Número Adicionado.", "");
 		FacesContext.getCurrentInstance().addMessage(null, msg);
 	}
@@ -257,16 +240,27 @@ public class ClienteControler {
 	}
 
 	public void salvarCliente() {
-		System.out.println(getCliente_end());
-		System.out.println(cliente);
-//		if (cliente != null) {
-//			clienteService.update(cliente);
-//			return;
-//		}
+		for (EndClienteBean end : enderecos) {
+			if (end.getN_end() == -1) {
+				end.setN_cliente_fk(cliente.getN_cliente());
+				endClienteService.create(end);
+				continue;
+			}
+			if (end.isEdited())
+				endClienteService.update(end);
+		}
 
-		FacesMessage msg = new FacesMessage(FacesMessage.SEVERITY_INFO, "Error.",
-				"Error: Cliente não foi instanciado.");
-		FacesContext.getCurrentInstance().addMessage(null, msg);
+		for (TelClienteBean tel : tels) {
+			if (tel.getN_telefone() == -1) {
+				tel.setN_cliente_fk(cliente.getN_cliente());
+				telClienteService.create(tel);
+				continue;
+			}
+			if (tel.isEdited())
+				telClienteService.update(tel);
+		}
+
+		clienteService.update(cliente);
 	}
 
 	public void excluirMaquina() {

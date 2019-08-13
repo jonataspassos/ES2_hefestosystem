@@ -3,7 +3,7 @@ package bean;
 import javax.faces.bean.ApplicationScoped;
 
 public class EndClienteBean {
-	private int n_end;
+	private int n_end = -1;
 	private int n_cliente_fk;
 	private String uf;
 	private String cidade;
@@ -11,6 +11,7 @@ public class EndClienteBean {
 	private String rua;
 	private String numero;
 	private String cep;
+	private boolean edited = false;
 
 	public int getN_end() {
 		return n_end;
@@ -76,9 +77,19 @@ public class EndClienteBean {
 		this.cep = cep;
 	}
 
+	public boolean isEdited() {
+		return edited;
+	}
+
+	public void setEdited(boolean edited) {
+		this.edited = edited;
+	}
+	
 	@Override
 	public String toString() {
 		return "EndClienteBean [n_end=" + n_end + ", n_cliente_fk=" + n_cliente_fk + ", uf=" + uf + ", cidade=" + cidade
-				+ ", bairro=" + bairro + ", rua=" + rua + ", numero=" + numero + ", cep=" + cep + "]";
+				+ ", bairro=" + bairro + ", rua=" + rua + ", numero=" + numero + ", cep=" + cep + ", edited=" + edited
+				+ "]";
 	}
+
 }

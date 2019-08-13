@@ -3,10 +3,11 @@ package bean;
 import javax.faces.bean.ApplicationScoped;
 
 public class TelClienteBean {
-	private int n_telefone;
+	private int n_telefone = -1;
 	private int n_cliente_fk;
 	private int ddd;
 	private int numero_tel;
+	private boolean edited = false;
 
 	public int getN_telefone() {
 		return n_telefone;
@@ -40,9 +41,18 @@ public class TelClienteBean {
 		this.numero_tel = numero_tel;
 	}
 
+	public boolean isEdited() {
+		return edited;
+	}
+
+	public void setEdited(boolean edited) {
+		this.edited = edited;
+	}
+
 	@Override
 	public String toString() {
 		return "TelClienteBean [n_telefone=" + n_telefone + ", n_cliente_fk=" + n_cliente_fk + ", ddd=" + ddd
-				+ ", numero_tel=" + numero_tel + "]";
+				+ ", numero_tel=" + numero_tel + ", edited=" + edited + "]";
 	}
+
 }
