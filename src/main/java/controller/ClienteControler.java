@@ -11,7 +11,6 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 
 import org.primefaces.PrimeFaces;
-import org.primefaces.event.CellEditEvent;
 import org.primefaces.event.RowEditEvent;
 
 import bean.ClienteBean;
@@ -42,8 +41,6 @@ public class ClienteControler {
 	private EndClienteModel endClienteService;
 	@ManagedProperty("#{telClienteModel}")
 	private TelClienteModel telClienteService;
-	@ManagedProperty("#{message}")
-	private MessagesMB messagesService;
 
 	@PostConstruct
 	public void init() {
@@ -83,14 +80,6 @@ public class ClienteControler {
 
 	public void setFilteredClientes(List<ClienteLookUpList> filteredClientes) {
 		this.filteredClientes = filteredClientes;
-	}
-
-	public MessagesMB getMessagesService() {
-		return messagesService;
-	}
-
-	public void setMessagesService(MessagesMB messagesService) {
-		this.messagesService = messagesService;
 	}
 
 	public Boolean getClienteEdicao() {
@@ -243,13 +232,13 @@ public class ClienteControler {
 				cliente_end.setN_cliente_fk(cliente.getN_cliente());
 				cliente_tel.setN_cliente_fk(cliente.getN_cliente());
 				if (endClienteService.create(cliente_end) && telClienteService.create(cliente_tel)) {
-					messagesService.info("Cliente cadastrado com sucesso.");
+					System.out.println("Cliente cadastrado com sucesso.");
 					Thread.sleep(5000);
 					SystemMB.getSystem().redirect("/p/cliente/listar.xhtml");
 					return;
 				}
 			}
-			messagesService.error("Error ao tentar cadastrar cliente.");
+			System.out.println("Error ao tentar cadastrar cliente.");
 		}
 	}
 
