@@ -14,6 +14,7 @@ import javax.faces.context.FacesContext;
 import org.primefaces.PrimeFaces;
 import org.primefaces.event.RowEditEvent;
 
+import bean.ClienteBean;
 import bean.EmpresaBean;
 import bean.EndEmpresaBean;
 import bean.TelEmpresaBean;
@@ -84,7 +85,15 @@ public class EmpresaController implements Serializable {
 		this.empresaService = empresaService;
 	}
 	
-	public EmpresaBean getEmpresa() {
+	public EmpresaBean getEmpresa() {		
+		String param_id = getEmpresa_id_param();
+		if (empresa == null) {
+			if (param_id == null) {
+				empresa = new EmpresaBean();
+				return empresa;
+			}
+			empresa = empresaService.read(Integer.parseInt(getEmpresa_id_param()));
+		}
 		return empresa;
 	}
 
@@ -93,6 +102,8 @@ public class EmpresaController implements Serializable {
 	}
 
 	public TelEmpresaBean getEmpresa_tel() {
+		if(empresa_tel == null)
+			empresa_tel = new TelEmpresaBean();
 		return empresa_tel;
 	}
 
@@ -101,6 +112,8 @@ public class EmpresaController implements Serializable {
 	}
 
 	public EndEmpresaBean getEmpresa_end() {
+		if (empresa_end == null)
+			empresa_end = new EndEmpresaBean();
 		return empresa_end;
 	}
 
@@ -291,11 +304,11 @@ public class EmpresaController implements Serializable {
 		System.out.println("Error: Empresa não foi instanciada.");
 	}
 
-	public void setEmpresaCnpj(String cnpj) {
+	public void setEmpresCnpj(String cnpj) {
 		empresa.setCnpj(cnpj.replaceAll("[^0-9]", ""));
 	}
 
-	public String getEmpresaCnpj() {
+	public String getEmpresCnpj() {
 		String r = empresa.getCnpj();
 		if (r != null)
 			return r;
@@ -303,7 +316,7 @@ public class EmpresaController implements Serializable {
 		return "";
 	}
 
-	public void setEmpresaPhone(String phone) {
+	public void setEmpresPhone(String phone) {
 		phone = phone.replaceAll("[^0-9]", "");
 		try {
 			empresa_tel.setNumero_tel(Integer.parseInt(phone));
@@ -313,7 +326,7 @@ public class EmpresaController implements Serializable {
 
 	}
 
-	public String getEmpresaPhone() {
+	public String getEmpresPhone() {
 		return String.format("%d-%d", empresa_tel.getNumero_tel() / 10000, empresa_tel.getNumero_tel() % 10000);
 	}
 

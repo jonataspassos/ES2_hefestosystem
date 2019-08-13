@@ -81,7 +81,7 @@ public class EmpresaModel implements Serializable {
 		return empresas;
 	}
 	
-	public EmpresaLookUpList read(String cnpj) {
+	public EmpresaLookUpList read(String empresa_id) {
 		EmpresaLookUpList empresa;
 		Database bd = new Database();
 		Connection conn = null;
@@ -90,9 +90,9 @@ public class EmpresaModel implements Serializable {
 			conn = bd.getConnection();
 
 			if (conn != null) {
-				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE CNPJ = ?");
+				PreparedStatement st = conn.prepareStatement("SELECT * FROM EMPRESA_LIST WHERE N_EMPRESA = ?");
 				
-				st.setString(1, cnpj);
+				st.setString(1, empresa_id);
 
 				ResultSet rs = st.executeQuery();
 
@@ -116,8 +116,8 @@ public class EmpresaModel implements Serializable {
 		return null;
 	}
 
-	public EmpresaLookUpList read(int n_empresa_fk) {
-		EmpresaLookUpList empresa;
+	public EmpresaBean read(int n_empresa_fk) {
+		EmpresaBean empresa;
 		Database bd = new Database();
 		Connection conn = null;
 
@@ -132,12 +132,10 @@ public class EmpresaModel implements Serializable {
 				ResultSet rs = st.executeQuery();
 
 				if (rs.next()) {
-					empresa = new EmpresaLookUpList();
+					empresa = new EmpresaBean();
 					empresa.setN_empresa(rs.getInt("n_empresa"));
 					empresa.setCnpj(rs.getNString("cnpj"));
 					empresa.setRaz_social(rs.getString("raz_social"));
-					empresa.setTelefone(rs.getString("telefone"));
-					empresa.setN_alugueis(rs.getInt("n_alugueis"));
 					return empresa;
 				}
 

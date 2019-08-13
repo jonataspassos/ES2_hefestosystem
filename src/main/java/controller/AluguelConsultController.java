@@ -75,7 +75,7 @@ public class AluguelConsultController implements Serializable {
 				maquinaSel = maquinaService.read("" + aluguelSel.getN_maquina_fk());
 				funcionarioSel = funcionarioService.read(aluguelSel.getN_funcionario_fk());
 				if (aluguelSel.getN_empresa_fk() != -1) {
-					empresaSel = empresaService.read(aluguelSel.getN_empresa_fk());
+					empresaSel = empresaService.read("" + aluguelSel.getN_empresa_fk());
 				}
 				return;
 			}
@@ -160,11 +160,11 @@ public class AluguelConsultController implements Serializable {
 		if (1 == step)
 			return "Concluir";
 		else
-			return "Próximo";
+			return "Prï¿½ximo";
 	}
 
 	public String getMotivo() {
-		return "não sei";
+		return "nï¿½o sei";
 	}
 
 	public int getNdias() {
@@ -370,7 +370,7 @@ public class AluguelConsultController implements Serializable {
 			if(aluguelSel.getHori_retorno()>=aluguelSel.getHori_saida())
 				step++;
 			else {
-				System.out.println("Preencha o horimetro com um valor válido.");
+				System.out.println("Preencha o horimetro com um valor vï¿½lido.");
 			}
 			break;
 		case 1:
