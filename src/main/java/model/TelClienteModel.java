@@ -105,7 +105,7 @@ public class TelClienteModel implements Serializable {
 		}
 	}
 	
-	public void delete(String tel_id) {
+	public void delete(int tel_id) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -114,8 +114,8 @@ public class TelClienteModel implements Serializable {
 			conn = db.getConnection();
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("DELETE FROM TEL_CLIENTE WHERE N_TELEFONE = ?");
-				st.setInt(1, Integer.parseInt(tel_id));
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE TEL_CLIENTE_DELETE(?)");
+				st.setInt(1, tel_id);
 				st.execute();
 
 				st.close();

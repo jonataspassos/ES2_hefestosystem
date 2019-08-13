@@ -82,7 +82,7 @@
 							<div class="p-col pr-0">
 								<p:commandButton id="btnAddTel" value="Adicionar"
 									class="btn btn-success btn-text"
-									update=":form2:table1 :formTel" icon="fa fa-plus"
+									update=":form2:tels :formTel" icon="fa fa-plus"
 									action="#{clienteMB.onTelAddNew}" />
 
 							</div>
@@ -102,7 +102,7 @@
 					</div>
 
 					<div class="p-grid p-col">
-						<p:dataTable id="table1" var="tel" value="#{clienteMB.tels}"
+						<p:dataTable id="tels" var="tel" value="#{clienteMB.tels}"
 							style="margin-bottom:20px" editable="true">
 
 							<f:facet name="header">Números</f:facet>
@@ -330,7 +330,7 @@
 				<div class="p-col">
 					<div class="p-grid p-justify-end">
 						<p:commandButton class="btn btn-error btn-text" value="Excluir"
-							id="btnExcluir" action="#{cliente.excluirCliente}"
+							id="btnExcluir" action="#{clienteMB.excluirCliente}"
 							icon="fa fa-trash">
 							<p:confirm header="Confirmação"
 								message="Tem certeza de que deseja excluir o cliente?"

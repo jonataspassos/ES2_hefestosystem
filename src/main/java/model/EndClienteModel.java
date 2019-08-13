@@ -112,7 +112,7 @@ public class EndClienteModel implements Serializable {
 		}
 	}
 
-	public void delete(String endereco_id) {
+	public void delete(int endereco_id) {
 		Database db = new Database();
 		Connection conn = null;
 
@@ -121,8 +121,8 @@ public class EndClienteModel implements Serializable {
 			conn = db.getConnection();
 			if (conn != null) {
 
-				PreparedStatement st = conn.prepareStatement("DELETE FROM END_CLIENTE WHERE N_END = ?");
-				st.setInt(1, Integer.parseInt(endereco_id));
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE END_CLIENTE_DELETE(?)");
+				st.setInt(1, endereco_id);
 				st.execute();
 
 				st.close();

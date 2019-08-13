@@ -246,7 +246,24 @@ public class ClienteModel implements Serializable {
 		}
 	}
 	
-	public void delete(String cliente_id) {
-		
+	public void delete(int cliente_id) {
+		Database db = new Database();
+		Connection conn = null;
+
+		try {
+
+			conn = db.getConnection();
+			if (conn != null) {
+
+				PreparedStatement st = conn.prepareStatement("EXECUTE PROCEDURE CLIENTE_DELETE(?)");
+				st.setInt(1, cliente_id);
+				st.execute();
+
+				st.close();
+				conn.close();
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 }

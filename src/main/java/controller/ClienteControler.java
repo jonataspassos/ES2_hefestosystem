@@ -193,7 +193,14 @@ public class ClienteControler {
 	}
 
 	public void onEnderecoRowCancel(RowEditEvent event) {
-		System.out.println((EndClienteBean) event.getObject());
+		EndClienteBean end_edited = (EndClienteBean) event.getObject();
+
+		if (end_edited.getN_end() != -1)
+			endClienteService.delete(end_edited.getN_end());
+
+		enderecos.remove(enderecos.indexOf(end_edited));
+
+		PrimeFaces.current().ajax().update(":form3:enderecos");
 	}
 
 	public void onEnderecoAddNew() {
@@ -211,7 +218,14 @@ public class ClienteControler {
 	}
 
 	public void onTelRowCancel(RowEditEvent event) {
-		System.out.println((TelClienteBean) event.getObject());
+		TelClienteBean tel_edited = (TelClienteBean) event.getObject();
+
+		if (tel_edited.getN_telefone() != -1)
+			telClienteService.delete(tel_edited.getN_telefone());
+
+		tels.remove(tels.indexOf(tel_edited));
+
+		PrimeFaces.current().ajax().update(":form2:tels");
 	}
 
 	public void onTelAddNew() {
@@ -263,9 +277,28 @@ public class ClienteControler {
 		clienteService.update(cliente);
 	}
 
-	public void excluirMaquina() {
+	public void excluirTel() {
+		for (TelClienteBean tel : tels) {
+			if (tel.getN_telefone() != -1) 
+				telClienteService.delete(tel.getN_telefone());
+		}
+	}
+
+	public void excluirEndereco() {
+		for (EndClienteBean end : enderecos) {
+			if (end.getN_end() != -1) 
+				endClienteService.delete(end.getN_end());
+		}
+	}
+
+	public void excluirCliente() {
 		if (cliente != null) {
-			clienteService.delete(getCliente_id_param());
+			if (enderecos.size() > 0)
+				excluirEndereco();
+			if (tels.size() > 0)
+				excluirTel();
+
+			clienteService.delete(cliente.getN_cliente());
 			return;
 		}
 		System.out.println("Error: Cliente não foi instanciado.");
