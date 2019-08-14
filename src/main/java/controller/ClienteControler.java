@@ -47,7 +47,7 @@ public class ClienteControler {
 		clientes = clienteService.list();
 		cliente = null;
 		cliente_id_param = null;
-		clienteEdicao = true;
+		clienteEdicao = false;
 		cliente_end = null;
 		cliente_tel = null;
 		enderecos = null;
@@ -212,8 +212,12 @@ public class ClienteControler {
 			telClienteService.delete(tel_edited.getN_telefone());
 
 		tels.remove(tels.indexOf(tel_edited));
+		
+		for(TelClienteBean t : tels) {
+			System.out.println(t);
+		}
 
-		PrimeFaces.current().ajax().update(":form2:tels");
+//		PrimeFaces.current().ajax().update("tels");
 	}
 
 	public void onTelAddNew() {

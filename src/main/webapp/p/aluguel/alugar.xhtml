@@ -9,7 +9,7 @@
 	<ui:define name="titulo">Alugar Máquina</ui:define>
 	<ui:define name="cabecalho">Alugar Máquina</ui:define>
 	<ui:define name="corpo">
-		<p:steps id="steps" styleClass="p-grid"
+		<p:steps id="steps" class="p-grid p-justify-center"
 			activeIndex="#{aluguelMB.step}">
 			<p:autoUpdate />
 			<p:menuitem value="Dados Cadastrais" styleClass="p-col" />
@@ -106,9 +106,9 @@
 
 					<div class="p-col">
 						<p:outputLabel for="range" value="Período do aluguel: " />
-						<p:datePicker id="range" class="input-style-1" pattern="dd/MM/yyyy"
-							selectionMode="range" value="#{aluguelMB.period}"
-							readonlyInput="true">
+						<p:datePicker id="range" class="input-style-1"
+							pattern="dd/MM/yyyy" selectionMode="range"
+							value="#{aluguelMB.period}" readonlyInput="true">
 							<p:ajax update="dadosAluguel" />
 						</p:datePicker>
 					</div>
@@ -124,7 +124,8 @@
 					</div>
 					<div class="p-col">
 						<p:outputLabel value="Horímetro: " />
-						<p:inputText class="input-style-1" value="#{aluguelMB.aluguelSel.hori_saida}" />
+						<p:inputText class="input-style-1"
+							value="#{aluguelMB.aluguelSel.hori_saida}" />
 					</div>
 
 					<div class="p-col">
@@ -237,13 +238,13 @@
 						<p:outputLabel value="Personalizado" />
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.descPers}" />
+						<p:outputLabel id="descPers" value="#{aluguelMB.descPers}" />
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.delPers}" />
+						<p:outputLabel id="delPers" value="#{aluguelMB.delPers}" />
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.valPers}" />
+						<p:outputLabel id="valPers" value="#{aluguelMB.valPers}" />
 					</div>
 				</div>
 				<div class="ui-g">
@@ -253,8 +254,9 @@
 						<p:outputLabel value="Total" />
 					</div>
 					<div class="ui-g-2">
-						<p:inputText value="#{aluguelMB.total}">
-							<p:ajax listener="#{aluguelMB.updateDescontos()}" />
+						<p:inputText id="total" value="#{aluguelMB.total}">
+							<p:ajax listener="#{aluguelMB.updateDescontos}"
+								update="descPers delPers valPers" ignoreAutoUpdate="true" />
 						</p:inputText>
 					</div>
 				</div>
