@@ -1,7 +1,7 @@
 package bean;
 
 public class TelFuncionarioBean {
-	private int n_telefone;
+	private int n_telefone = -1;
 	private int n_funcionario_fk;
 	private int ddd;
 	private int numero_tel;

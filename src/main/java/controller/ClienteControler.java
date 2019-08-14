@@ -212,12 +212,8 @@ public class ClienteControler {
 			telClienteService.delete(tel_edited.getN_telefone());
 
 		tels.remove(tels.indexOf(tel_edited));
-		
-		for(TelClienteBean t : tels) {
-			System.out.println(t);
-		}
 
-//		PrimeFaces.current().ajax().update("tels");
+		PrimeFaces.current().ajax().update(":form2:tels");
 	}
 
 	public void onTelAddNew() {

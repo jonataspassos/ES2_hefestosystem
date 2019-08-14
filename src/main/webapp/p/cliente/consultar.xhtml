@@ -100,7 +100,7 @@
 
 					<div class="p-grid p-col">
 						<p:dataTable id="tels" var="tel" value="#{clienteMB.tels}"
-							style="margin-bottom:20px" editable="true" autoUpdate="true">
+							style="margin-bottom:20px" editable="true">
 
 							<f:facet name="header">Números</f:facet>
 
@@ -221,6 +221,7 @@
 					</div>
 
 					<div class="p-grid p-col">
+					<p:autoUpdate></p:autoUpdate>
 						<p:dataTable id="enderecos" widgetVar="end" var="endereco"
 							value="#{clienteMB.enderecos}" style="margin-bottom:20px"
 							editable="true">

@@ -1,7 +1,7 @@
 package bean;
 
 public class EndFuncionarioBean {
-	private int n_end;
+	private int n_end = -1;
 	private int n_funcionario_fk;
 	private String uf;
 	private String cidade;
