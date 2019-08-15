@@ -18,8 +18,8 @@
 		</p:steps>
 		<h:form id="form">
 			<p:autoUpdate />
-			<!-- 						<div style="display: #{aluguelMB.getForms(0)"> -->
-			<div class="step0">
+									<div style="display: #{aluguelMB.getForms(0)}">
+<!-- 			<div class="step0"> -->
 				<h1>Dados Cadastrais</h1>
 				<div class="p-grid p-justify-between">
 					<div class="p-col-4 text-left">
@@ -99,8 +99,8 @@
 				<!-- Forms -->
 			</div>
 			<!-- Dados Cadastrais -->
-			<!-- 			<div style="display: #{aluguelMB.getForms(1)"> -->
-			<div class="step1">
+						<div style="display: #{aluguelMB.getForms(1)}">
+<!-- 			<div class="step1"> -->
 				<h1>Especificação do Aluguel</h1>
 				<p:panelGrid id="dadosAluguel">
 
@@ -138,22 +138,22 @@
 					</div>
 				</p:panelGrid>
 			</div>
-			<!-- 			<div style="display: #{aluguelMB.getForms(2)"> -->
-			<div class="step2">
+						<div style="display: #{aluguelMB.getForms(2)}">
+<!-- 			<div class="step2"> -->
 				<h1>Confirmação e Pagamento</h1>
 				<div class="ui-g">
 					<!-- Máquina -->
 					<div class="ui-g-6">
-						<p:outputLabel value="Máquina" />
+						<p:outputLabel value="Máquina" style="font-weight:bold"/>
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="Diária" />
+						<p:outputLabel value="Diária" style="font-weight:bold"/>
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="Nº Dias" />
+						<p:outputLabel value="Nº Dias" style="font-weight:bold"/>
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="Valor" />
+						<p:outputLabel value="Valor" style="font-weight:bold"/>
 					</div>
 				</div>
 				<div class="ui-g">
@@ -173,27 +173,27 @@
 				</div>
 				<div class="ui-g">
 					<!-- Desconto -->
-					<div class="ui-g-6">
-						<p:outputLabel value="Descontos" />
+					<div class="ui-g-8">
+						<p:outputLabel value="Descontos" style="font-weight:bold"/>
+					</div>
+<!-- 					<div class="ui-g-2"> -->
+<!-- 						<p:outputLabel value="%" /> -->
+<!-- 					</div> -->
+					<div class="ui-g-2">
+						<p:outputLabel value="-R$" style="font-weight:bold"/>
 					</div>
 					<div class="ui-g-2">
-						<p:outputLabel value="%" />
-					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="-R$" />
-					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="R$" />
+						<p:outputLabel value="R$" style="font-weight:bold"/>
 					</div>
 				</div>
 				<div class="ui-g">
 					<!-- Desconto Nº de Dias -->
-					<div class="ui-g-6">
+					<div class="ui-g-8">
 						<p:outputLabel value="Nº de Dias" />
 					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.descNdias}" />
-					</div>
+<!-- 					<div class="ui-g-2"> -->
+<!-- 						<p:outputLabel value="#{aluguelMB.descNdias}" /> -->
+<!-- 					</div> -->
 					<div class="ui-g-2">
 						<p:outputLabel value="#{aluguelMB.delNdias}" />
 					</div>
@@ -203,12 +203,12 @@
 				</div>
 				<div class="ui-g">
 					<!-- Desconto Horas/dia -->
-					<div class="ui-g-6">
+					<div class="ui-g-8">
 						<p:outputLabel value="Horas/Dia" />
 					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.descHdias}" />
-					</div>
+<!-- 					<div class="ui-g-2"> -->
+<!-- 						<p:outputLabel value="#{aluguelMB.descHdias}" /> -->
+<!-- 					</div> -->
 					<div class="ui-g-2">
 						<p:outputLabel value="#{aluguelMB.delHdias}" />
 					</div>
@@ -218,12 +218,12 @@
 				</div>
 				<div class="ui-g">
 					<!-- Desconto Fidelização -->
-					<div class="ui-g-6">
+					<div class="ui-g-8">
 						<p:outputLabel value="Fidelização" />
 					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.descFidel}" />
-					</div>
+<!-- 					<div class="ui-g-2"> -->
+<!-- 						<p:outputLabel value="#{aluguelMB.descFidel}" /> -->
+<!-- 					</div> -->
 					<div class="ui-g-2">
 						<p:outputLabel value="#{aluguelMB.delFidel}" />
 					</div>
@@ -233,12 +233,12 @@
 				</div>
 				<div class="ui-g">
 					<!-- Desconto personalizado -->
-					<div class="ui-g-6">
+					<div class="ui-g-8">
 						<p:outputLabel value="Personalizado" />
 					</div>
-					<div class="ui-g-2">
-						<p:outputLabel value="#{aluguelMB.descPers}" />
-					</div>
+<!-- 					<div class="ui-g-2"> -->
+<!-- 						<p:outputLabel value="#{aluguelMB.descPers}" /> -->
+<!-- 					</div> -->
 					<div class="ui-g-2">
 						<p:outputLabel value="#{aluguelMB.delPers}" />
 					</div>

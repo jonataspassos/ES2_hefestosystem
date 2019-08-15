@@ -207,7 +207,9 @@
 						<p:outputLabel value="Total" />
 					</div>
 					<div class="ui-g-4">
-						<p:inputText value="#{aluguelConsultMB.total}" />
+						<p:inputText value="#{aluguelConsultMB.total}">
+							<p:ajax listener="#{aluguelConsultMB.updateMulta()}"/>
+						</p:inputText>
 					</div>
 				</div>
 			</div>

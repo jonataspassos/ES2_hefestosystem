@@ -21,8 +21,7 @@
 					value="#{clienteMB.clientes}" widgetVar="clientesTable"
 					multiViewState="true" rows="10" paginator="true"
 					paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
-					rowsPerPageTemplate="5,10,15" selectionMode="single"
-					selection="#{clienteMB.selectedCliente}" rowKey="#{cli.n_cliente}"
+					rowsPerPageTemplate="5,10,15" rowKey="#{cli.n_cliente}"
 					emptyMessage="Nenhum Cliente encontrado com esses critérios"
 					filteredValue="#{clienteMB.filteredClientes}" sortMode="multiple">
 					<f:facet name="header">

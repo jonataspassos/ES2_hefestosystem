@@ -257,17 +257,9 @@ public class AluguelConsultController implements Serializable {
 	}
 
 	public void setTotal(String total) {
-		float convert;
-		try {
-			convert = Float.parseFloat(total);
-		} catch (NumberFormatException e) {
-			total = total.replaceAll("[^0-9,]", "");
-			total = total.replaceAll(",", ".");
-			convert = Float.parseFloat(total);
-		}
-
-		totalTemp = convert;
-		descontos[4] = convert / valHdiasf();
+		total = total.replaceAll("R\\$", "");
+		System.out.println(total);
+		totalTemp = HUtil.parseFloat(total);
 	}
 
 	public String getTotal() {
@@ -303,16 +295,7 @@ public class AluguelConsultController implements Serializable {
 	}
 
 	public void setEntradaDinheiro(String total) {
-		float convert;
-		try {
-			convert = Float.parseFloat(total);
-		} catch (NumberFormatException e) {
-			total = total.replaceAll("[^0-9,]", "");
-			total = total.replaceAll(",", ".");
-			convert = Float.parseFloat(total);
-		}
-
-		dinheiro = convert;
+		dinheiro = HUtil.parseFloat(total);
 	}
 
 	public String getEntradaDinheiro() {
@@ -337,20 +320,7 @@ public class AluguelConsultController implements Serializable {
 	}
 
 	public void updateMulta() {
-		descontos[0] = getNdias() / (float) getNdiasPrev();
-		if (descontos[0] < 1)
-			descontos[0] = 1;
-		descontos[1] = (aluguelSel.getHori_retorno() - aluguelSel.getHori_saida())
-				/ (Float.parseFloat(getHoriPrevis()) - aluguelSel.getHori_saida());
-		if (descontos[1] < 1)
-			descontos[1] = 1;
-		descontos[2] = HUtil.descNdias(getNdias());
-		descontos[3] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
-		if (descontos[0] > 1 || descontos[1] > 1) {
-			setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2] * descontos[3]);
-		} else {
-			setTotal("" + getAluguelSel().getVal_contratado());
-		}
+		descontos[4] = totalTemp / valHdiasf();
 	}
 
 	public String getForms(int i) {
@@ -365,9 +335,23 @@ public class AluguelConsultController implements Serializable {
 		switch (step) {
 		case 0:
 			updateMulta();
-			if (aluguelSel.getHori_retorno() >= aluguelSel.getHori_saida())
+			if (aluguelSel.getHori_retorno() >= aluguelSel.getHori_saida()) {
+				descontos[0] = getNdias() / (float) getNdiasPrev();
+				if (descontos[0] < 1)
+					descontos[0] = 1;
+				descontos[1] = (aluguelSel.getHori_retorno() - aluguelSel.getHori_saida())
+						/ (Float.parseFloat(getHoriPrevis()) - aluguelSel.getHori_saida());
+				if (descontos[1] < 1)
+					descontos[1] = 1;
+				descontos[2] = HUtil.descNdias(getNdias());
+				descontos[3] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
+				if (descontos[0] > 1 || descontos[1] > 1) {
+					setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2] * descontos[3]);
+				} else {
+					setTotal("" + getAluguelSel().getVal_contratado());
+				}
 				step++;
-			else {
+			}else {
 				PrimeFaces.current().executeScript(
 						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha o horimetro com um valor válido.'})");
 				System.out.println("Preencha o horimetro com um valor válido.");

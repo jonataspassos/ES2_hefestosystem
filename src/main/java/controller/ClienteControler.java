@@ -1,5 +1,7 @@
 package controller;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,18 +25,24 @@ import model.TelClienteModel;
 
 @ManagedBean(name = "clienteMB")
 @ViewScoped
-public class ClienteControler {
+public class ClienteControler implements Serializable{
+	//--------------------------Sel Atributes -------------------------//
 	private List<ClienteLookUpList> clientes;
 	private List<ClienteLookUpList> filteredClientes;
 	private List<EndClienteBean> enderecos;
 	private List<TelClienteBean> tels;
+	private List<TelClienteBean> telsToRemove;
 	private ClienteLookUpList selectedCliente;
 	private ClienteBean cliente;
 	private TelClienteBean cliente_tel;
 	private EndClienteBean cliente_end;
+	
+	//-------------------------Atributes--------------------------------//
 	private String cliente_id_param;
 	private Boolean clienteEdicao;
 
+	
+	//------------------------Managed Propertys-------------------------//
 	@ManagedProperty("#{clienteModel}")
 	private ClienteModel clienteService;
 	@ManagedProperty("#{endClienteModel}")
@@ -53,6 +61,32 @@ public class ClienteControler {
 		enderecos = null;
 		tels = null;
 	}
+	
+	public void setClienteService(ClienteModel clienteService) {
+		this.clienteService = clienteService;
+	}
+
+	public ClienteModel getClienteService() {
+		return clienteService;
+	}
+	
+	public EndClienteModel getEndClienteService() {
+		return endClienteService;
+	}
+
+	public void setEndClienteService(EndClienteModel endClienteService) {
+		this.endClienteService = endClienteService;
+	}
+
+	public TelClienteModel getTelClienteService() {
+		return telClienteService;
+	}
+
+	public void setTelClienteService(TelClienteModel telClienteService) {
+		this.telClienteService = telClienteService;
+	}
+	
+	//---------------------- Sels Get Set --------------------------//
 
 	public ClienteLookUpList getSelectedCliente() {
 		return selectedCliente;
@@ -70,36 +104,20 @@ public class ClienteControler {
 		return filteredClientes;
 	}
 
-	public void setClienteService(ClienteModel clienteService) {
-		this.clienteService = clienteService;
-	}
-
-	public ClienteModel getClienteService() {
-		return clienteService;
-	}
-
 	public void setFilteredClientes(List<ClienteLookUpList> filteredClientes) {
 		this.filteredClientes = filteredClientes;
 	}
-
-	public Boolean getClienteEdicao() {
-		return clienteEdicao;
+	
+	public void setCliente_tel(TelClienteBean cliente_tel) {
+		this.cliente_tel = cliente_tel;
 	}
-
-	public void setClienteEdicao(Boolean clienteEdicao) {
-		this.clienteEdicao = clienteEdicao;
-	}
-
+	
 	public TelClienteBean getCliente_tel() {
 		if (cliente_tel == null)
 			cliente_tel = new TelClienteBean();
 		return cliente_tel;
 	}
-
-	public void setCliente_tel(TelClienteBean cliente_tel) {
-		this.cliente_tel = cliente_tel;
-	}
-
+	
 	public EndClienteBean getCliente_end() {
 		if (cliente_end == null)
 			cliente_end = new EndClienteBean();
@@ -109,21 +127,7 @@ public class ClienteControler {
 	public void setCliente_end(EndClienteBean cliente_end) {
 		this.cliente_end = cliente_end;
 	}
-
-	public String getCliente_id_param() {
-		if (cliente_id_param == null) {
-			FacesContext context = FacesContext.getCurrentInstance();
-			Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
-			cliente_id_param = paramMap.get("cliente_id");
-		}
-
-		return cliente_id_param;
-	}
-
-	public void setCliente_id_param(String cliente_id_param) {
-		this.cliente_id_param = cliente_id_param;
-	}
-
+	
 	public ClienteBean getCliente() {
 		String param_id = getCliente_id_param();
 		if (cliente == null) {
@@ -138,22 +142,6 @@ public class ClienteControler {
 
 	public void setCliente(ClienteBean cliente) {
 		this.cliente = cliente;
-	}
-
-	public EndClienteModel getEndClienteService() {
-		return endClienteService;
-	}
-
-	public void setEndClienteService(EndClienteModel endClienteService) {
-		this.endClienteService = endClienteService;
-	}
-
-	public TelClienteModel getTelClienteService() {
-		return telClienteService;
-	}
-
-	public void setTelClienteService(TelClienteModel telClienteService) {
-		this.telClienteService = telClienteService;
 	}
 
 	public List<EndClienteBean> getEnderecos() {
@@ -175,6 +163,32 @@ public class ClienteControler {
 	public void setTels(List<TelClienteBean> tels) {
 		this.tels = tels;
 	}
+	
+	//------------------------ Gets Sets -----------------------//
+
+	public Boolean getClienteEdicao() {
+		return clienteEdicao;
+	}
+
+	public void setClienteEdicao(Boolean clienteEdicao) {
+		this.clienteEdicao = clienteEdicao;
+	}
+
+	public String getCliente_id_param() {
+		if (cliente_id_param == null) {
+			FacesContext context = FacesContext.getCurrentInstance();
+			Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+			cliente_id_param = paramMap.get("cliente_id");
+		}
+
+		return cliente_id_param;
+	}
+
+	public void setCliente_id_param(String cliente_id_param) {
+		this.cliente_id_param = cliente_id_param;
+	}
+
+	//---------------------- Methods ------------------------------------//
 
 	public void onEnderecoRowEdit(RowEditEvent event) {
 		EndClienteBean end_edited = (EndClienteBean) event.getObject();
@@ -208,8 +222,11 @@ public class ClienteControler {
 	public void onTelRowCancel(RowEditEvent event) {
 		TelClienteBean tel_edited = (TelClienteBean) event.getObject();
 
-		if (tel_edited.getN_telefone() != -1)
-			telClienteService.delete(tel_edited.getN_telefone());
+		if (tel_edited.getN_telefone() != -1) {
+			telsToRemove  = telsToRemove == null?new ArrayList<TelClienteBean>():telsToRemove;
+			telsToRemove.add(tel_edited);
+			//telClienteService.delete(tel_edited.getN_telefone());
+		}
 
 		tels.remove(tels.indexOf(tel_edited));
 
@@ -265,6 +282,10 @@ public class ClienteControler {
 			if (tel.isEdited())
 				telClienteService.update(tel);
 		}
+		if(telsToRemove != null)
+		for (TelClienteBean tel : telsToRemove) {
+			telClienteService.delete(tel.getN_telefone());
+		}
 
 		clienteService.update(cliente);
 		PrimeFaces.current().executeScript(
@@ -275,6 +296,12 @@ public class ClienteControler {
 		for (TelClienteBean tel : tels) {
 			if (tel.getN_telefone() != -1)
 				telClienteService.delete(tel.getN_telefone());
+		}
+		if(telsToRemove!=null) {
+			for (TelClienteBean tel : telsToRemove) {
+				if (tel.getN_telefone() != -1)
+					telClienteService.delete(tel.getN_telefone());
+			}
 		}
 	}
 
@@ -287,9 +314,9 @@ public class ClienteControler {
 
 	public void excluirCliente() {
 		if (cliente != null) {
-			if (enderecos.size() > 0)
+//			if (enderecos.size() > 0)
 				excluirEndereco();
-			if (tels.size() > 0)
+//			if (tels.size() > 0)
 				excluirTel();
 
 			clienteService.delete(cliente.getN_cliente());
@@ -324,6 +351,10 @@ public class ClienteControler {
 
 	public String getClientPhone() {
 		return String.format("%d-%d", cliente_tel.getNumero_tel() / 10000, cliente_tel.getNumero_tel() % 10000);
+	}
+	
+	public String getClientPhone(int phone) {
+		return String.format("%d-%d", phone / 10000, phone % 10000);
 	}
 
 }
