@@ -222,8 +222,10 @@ public class EmpresaController implements Serializable {
 			telEmpresaService.delete(tel_edited.getN_telefone());
 
 		tels.remove(tels.indexOf(tel_edited));
-
-		PrimeFaces.current().ajax().update(":form2:tels");
+		tels.add(tel_edited);
+		PrimeFaces.current().ajax().update("tels");
+		tels.remove(tels.indexOf(tel_edited));
+		PrimeFaces.current().ajax().update("tels");
 	}
 
 	public void onTelAddNew() {

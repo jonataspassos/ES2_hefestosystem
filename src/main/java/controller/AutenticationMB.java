@@ -1,5 +1,7 @@
 package controller;
 
+import java.util.Map;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.SessionScoped;
@@ -45,7 +47,7 @@ public class AutenticationMB {
 	public void redefinirSenha() {
 		FuncionarioModel funm = new FuncionarioModel();
 		funm.novaSenha(funcionario, senha1, senha2);
-		SystemMB.getSystem().redirect("/");
+		SystemMB.getSystem().redirect("/?f=true");
 	}
 	
 	public void logout() {
@@ -81,6 +83,9 @@ public class AutenticationMB {
 	}
 
 	public FuncionarioBean getFuncionario() {
+		if(getParam("f")!=null){
+			PrimeFaces.current().executeScript("PF('welcomeDialog').show()");
+		}
 		return funcionario;
 	}
 
@@ -127,5 +132,12 @@ public class AutenticationMB {
 	
 	public static FuncionarioBean getFuncionarioDaSessao() {
 		return getAutentication().getFuncionario();
+	}
+	
+	public String getParam(String param) {
+		FacesContext context = FacesContext.getCurrentInstance();
+		Map<String, String> paramMap = context.getExternalContext().getRequestParameterMap();
+		return paramMap.get(param);
+		
 	}
 }

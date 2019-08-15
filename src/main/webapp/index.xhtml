@@ -9,6 +9,32 @@
 	<ui:define name="titulo">Titulo da Página</ui:define>
 	<ui:define name="cabecalho">Seja Bem Vindo #{autentication.funcionario.nome}</ui:define>
 	<ui:define name="corpo">
+		<div class="p-grid">
+<!-- 			<div class="p-col-6"></div> -->
+<!-- 			<div class="p-col-6"> -->
+<!-- 				<p:barChart model="#{indexMB.barModel}" -->
+<!-- 					style="width: 100%; height: 400px;" /> -->
+<!-- 			</div> -->
+		</div>
+
+		<p:dialog widgetVar="welcomeDialog" header="Seja bem Vindo ao Hefesto System">
+				<p>
+					Este é um sistema de gerenciamento de máquinas.<BR /> Neste
+					sistema, você, funcionário, poderá realizar cadastro de clientes,
+					empresas, máquinas e outros funcionarios. Poderá consultá-los e
+					editá-los sempre que desejar e excluí-los quando for necessário.<BR />
+					As máquinas, além dessas operações, você poderá também colocá-las e
+					retirá-las de revisões, para manutenção, troca de óleo ou o que for
+					necessário.<BR /> Como recurso principal, este sistema realiza o
+					aluguel das máquinas para um cliente, delimitando datas e tempo de
+					uso.<BR /> Alerte seus clientes do sistema rígido de contrato,
+					serão aplicadas multas para atraso na devolução, ou abuso de horas
+					de funcionamento da máquina alugada.<BR /> Receba seus pagamentos
+					registrando quanto de cada aluguel você ja recebeu para saber
+					quanto ainda falta receber de cada um.<BR />
+					Esperamos que aprove o sistema e que seja útil para você.
+				</p>
+		</p:dialog>
 
 	</ui:define>
 </ui:composition>
