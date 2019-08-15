@@ -64,16 +64,14 @@
 								<div class="box">
 									<h5>DDD</h5>
 									<p:inputMask id="ddd" value="#{clienteMB.cliente_tel.ddd}"
-										mask="99" required="true"
-										disabled="#{!clienteMB.clienteEdicao}" />
+										mask="99" required="true" />
 								</div>
 							</div>
 							<div class="p-col">
 								<div class="box">
 									<h5>Número</h5>
 									<p:inputMask id="numero_tel" value="#{clienteMB.clientPhone}"
-										mask="99999-9999" required="true"
-										disabled="#{!clienteMB.clienteEdicao}" />
+										mask="99999-9999" required="true" />
 								</div>
 							</div>
 						</div>
@@ -81,9 +79,8 @@
 						<div class="p-grid">
 							<div class="p-col pr-0">
 								<p:commandButton id="btnAddTel" value="Adicionar"
-									class="btn btn-success btn-text"
-									update=":form2:tels :formTel" icon="fa fa-plus"
-									action="#{clienteMB.onTelAddNew}" />
+									class="btn btn-success btn-text" update=":form2:tels :formTel"
+									icon="fa fa-plus" action="#{clienteMB.onTelAddNew}" />
 
 							</div>
 						</div>
@@ -152,16 +149,14 @@
 								<div class="box">
 									<h5>UF</h5>
 									<p:inputMask id="uf" value="#{clienteMB.cliente_end.uf}"
-										mask="a*" required="true"
-										disabled="#{!clienteMB.clienteEdicao}" />
+										mask="a*" required="true" />
 								</div>
 							</div>
 							<div class="p-col-3">
 								<div class="box">
 									<h5>Cidade</h5>
 									<p:inputText id="cidade"
-										value="#{clienteMB.cliente_end.cidade}" required="true"
-										disabled="#{!clienteMB.clienteEdicao}">
+										value="#{clienteMB.cliente_end.cidade}" required="true">
 										<f:validateLength minimum="1" maximum="20" />
 									</p:inputText>
 								</div>
@@ -170,8 +165,7 @@
 								<div class="box">
 									<h5>Bairro</h5>
 									<p:inputText id="bairro"
-										value="#{clienteMB.cliente_end.bairro}" required="true"
-										disabled="#{!clienteMB.clienteEdicao}">
+										value="#{clienteMB.cliente_end.bairro}" required="true">
 										<f:validateLength minimum="1" maximum="20" />
 									</p:inputText>
 								</div>
@@ -180,7 +174,7 @@
 								<div class="box">
 									<h5>Rua</h5>
 									<p:inputText id="rua" value="#{clienteMB.cliente_end.rua}"
-										required="true" disabled="#{!clienteMB.clienteEdicao}">
+										required="true">
 										<f:validateLength minimum="1" maximum="30" />
 									</p:inputText>
 								</div>
@@ -193,16 +187,14 @@
 									<h5>Número</h5>
 									<p:inputNumber id="numero"
 										value="#{clienteMB.cliente_end.numero}" required="true"
-										minValue="0" maxValue="9999999999"
-										disabled="#{!clienteMB.clienteEdicao}" />
+										minValue="0" maxValue="9999999999" />
 								</div>
 							</div>
 							<div class="p-col-3">
 								<div class="box">
 									<h5>CEP</h5>
 									<p:inputMask id="cep" value="#{clienteMB.cliente_end.cep}"
-										mask="99999-999" required="true"
-										disabled="#{!clienteMB.clienteEdicao}" />
+										mask="99999-999" required="true" />
 								</div>
 							</div>
 
@@ -229,6 +221,7 @@
 					</div>
 
 					<div class="p-grid p-col">
+					<p:autoUpdate></p:autoUpdate>
 						<p:dataTable id="enderecos" widgetVar="end" var="endereco"
 							value="#{clienteMB.enderecos}" style="margin-bottom:20px"
 							editable="true">

@@ -1,7 +1,7 @@
 package bean;
 
 public class EndEmpresaBean {
-	private int n_end;
+	private int n_end = -1;
 	private int n_empresa_fk;
 	private String uf;
 	private String cidade;

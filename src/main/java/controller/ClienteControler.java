@@ -55,7 +55,7 @@ public class ClienteControler implements Serializable{
 		clientes = clienteService.list();
 		cliente = null;
 		cliente_id_param = null;
-		clienteEdicao = true;
+		clienteEdicao = false;
 		cliente_end = null;
 		cliente_tel = null;
 		enderecos = null;

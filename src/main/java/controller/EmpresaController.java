@@ -227,7 +227,10 @@ public class EmpresaController implements Serializable {
 	}
 
 	public void onTelAddNew() {
+		System.out.println(empresa_tel);
+		System.out.println(tels.size());
 		this.tels.add(empresa_tel);
+		System.out.println(tels.size());
 		empresa_tel = new TelEmpresaBean();
 		PrimeFaces.current().executeScript("PF('dlg1').hide()");
 
