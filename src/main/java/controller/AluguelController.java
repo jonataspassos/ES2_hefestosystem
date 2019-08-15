@@ -334,10 +334,10 @@ public class AluguelController implements Serializable {
 		switch (step) {
 		case 0:
 			if (clienteSel.getNome() != null && (!empresa || empresaSel.getRaz_social() != null)) {
-				//PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
-				//PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
 				this.step++;
-				//PrimeFaces.current().executeScript("$('.step1').css('display', 'block');");
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'block');");
 			} else {
 				PrimeFaces.current().executeScript(
 						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha todos os campos.'})");
@@ -345,8 +345,8 @@ public class AluguelController implements Serializable {
 			break;
 		case 1:
 			if (maquinaSel2.getMarca() != null && getHoras() != null) {
-				//PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
-				//PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
 
 				descontos[0] = HUtil.descNdias(getNdias());
 				descontos[1] = HUtil.descHorasDias(getAluguelSel().getTempo_hd());
@@ -355,7 +355,7 @@ public class AluguelController implements Serializable {
 				setTotal("" + getValor() * descontos[0] * descontos[1] * descontos[2]);
 
 				this.step++;
-				//PrimeFaces.current().executeScript("$('.step2').css('display', 'block');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'block');");
 			} else {
 				PrimeFaces.current().executeScript(
 						"Swal.fire({ type: 'warning', title: 'Oopss...', text: 'Preencha todos os campos.'})");
@@ -376,16 +376,16 @@ public class AluguelController implements Serializable {
 		if (this.step > 0) {
 			switch (step) {
 			case 1:
-				//PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
-				//PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step1').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
 				break;
 			case 2:
-				//PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
-				//PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step0').css('display', 'none');");
+				PrimeFaces.current().executeScript("$('.step2').css('display', 'none');");
 				break;
 			}
 			this.step--;
-			//PrimeFaces.current().executeScript("$('.step" + this.step + "').css('display', 'block');");
+			PrimeFaces.current().executeScript("$('.step" + this.step + "').css('display', 'block');");
 		}
 
 	}
@@ -409,8 +409,6 @@ public class AluguelController implements Serializable {
 		PrimeFaces.current().executeScript(
 				"Swal.fire({ type: 'success', title: 'Tudo certo...', text: 'Máquina Alugada.', timer: 3000,"
 						+ "showConfirmButton: false})");
-
-		Thread.sleep(3000);
 		SystemMB.getSystem().redirect("/p/aluguel/listar.xhtml");
 	}
 

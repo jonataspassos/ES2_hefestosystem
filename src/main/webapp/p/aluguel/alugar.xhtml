@@ -18,8 +18,8 @@
 		</p:steps>
 		<h:form id="form">
 			<p:autoUpdate />
-									<div style="display: #{aluguelMB.getForms(0)}">
-<!-- 			<div class="step0"> -->
+<!-- 									<div style="display: #{aluguelMB.getForms(0)}"> -->
+			<div class="step0">
 				<h1>Dados Cadastrais</h1>
 				<div class="p-grid p-justify-between">
 					<div class="p-col-4 text-left">
@@ -99,8 +99,8 @@
 				<!-- Forms -->
 			</div>
 			<!-- Dados Cadastrais -->
-						<div style="display: #{aluguelMB.getForms(1)}">
-<!-- 			<div class="step1"> -->
+<!-- 						<div style="display: #{aluguelMB.getForms(1)}"> -->
+			<div class="step1">
 				<h1>Especificação do Aluguel</h1>
 				<p:panelGrid id="dadosAluguel">
 
@@ -139,8 +139,8 @@
 					</div>
 				</p:panelGrid>
 			</div>
-						<div style="display: #{aluguelMB.getForms(2)}">
-<!-- 			<div class="step2"> -->
+<!-- 						<div style="display: #{aluguelMB.getForms(2)}"> -->
+			<div class="step2">
 				<h1>Confirmação e Pagamento</h1>
 				<div class="ui-g">
 					<!-- Máquina -->
@@ -257,7 +257,7 @@
 					<div class="ui-g-2">
 						<p:inputText id="total" value="#{aluguelMB.total}">
 							<p:ajax listener="#{aluguelMB.updateDescontos}"
-								update="descPers delPers valPers" ignoreAutoUpdate="true" />
+								update="delPers valPers" ignoreAutoUpdate="true" />
 						</p:inputText>
 					</div>
 				</div>

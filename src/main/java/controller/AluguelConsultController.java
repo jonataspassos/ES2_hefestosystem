@@ -275,7 +275,7 @@ public class AluguelConsultController implements Serializable {
 	}
 
 	public String getHoriPrevis() {
-		return "" + (aluguelSel.getTempo_hd() * getNdiasPrev() + aluguelSel.getHori_saida());
+		return "" + ((int)aluguelSel.getTempo_hd() * getNdiasPrev() + aluguelSel.getHori_saida())+"h";
 	}
 
 	public void setHoriRetorno(int hori) {
@@ -308,6 +308,19 @@ public class AluguelConsultController implements Serializable {
 		if (troco < 0)
 			troco = 0;
 		return String.format("R$%.2f", troco);
+	}
+	
+	public String getHoriRetornoS() {
+		if(aluguelSel.getData_entregue()!=null)
+			return ""+aluguelSel.getHori_retorno()+"h";
+		else
+			return "Ainda não Retornado";
+	} 
+	public String getHorasGastas() {
+		if(aluguelSel.getData_entregue()!=null)
+			return ""+(aluguelSel.getHori_retorno()-aluguelSel.getHori_saida())+"h";
+		else
+			return "Ainda não Retornado";
 	}
 
 	// ----------------------Methods--------------------------------//
